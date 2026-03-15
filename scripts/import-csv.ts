@@ -1,10 +1,11 @@
 import { parse } from "csv-parse/sync";
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
 import type { Job } from "../src/lib/db";
 
 const jsonPath = join(process.cwd(), "jobboard.json");
 const csvPath = join(process.cwd(), "slt-jobs.csv");
+const seenUrlsPath = join(process.cwd(), "seen-urls.csv");
 
 // Sentinel date for unknown posted dates (epoch: 1970-01-01T00:00:00.000Z)
 const UNKNOWN_DATE = new Date(0).toISOString();
@@ -45,9 +46,34 @@ function isValidUrl(urlStr: string): boolean {
   }
 }
 
+// Load previously seen URLs from seen-urls.csv
+function loadSeenUrls(): Set<string> {
+  const urls = new Set<string>();
+  if (!existsSync(seenUrlsPath)) {
+    return urls;
+  }
+  const content = readFileSync(seenUrlsPath, "utf-8");
+  for (const line of content.split("\n")) {
+    const trimmed = line.trim();
+    if (trimmed) {
+      urls.add(trimmed);
+    }
+  }
+  return urls;
+}
+
+// Write all seen URLs to seen-urls.csv
+function writeSeenUrls(urls: Set<string>): void {
+  const sorted = [...urls].sort();
+  writeFileSync(seenUrlsPath, sorted.join("\n") + "\n", "utf-8");
+  console.log(`Wrote ${sorted.length} unique URLs to seen-urls.csv`);
+}
+
 function importCsvToJson() {
   console.log("Reading CSV file...");
   const csvContent = readFileSync(csvPath, "utf-8");
+  const seenUrls = loadSeenUrls();
+  console.log(`Loaded ${seenUrls.size} previously seen URLs`);
 
   console.log("Parsing CSV...");
   const records = parse(csvContent, {
@@ -79,8 +105,9 @@ function importCsvToJson() {
 
   console.log(`Found ${records.length} job records`);
 
-  // Map CSV records to Job format and filter out invalid records
+  // Map CSV records to Job format and filter out invalid/duplicate records
   let invalidCount = 0;
+  let duplicateCount = 0;
   const jobsWithoutIds = records
     .map((record, index): Omit<Job, "id"> | null => {
       const title = record["Job Title"]?.trim() || "";
@@ -95,7 +122,7 @@ function importCsvToJson() {
         const missingFields: string[] = [];
         if (!title) missingFields.push("Job Title");
         if (!company) missingFields.push("Company");
-        
+
         console.error(
           `Invalid record at row ${index + 2} (CSV row ${index + 2}): Missing required fields: ${missingFields.join(", ")}`
         );
@@ -106,6 +133,18 @@ function importCsvToJson() {
       const isUrl = isValidUrl(applicationLinkValue);
       const apply_link = isUrl ? applicationLinkValue : undefined;
       const application_instructions = isUrl ? undefined : applicationLinkValue || undefined;
+
+      // Skip jobs with URLs we've already seen
+      if (apply_link && seenUrls.has(apply_link)) {
+        duplicateCount++;
+        console.log(`Skipping duplicate URL at row ${index + 2}: ${apply_link}`);
+        return null;
+      }
+
+      // Track new URLs
+      if (apply_link) {
+        seenUrls.add(apply_link);
+      }
 
       return {
         title,
@@ -130,9 +169,15 @@ function importCsvToJson() {
   if (invalidCount > 0) {
     console.log(`Skipped ${invalidCount} invalid record(s)`);
   }
+  if (duplicateCount > 0) {
+    console.log(`Skipped ${duplicateCount} duplicate URL(s)`);
+  }
 
   console.log("Writing jobs to JSON file...");
   writeFileSync(jsonPath, JSON.stringify(jobs, null, 2), "utf-8");
+
+  // Write updated seen URLs
+  writeSeenUrls(seenUrls);
 
   console.log(`Successfully imported ${jobs.length} jobs`);
 }

@@ -29,7 +29,7 @@ function parseDate(dateStr: string | undefined): string {
     return date.toISOString();
   }
 
-  return new Date().toISOString();
+  return UNKNOWN_DATE;
 }
 
 // Check if a string is a valid URL.

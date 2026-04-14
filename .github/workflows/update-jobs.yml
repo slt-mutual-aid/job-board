@@ -29,13 +29,22 @@ jobs:
       - name: Import CSV to JSON
         run: yarn import-csv
 
-      - name: Check for changes
+      - name: Check for changes and job count
         id: changes
         run: |
           if git diff --quiet slt-jobs.csv jobboard.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
+            OLD_COUNT=$(git show HEAD:jobboard.json | jq 'length')
+            NEW_COUNT=$(jq 'length' jobboard.json)
+            echo "old_count=$OLD_COUNT" >> "$GITHUB_OUTPUT"
+            echo "new_count=$NEW_COUNT" >> "$GITHUB_OUTPUT"
+            THRESHOLD=$(( OLD_COUNT / 2 ))
+            if [ "$NEW_COUNT" -lt "$THRESHOLD" ]; then
+              echo "::error::Job count dropped from $OLD_COUNT to $NEW_COUNT (>50% decrease). Aborting."
+              exit 1
+            fi
           fi
 
       - name: Create PR
@@ -43,16 +52,18 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          BRANCH="update-jobs-$(date +%Y-%m-%d)"
+          BRANCH="update-jobs-$(date +%Y-%m-%d-%H%M)"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
           git add slt-jobs.csv jobboard.json
           git commit -m "update jobs $(date +'%b %-d')"
           git push -u origin "$BRANCH"
+          OLD=${{ steps.changes.outputs.old_count }}
+          NEW=${{ steps.changes.outputs.new_count }}
           gh pr create \
             --title "Update jobs $(date +'%b %-d')" \
-            --body "Routine job data update from Google Sheets." \
+            --body "Routine job data update from Google Sheets. Job count: $OLD → $NEW." \
             --reviewer treymo
 
       - name: No changes

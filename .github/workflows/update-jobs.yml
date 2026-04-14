@@ -1,0 +1,60 @@
+name: Update jobs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Fetch latest CSV from Google Sheets
+        run: yarn fetch-csv
+
+      - name: Import CSV to JSON
+        run: yarn import-csv
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet slt-jobs.csv jobboard.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create PR
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="update-jobs-$(date +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add slt-jobs.csv jobboard.json
+          git commit -m "update jobs $(date +'%b %-d')"
+          git push -u origin "$BRANCH"
+          gh pr create \
+            --title "Update jobs $(date +'%b %-d')" \
+            --body "Routine job data update from Google Sheets." \
+            --reviewer treymo
+
+      - name: No changes
+        if: steps.changes.outputs.changed != 'true'
+        run: echo "No job data changes detected."

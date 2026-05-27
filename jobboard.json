@@ -1,5 +1,15 @@
 [
   {
+    "title": "Bartender / Bar Attendant / Pool Attendant / Cocktail Server",
+    "company": "Caesar's Republic- High Dive Pool & Lounge",
+    "location": "PEEK nighclub (inside Harrah's) at Stateline, NV",
+    "description": "As part of the opening team for a brand-new luxury poolside experience, delivered exceptional guest service in a fast-paced, high-energy environment. Provided full-spectrum support across bar operations and poolside service, ensuring a seamless and elevated guest experience.\r\n\r\nKey responsibilities included:\r\n\r\nCrafted and served premium cocktails, beer, and wine while maintaining accuracy, speed, and presentation standards\r\nProvided attentive poolside and lounge service, taking orders, delivering beverages, and anticipating guest needs\r\nMaintained clean, organized bar and pool areas, adhering to health, safety, and brand standards\r\nSupported bar setup, inventory control, and restocking to ensure continuous service flow\r\nEngaged with guests to create a vibrant, welcoming atmosphere aligned with the High Dive brand experience\r\nCollaborated with team members to execute high-volume service during peak periods, events, and activations\r\nMonitored pool deck environment to ensure guest comfort, safety, and overall satisfaction\r\nRecognized for adaptability, strong guest engagement, and contributing to the successful launch of a new hospitality concept.",
+    "application_instructions": "Drop off resume in person at Harrah's",
+    "job_type": "Full-time, Part-time",
+    "posted_date": "2026-05-26T00:00:00.000Z",
+    "id": 1
+  },
+  {
     "title": "Plant Nursery Worker",
     "company": "Sunbasin Landscape & Nursery",
     "location": "Stateline, NV",
@@ -8,7 +18,7 @@
     "hourly_rate": "$18 - $20",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "2026-05-20T00:00:00.000Z",
-    "id": 1
+    "id": 2
   },
   {
     "title": "Multi-Purpose Clerk - Deli",
@@ -19,7 +29,7 @@
     "hourly_rate": "$16.75 - $26.50",
     "job_type": "Unknown",
     "posted_date": "2026-05-15T00:00:00.000Z",
-    "id": 2
+    "id": 3
   },
   {
     "title": "Housekeeping Room Attendant",
@@ -30,7 +40,7 @@
     "hourly_rate": "$21",
     "job_type": "Full-time, Temporary/Seasonal",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 3
+    "id": 4
   },
   {
     "title": "Front Desk Agent",
@@ -41,17 +51,17 @@
     "hourly_rate": "$22",
     "job_type": "Full-time, Temporary/Seasonal",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 4
+    "id": 5
   },
   {
     "title": "Cage Cashier and Caesars Rewards Representative",
-    "company": "Caesar's Entertainment",
+    "company": "Caesar's Republic",
     "location": "Stateline, NV",
     "description": "This position is responsible for meeting casino and patron cash needs and promoting the company’s customer loyalty program.",
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs/preview/84678/?location=Stateline%2C+NV%2C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&sortBy=POSTING_DATES_DESC",
     "job_type": "Unknown",
     "posted_date": "2026-05-22T00:00:00.000Z",
-    "id": 5
+    "id": 6
   },
   {
     "title": "Host/Cashier",
@@ -61,7 +71,7 @@
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs/preview/84465/?location=Stateline%2C+NV%2C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&sortBy=POSTING_DATES_DESC",
     "job_type": "Unknown",
     "posted_date": "2026-05-21T00:00:00.000Z",
-    "id": 6
+    "id": 7
   },
   {
     "title": "Cook II",
@@ -72,7 +82,7 @@
     "hourly_rate": "$18",
     "job_type": "Full-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 7
+    "id": 8
   },
   {
     "title": "Bus Person",
@@ -82,7 +92,7 @@
     "apply_link": "https://recruiting.ultipro.com/TWI1006TRWH/JobBoard/b9cc79c4-75a2-4800-8508-16504f7a2d90/OpportunityDetail?opportunityId=a432b32e-ed07-446a-84b7-dd5e5006266c",
     "job_type": "Part-time",
     "posted_date": "2026-05-26T00:00:00.000Z",
-    "id": 8
+    "id": 9
   },
   {
     "title": "Administrative Assistant",
@@ -93,7 +103,7 @@
     "hourly_rate": "$26.95 - $32.76",
     "job_type": "Full-time, Temporary/Seasonal",
     "posted_date": "2026-05-18T00:00:00.000Z",
-    "id": 9
+    "id": 10
   },
   {
     "title": "Overnight Grocery Team Member (Stocker, Inventory, Receiving)",
@@ -104,7 +114,7 @@
     "hourly_rate": "$18.00 - $25.40",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 10
+    "id": 11
   },
   {
     "title": "Specialty Team Member (Beer, Wine, Cheese & Chocolate)",
@@ -115,7 +125,7 @@
     "hourly_rate": "$18.00 - $25.40",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 11
+    "id": 12
   },
   {
     "title": "Dishwasher",
@@ -126,7 +136,7 @@
     "hourly_rate": "$17 - $18",
     "job_type": "Full-time",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 12
+    "id": 13
   },
   {
     "title": "Restaurant Line Cook",
@@ -137,7 +147,7 @@
     "hourly_rate": "$18 - $20",
     "job_type": "Full-time",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 13
+    "id": 14
   },
   {
     "title": "Cashier / Sales Associate",
@@ -148,7 +158,7 @@
     "hourly_rate": "$17",
     "job_type": "Part-time",
     "posted_date": "2026-05-11T00:00:00.000Z",
-    "id": 14
+    "id": 15
   },
   {
     "title": "Box Office Attendant",
@@ -159,7 +169,7 @@
     "hourly_rate": "$20",
     "job_type": "Part-time",
     "posted_date": "2026-05-11T00:00:00.000Z",
-    "id": 15
+    "id": 16
   },
   {
     "title": "Banquet - Set up",
@@ -169,7 +179,7 @@
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs/preview/84042/?location=Stateline%2C+NV%2C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&sortBy=POSTING_DATES_DESC",
     "job_type": "Full-time",
     "posted_date": "2026-05-12T00:00:00.000Z",
-    "id": 16
+    "id": 17
   },
   {
     "title": "Host Person",
@@ -179,7 +189,7 @@
     "apply_link": "https://recruiting.ultipro.com/TWI1006TRWH/JobBoard/b9cc79c4-75a2-4800-8508-16504f7a2d90/OpportunityDetail?opportunityId=c8669229-263a-42a4-a55b-7ef8b156842c",
     "job_type": "Full-time",
     "posted_date": "2026-05-08T00:00:00.000Z",
-    "id": 17
+    "id": 18
   },
   {
     "title": "Food Truck Assistant",
@@ -190,7 +200,7 @@
     "hourly_rate": "$18 - $20",
     "job_type": "Full-time",
     "posted_date": "2026-05-11T00:00:00.000Z",
-    "id": 18
+    "id": 19
   },
   {
     "title": "Barista",
@@ -201,7 +211,7 @@
     "hourly_rate": "$21.25 - $24.12",
     "job_type": "Unknown",
     "posted_date": "2026-05-04T00:00:00.000Z",
-    "id": 19
+    "id": 20
   },
   {
     "title": "Lead Barista",
@@ -211,7 +221,7 @@
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs/preview/83575/?location=Stateline%2C+NV%2C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&sortBy=POSTING_DATES_DESC",
     "job_type": "Part-time",
     "posted_date": "2026-05-04T00:00:00.000Z",
-    "id": 20
+    "id": 21
   },
   {
     "title": "Cedar Bath Attendant and Laborer",
@@ -222,7 +232,7 @@
     "hourly_rate": "$20",
     "job_type": "Part-time",
     "posted_date": "2026-05-02T00:00:00.000Z",
-    "id": 21
+    "id": 22
   },
   {
     "title": "Evening Gate Attendant",
@@ -233,7 +243,7 @@
     "hourly_rate": "$18 - $20",
     "job_type": "Part-time",
     "posted_date": "2026-05-01T00:00:00.000Z",
-    "id": 22
+    "id": 23
   },
   {
     "title": "Barista",
@@ -244,7 +254,7 @@
     "hourly_rate": "$16.90",
     "job_type": "Full-time, Part-time",
     "posted_date": "2026-05-01T00:00:00.000Z",
-    "id": 23
+    "id": 24
   },
   {
     "title": "Guest Room Attendant / Housekeeper",
@@ -255,7 +265,7 @@
     "hourly_rate": "$17.50–$18.50",
     "job_type": "Full-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 24
+    "id": 25
   },
   {
     "title": "QA Inspector",
@@ -266,7 +276,7 @@
     "hourly_rate": "$18.50–$19.00",
     "job_type": "Full-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 25
+    "id": 26
   },
   {
     "title": "EVS Attendant / Janitor",
@@ -277,7 +287,7 @@
     "hourly_rate": "$16.50–$17.50",
     "job_type": "Full-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 26
+    "id": 27
   },
   {
     "title": "Houseman and Driver",
@@ -288,7 +298,7 @@
     "hourly_rate": "$19.00–$19.50",
     "job_type": "Full-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 27
+    "id": 28
   },
   {
     "title": "Seafood Team Memeber (Service Counter)",
@@ -299,7 +309,7 @@
     "hourly_rate": "$18.00 - $25.40",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 28
+    "id": 29
   },
   {
     "title": "Clerk",
@@ -310,7 +320,7 @@
     "hourly_rate": "$17.25 - $22.50",
     "job_type": "Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 29
+    "id": 30
   },
   {
     "title": "Casino Beverage Stocker",
@@ -320,7 +330,7 @@
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs/preview/83163/?location=Stateline%2C+NV%2C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&sortBy=POSTING_DATES_DESC",
     "job_type": "Unknown",
     "posted_date": "2026-04-20T00:00:00.000Z",
-    "id": 30
+    "id": 31
   },
   {
     "title": "Cookie Crew",
@@ -331,7 +341,7 @@
     "hourly_rate": "$20 + tips",
     "job_type": "Part-time",
     "posted_date": "2026-04-20T00:00:00.000Z",
-    "id": 31
+    "id": 32
   },
   {
     "title": "Vacation House Cleaner",
@@ -342,7 +352,7 @@
     "hourly_rate": "$25-$30",
     "job_type": "Full-time, Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 32
+    "id": 33
   },
   {
     "title": "Bartender",
@@ -353,7 +363,7 @@
     "hourly_rate": "$16.90 - $35.00",
     "job_type": "Full-time, Part-time, Temporary/Seasonal",
     "posted_date": "2026-04-13T00:00:00.000Z",
-    "id": 33
+    "id": 34
   },
   {
     "title": "Sandwich Artist/Cashier/Supervisor",
@@ -364,7 +374,7 @@
     "hourly_rate": "$17.50 - $20.00",
     "job_type": "Full-time, Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 34
+    "id": 35
   },
   {
     "title": "Retail Attendant",
@@ -374,7 +384,7 @@
     "apply_link": "https://recruitingbypaycor.com/career/JobIntroduction.action?clientId=8a7883c689b7fbd50189c1277e00060b&id=8a78859f9cd55a16019d01f4e0840def&source=&lang=en",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 35
+    "id": 36
   },
   {
     "title": "Server",
@@ -384,7 +394,7 @@
     "apply_link": "https://recruitingbypaycor.com/career/JobIntroduction.action?clientId=8a7883c689b7fbd50189c1277e00060b&id=8a7885a89d02e553019d0863d1cd0eda&source=&lang=en",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 36
+    "id": 37
   },
   {
     "title": "Busser / Food Runner",
@@ -394,7 +404,7 @@
     "apply_link": "https://recruitingbypaycor.com/career/JobIntroduction.action?clientId=8a7883c689b7fbd50189c1277e00060b&id=8a7887ac9cbb3522019cc0003e314134&source=&lang=en",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 37
+    "id": 38
   },
   {
     "title": "Sales Associate",
@@ -405,7 +415,7 @@
     "hourly_rate": "$16 - $20",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 38
+    "id": 39
   },
   {
     "title": "Multiple Positions Available (Seasonal)",
@@ -416,7 +426,7 @@
     "hourly_rate": "Varies by role",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 39
+    "id": 40
   },
   {
     "title": "Maintenance Technician II - Recreation (Seasonal/Temporary)",
@@ -427,7 +437,7 @@
     "hourly_rate": "$23.66 - $26.12",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 40
+    "id": 41
   },
   {
     "title": "Shift Lead",
@@ -437,7 +447,7 @@
     "apply_link": "https://docs.google.com/forms/d/e/1FAIpQLSdfkNt_4gpkHNgHTQDoTV-qZeJm0UXCd1T4_e2xfRlMIRsR6g/viewform",
     "job_type": "Full-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 41
+    "id": 42
   },
   {
     "title": "Barista/Register/Back of House",
@@ -447,7 +457,7 @@
     "apply_link": "https://docs.google.com/forms/d/e/1FAIpQLSdfkNt_4gpkHNgHTQDoTV-qZeJm0UXCd1T4_e2xfRlMIRsR6g/viewform",
     "job_type": "Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 42
+    "id": 43
   },
   {
     "title": "Night Cleaner",
@@ -457,7 +467,7 @@
     "apply_link": "https://docs.google.com/forms/d/e/1FAIpQLSdfkNt_4gpkHNgHTQDoTV-qZeJm0UXCd1T4_e2xfRlMIRsR6g/viewform",
     "job_type": "Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 43
+    "id": 44
   },
   {
     "title": "Grocery Clerk- Freight",
@@ -467,7 +477,7 @@
     "apply_link": "https://www.paycomonline.net/v4/ats/web.php/portal/D0EAAF82D2F805FCF6412120F6BF9534/jobs/84699",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 44
+    "id": 45
   },
   {
     "title": "Produce Clerk",
@@ -477,7 +487,7 @@
     "apply_link": "https://www.paycomonline.net/v4/ats/web.php/portal/D0EAAF82D2F805FCF6412120F6BF9534/jobs/84690",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 45
+    "id": 46
   },
   {
     "title": "Meat Clerk",
@@ -487,7 +497,7 @@
     "apply_link": "https://www.paycomonline.net/v4/ats/web.php/portal/D0EAAF82D2F805FCF6412120F6BF9534/jobs/84680",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 46
+    "id": 47
   },
   {
     "title": "Grocery Clerk",
@@ -497,7 +507,7 @@
     "apply_link": "https://www.paycomonline.net/v4/ats/web.php/portal/D0EAAF82D2F805FCF6412120F6BF9534/jobs/84671",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 47
+    "id": 48
   },
   {
     "title": "Crew Member",
@@ -507,6 +517,6 @@
     "apply_link": "https://tmt.spotapps.co/job-listings?spot_id=135071&callback_url=http%3A%2F%2Fbluedogpizzatahoe.com%2F&_gl=1%2an7rwk9%2a_ga%2aOTI4NDUxMzQ2LjE3NjQ3MTQyNTc.%2a_ga_VG24VK2VKT%2aczE3NjQ3MTQyNTYkbzEkZzAkdDE3NjQ3MTQyNTgkajU4JGwwJGgw%2a_ga_FB6MG7Y9S1%2aczE3NjQ3MTQyNTckbzEkZzAkdDE3NjQ3MTQyNTgkajU5JGwwJGgw",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 48
+    "id": 49
   }
 ]

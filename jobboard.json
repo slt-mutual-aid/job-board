@@ -1,5 +1,137 @@
 [
   {
+    "title": "Bussers/Hosts",
+    "company": "Bert's Cafe",
+    "location": "1146 Emerald Bay Road",
+    "description": "Are you interested in working in a fast paced and social environment? Come in to Bert's Cafe- We are currently hiring bussers and hosts. Must be willing to work mornings and weekends. Looking for friendly, hard working, high energy individuals that are great at multi-tasking and are looking to be part of one of Tahoe's best teams.\r\n\r\nHours of operation: 7:00-2:00 (schedule varies but usually around 7-3:00)\r\nMinimum wage + great tips + 401k\r\nPeople friendly / presentable / reliable / capable / team player - All things we are looking for in a new-hire.",
+    "application_instructions": "Must apply in person at 1146 Emerald Bay Road in South Lake Tahoe at the 'Y'.",
+    "hourly_rate": "$16.90 + tips",
+    "job_type": "Full-time",
+    "posted_date": "1026-06-21T00:00:00.000Z",
+    "id": 1
+  },
+  {
+    "title": "Construction Laborer",
+    "company": "Affordable Construction Services",
+    "location": "South Lake Tahoe, CA",
+    "description": "General Construction Laborer. Salary based on experience.\r\nMust have own vehicle, preferably a truck, and hand tools\r\n\r\nHours of work: 7:30 AM to 4 PM.\r\n\r\nWill train right person.",
+    "application_instructions": "CALL OFFICE FOR INQUIRY AT (530) 573-1194. No emails.",
+    "hourly_rate": "DOE (Competitive)",
+    "job_type": "Full-time",
+    "posted_date": "2026-06-22T00:00:00.000Z",
+    "id": 2
+  },
+  {
+    "title": "Valet Attendant",
+    "company": "Riva Grill",
+    "location": "900 Ski Run Boulevard, South Lake Tahoe, CA 96150",
+    "description": "As a Valet Attendant at Riva Grill you are the first impression! You will provide exceptional valet parking services by safely and efficiently moving guest vehicles to a designated parking location and assisting them in a friendly, efficient, courteous and professional manner. You may also assist with loading and unloading.",
+    "apply_link": "https://www.indeed.com/viewjob?cmp=Riva-Grill&t=Parking+Attendant&jk=fc954657a71c2331&xpse=SoBE67I3i4pCb5SnBx0LbzkdCdPP&xfps=658a46d8-48ce-4af5-be8a-27a027219d29&xkcb=SoCT67M3i4oSNVwUgp0FbzkdCdPP&vjs=3",
+    "hourly_rate": "$16.50",
+    "job_type": "Full-time",
+    "posted_date": "2026-06-19T00:00:00.000Z",
+    "id": 3
+  },
+  {
+    "title": "Crew Member",
+    "company": "Port of Subs",
+    "location": "3101 Harrison Avenue, South Lake Tahoe, CA 96150",
+    "description": "We make delicious SANDWICHES! Join our team at our busy store. You will be responsible in preparing delicious sandwiches for our customers. We are looking for the ideal crew member who is experienced, pleasant, and committed! If you are a people person and provide excellent customer service, we want to hear from you!",
+    "apply_link": "https://www.indeed.com/viewjob?cmp=Schiff-Enterprise&t=Crew+Member&jk=c05d5c275fba08d4&xpse=SoAe67I3i4pDgywrJZ0LbzkdCdPP&xfps=de441214-b033-4c7a-9c85-d2ed748a071b&xkcb=SoA067M3i4oSNVwUgp0AbzkdCdPP&vjs=3",
+    "hourly_rate": "$20 + tips",
+    "job_type": "Part-time",
+    "posted_date": "2026-06-19T00:00:00.000Z",
+    "id": 4
+  },
+  {
+    "title": "Retail Sales Associate",
+    "company": "Blaze Vape and Smoke Shop",
+    "location": "Stateline, NV",
+    "description": "We are seeking a customer-focused individual with strong communication skills who enjoys engaging with customers. This position is ideal for candidates balancing multiple jobs or those unable to commit to a full weekly schedule.",
+    "apply_link": "https://www.indeed.com/viewjob?cmp=blaze-vape-and-smoke-shop&t=Retail+Sales+Associate&jk=cc45cfdf38c9e224&xpse=SoCw67I3i4pEFlzxVx0LbzkdCdPP&xfps=7cf8e279-e90d-4197-a748-8fe12ed0f63b&xkcb=SoCA67M3i4oSNVwUgp0BbzkdCdPP&vjs=3",
+    "hourly_rate": "$16",
+    "job_type": "Part-time",
+    "posted_date": "2026-06-19T00:00:00.000Z",
+    "id": 5
+  },
+  {
+    "title": "Marina Assistant",
+    "company": "Lakeside Marina",
+    "location": "4041 Lakeshore Boulevard, South Lake Tahoe, CA 96150",
+    "description": "POSITION SUMMARY/PURPOSE: These are key positions within Marina Operations, with direct daily contact with our Marina Guests.\r\n\r\nAll Marina Staff Members are required to have a State issued boating license or obtain one within their first week of employment.",
+    "apply_link": "https://www.indeed.com/viewjob?cmp=Timber-Cove-Marina&t=Marina+Assistant&jk=b2fa08b1dcecd37e&xpse=SoCE67I3i4pFPgwrGx0LbzkdCdPP&xfps=8835302c-75e1-4fa6-8260-672f57947774&xkcb=SoAd67M3i4oSNVwUgp0CbzkdCdPP&vjs=3",
+    "hourly_rate": "$17",
+    "job_type": "Full-time, Temporary/Seasonal",
+    "posted_date": "2026-06-19T00:00:00.000Z",
+    "id": 6
+  },
+  {
+    "title": "Jet Ski and Water Toy Rentals Attendant",
+    "company": "Tahoe Sports - Ski Run Boat Company",
+    "location": "South Lake Tahoe, CA",
+    "description": "We are looking for fun and outgoing people with positive attitudes to help us show the Visitors of Lake Tahoe a great time on the water! No experience is necessary with any position but people with good organizational skills and great work ethics have the most success. This is a great opportunity to learn more about Water Sports Activities in a fun work environment!",
+    "apply_link": "https://www.indeed.com/viewjob?cmp=Tahoe-Sports---Ski-Run-Boat-Company&t=Jet+Ski+and+Water+Toy+Rentals+Attendant&jk=6a8c0f0e5141ecb1&xpse=SoCk67I3i4pFXFzxVx0LbzkdCdPP&xfps=26500db2-396b-446a-9e2e-30456a027cc6&xkcb=SoCp67M3i4oSNVwUgp0DbzkdCdPP&vjs=3",
+    "hourly_rate": "$18 - $19",
+    "job_type": "Full-time, Part-time, Temporary/Seasonal",
+    "posted_date": "2026-06-19T00:00:00.000Z",
+    "id": 7
+  },
+  {
+    "title": "Barista/Bartender",
+    "company": "Noel's Coffee & Apothecary",
+    "location": "Stateline, NV",
+    "description": "We are seeking a hardworking, friendly, and experienced barista who is passionate about coffee and providing excellent customer service. The ideal candidate enjoys meeting people from all over the world and is comfortable working independently.",
+    "apply_link": "https://www.indeed.com/viewjob?cmp=Noel%2527s-Coffee-%2526-Apothecary&t=Barista&jk=2a074cc6f06eb80f&xpse=SoDg67I3i4pG-8wrG50LbzkdCdPP&xfps=23224c3d-3be1-4edf-9501-f1a5b5023c87&xkcb=SoBp67M3i4oSNVwUgp0ObzkdCdPP&vjs=3",
+    "hourly_rate": "$16 + tips",
+    "job_type": "Part-time",
+    "posted_date": "2026-06-19T00:00:00.000Z",
+    "id": 8
+  },
+  {
+    "title": "Service Specialist (Grocery Bagger)",
+    "company": "Save Mart",
+    "location": "1020 Al Tahoe Blvd",
+    "description": "The Service Specialist is an excellent entry level store position, with many opportunities for growth and learning within our Save Mart family of businesses in the grocery industry. Our Service Specialists play an important role in the efficient operations of the front-end, by providing friendly, fast and effective customer service. Your goal as a Service Specialist is to create a friendly, welcoming, and helpful store atmosphere, establishing loyal repeat customers.",
+    "apply_link": "https://savemart.csod.com/ux/ats/careersite/25/home/requisition/41421?c=savemart&city=south%20lake%20tahoe&source=Indeed",
+    "hourly_rate": "$16.90",
+    "job_type": "Unknown",
+    "posted_date": "2026-06-18T00:00:00.000Z",
+    "id": 9
+  },
+  {
+    "title": "Multi-purpose Clerk (Meat)",
+    "company": "Save Mart",
+    "location": "1020 Al Tahoe Blvd",
+    "description": "The Meat Clerk ensures that our customers’ needs are met and exceeded by delivering remarkable customer service and providing customers with exceptional product knowledge, efficient service and a friendly attitude. The Meat Clerk is responsible for providing a high level of customer service and practicing safe food handling procedures. This position supports the Meat department by performing tasks such as greeting and assisting customers with questions, promoting sales within the department, preparing, packaging, labeling, and merchandising products, maintaining department standards, and assisting customer requests and special orders. The Meat Clerk handles all products in a safe, sanitary manner and keeps all areas and equipment of the department clean.",
+    "apply_link": "https://savemart.csod.com/ux/ats/careersite/25/home/requisition/41418?c=savemart&city=south%20lake%20tahoe&source=Indeed",
+    "hourly_rate": "$16.90 - $26.50",
+    "job_type": "Unknown",
+    "posted_date": "2026-06-18T00:00:00.000Z",
+    "id": 10
+  },
+  {
+    "title": "Food Truck Assistant",
+    "company": "South Lake Brewing Company",
+    "location": "South Lake Tahoe, CA",
+    "description": "The Food Truck Assistant supports the Food Truck and Events Lead in operating the Food Truck at our\r\nBrewery location. This role focuses on food preparation, event support, transportation of supplies,\r\nmaintaining high standards of food safety and cleanliness and providing customer service. The ideal\r\ncandidate is organized, reliable, and passionate about delivering exceptional food experiences to our\r\nguests.",
+    "application_instructions": "Food Truck Assistant June 2026.pdf",
+    "hourly_rate": "$18 - $20 + tips",
+    "job_type": "Full-time",
+    "posted_date": "2026-06-16T00:00:00.000Z",
+    "id": 11
+  },
+  {
+    "title": "Production Associate",
+    "company": "South Lake Brewing Company",
+    "location": "South Lake Tahoe, CA",
+    "description": "South Lake Brewing Company is looking to hire a Production Associate to assist in helping run the\r\nbrewing and cellaring operations. This is an entry level position, no prior experience is required. This\r\nopportunity is perfect for someone excited to learn about and get a foot-in-the-door into the brewing\r\nindustry. This person will report to Chris Smith, Co-Owner and Director of Operations and will also\r\nreceive daily task direction from the Operations Team members.",
+    "application_instructions": "Production Associate, June 2026.docx.pdf",
+    "hourly_rate": "$19",
+    "job_type": "Temporary/Seasonal, Full-time",
+    "posted_date": "2026-06-16T00:00:00.000Z",
+    "id": 12
+  },
+  {
     "title": "Kitchen Help",
     "company": "Goodfellas Pizza",
     "location": "3668 Lake Tahoe Blvd, Suite C",
@@ -8,7 +140,7 @@
     "hourly_rate": "$16.90",
     "job_type": "Part-time",
     "posted_date": "2026-06-11T00:00:00.000Z",
-    "id": 1
+    "id": 13
   },
   {
     "title": "Cashier/Customer Service",
@@ -19,7 +151,7 @@
     "hourly_rate": "$19.50",
     "job_type": "Part-time, Full-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 2
+    "id": 14
   },
   {
     "title": "Cedar Bath Maintenance Laborer",
@@ -30,7 +162,7 @@
     "hourly_rate": "$22",
     "job_type": "Part-time",
     "posted_date": "2026-06-14T00:00:00.000Z",
-    "id": 3
+    "id": 15
   },
   {
     "title": "Retail Merchandise Associate",
@@ -41,7 +173,7 @@
     "hourly_rate": "$16.90 - $17.40",
     "job_type": "Part-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 4
+    "id": 16
   },
   {
     "title": "Building Operations Attendant",
@@ -52,18 +184,7 @@
     "hourly_rate": "$18 - $20",
     "job_type": "Part-time",
     "posted_date": "2026-06-08T00:00:00.000Z",
-    "id": 5
-  },
-  {
-    "title": "Host/Busser",
-    "company": "South Lake Brewing Company",
-    "location": "The Libation Lodge at 4000 Lake Tahoe Blvd.",
-    "description": "Host responsibilities include greeting guests, providing accurate wait times and escorting customers\r\nto the dining and bar areas. For this role, you should have solid organizational and people skills to\r\nmake sure our guests have a positive dining experience from the moment they arrive till they depart.\r\nUltimately, you’ll ensure we provide excellent customer service and a pleasant dining experience to\r\nour guests.",
-    "apply_link": "https://static1.squarespace.com/static/638a3a9643e9fb370520730f/t/6a2ed6fb2d9cd249dbdf11e9/1781454591782/South+Lake+Brewing+Co_Host+Job+Posting_June+2026.pdf",
-    "hourly_rate": "$17",
-    "job_type": "Unknown",
-    "posted_date": "2026-06-01T00:00:00.000Z",
-    "id": 6
+    "id": 17
   },
   {
     "title": "Assistant Marketing & Merchandise Manager",
@@ -74,18 +195,7 @@
     "hourly_rate": "$20 - $23",
     "job_type": "Part-time",
     "posted_date": "2026-06-01T00:00:00.000Z",
-    "id": 7
-  },
-  {
-    "title": "Dishwasher",
-    "company": "South Lake Brewing Company",
-    "location": "South Lake Tahoe, CA",
-    "description": "South Lake Brewing Company is hiring a Delivery Driver to join our Wholesale team. This role focuses\r\nexclusively on the timely and professional delivery of SLBC products across South Lake Tahoe, the\r\nTahoe Basin, and the Sacramento region. The Delivery Driver will work closely with the Sales Manager\r\nand Warehouse Support to ensure accurate order fulfillment and route coordination.",
-    "application_instructions": "Delivery Driver Job Post June 2026.pdf",
-    "hourly_rate": "$19",
-    "job_type": "Full-time, Part-time",
-    "posted_date": "2026-06-01T00:00:00.000Z",
-    "id": 8
+    "id": 18
   },
   {
     "title": "Front Desk Agent",
@@ -96,7 +206,7 @@
     "hourly_rate": "$22",
     "job_type": "Part-time",
     "posted_date": "2026-06-15T00:00:00.000Z",
-    "id": 9
+    "id": 19
   },
   {
     "title": "Front Desk Agent",
@@ -107,17 +217,7 @@
     "hourly_rate": "$22",
     "job_type": "Full-time",
     "posted_date": "2026-06-15T00:00:00.000Z",
-    "id": 10
-  },
-  {
-    "title": "Busperson",
-    "company": "Sage Room",
-    "location": "Stateline, NV",
-    "description": "Cleans and resets tables in restaurants",
-    "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/85648/?lastSelectedFacet=POSTING_DATES&location=Stateline%252C+NV%252C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&selectedPostingDatesFacet=7",
-    "job_type": "Unknown",
-    "posted_date": "2026-06-11T00:00:00.000Z",
-    "id": 11
+    "id": 20
   },
   {
     "title": "Bartender",
@@ -127,7 +227,7 @@
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/85651/?lastSelectedFacet=POSTING_DATES&location=Stateline%252C+NV%252C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&selectedPostingDatesFacet=7",
     "job_type": "Unknown",
     "posted_date": "2026-06-11T00:00:00.000Z",
-    "id": 12
+    "id": 21
   },
   {
     "title": "High Dive Pool and Lounge - Bartender",
@@ -137,7 +237,7 @@
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/85024/?lastSelectedFacet=POSTING_DATES&location=Stateline%252C+NV%252C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&selectedPostingDatesFacet=7",
     "job_type": "Unknown",
     "posted_date": "2026-06-10T00:00:00.000Z",
-    "id": 13
+    "id": 22
   },
   {
     "title": "Slots Attendant",
@@ -148,7 +248,7 @@
     "hourly_rate": "$12",
     "job_type": "Full-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 14
+    "id": 23
   },
   {
     "title": "Barista",
@@ -159,7 +259,7 @@
     "hourly_rate": "$18",
     "job_type": "Full-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 15
+    "id": 24
   },
   {
     "title": "Spa Attendant (On-call)",
@@ -170,7 +270,7 @@
     "hourly_rate": "$15",
     "job_type": "Part-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 16
+    "id": 25
   },
   {
     "title": "Bartender",
@@ -181,7 +281,7 @@
     "hourly_rate": "$12",
     "job_type": "Part-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 17
+    "id": 26
   },
   {
     "title": "Cook II",
@@ -192,7 +292,7 @@
     "hourly_rate": "$20",
     "job_type": "Full-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 18
+    "id": 27
   },
   {
     "title": "Host Person",
@@ -203,7 +303,7 @@
     "hourly_rate": "$15",
     "job_type": "Full-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 19
+    "id": 28
   },
   {
     "title": "Host Person",
@@ -214,7 +314,7 @@
     "hourly_rate": "$15",
     "job_type": "Part-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 20
+    "id": 29
   },
   {
     "title": "Dishwasher",
@@ -224,7 +324,7 @@
     "apply_link": "https://recruiting.ultipro.com/TWI1006TRWH/JobBoard/b9cc79c4-75a2-4800-8508-16504f7a2d90/OpportunityDetail?opportunityId=003f2855-8e80-4e28-aaea-5c1fbfd632fc",
     "job_type": "Full-time",
     "posted_date": "2026-06-12T00:00:00.000Z",
-    "id": 21
+    "id": 30
   },
   {
     "title": "Ground Crew Member",
@@ -235,7 +335,7 @@
     "hourly_rate": "$25 - $30",
     "job_type": "Full-time",
     "posted_date": "2026-05-31T00:00:00.000Z",
-    "id": 22
+    "id": 31
   },
   {
     "title": "Dishwasher",
@@ -246,7 +346,7 @@
     "hourly_rate": "$17 + tips",
     "job_type": "Full-time, Part-time",
     "posted_date": "2026-05-28T00:00:00.000Z",
-    "id": 23
+    "id": 32
   },
   {
     "title": "Host / Busser / Food Runner / Expo",
@@ -257,7 +357,7 @@
     "hourly_rate": "$12 - $16",
     "job_type": "Full-time, Part-time, Temporary/Seasonal",
     "posted_date": "2026-05-28T00:00:00.000Z",
-    "id": 24
+    "id": 33
   },
   {
     "title": "Concessions Bartender",
@@ -268,7 +368,7 @@
     "hourly_rate": "$12 + tips",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "2026-05-27T00:00:00.000Z",
-    "id": 25
+    "id": 34
   },
   {
     "title": "Part-Time Associate",
@@ -279,7 +379,7 @@
     "hourly_rate": "$16.90",
     "job_type": "Part-time",
     "posted_date": "2026-05-27T00:00:00.000Z",
-    "id": 26
+    "id": 35
   },
   {
     "title": "Waitperson for Summer Banquets",
@@ -289,7 +389,7 @@
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs/preview/84701/?lastSelectedFacet=POSTING_DATES&location=Stateline%2C+NV%2C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&selectedPostingDatesFacet=7&sortBy=POSTING_DATES_DESC",
     "job_type": "Unknown",
     "posted_date": "2026-05-28T00:00:00.000Z",
-    "id": 27
+    "id": 36
   },
   {
     "title": "Food Runner at Sapori",
@@ -299,7 +399,7 @@
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs/preview/84589/?lastSelectedFacet=POSTING_DATES&location=Stateline%2C+NV%2C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&selectedPostingDatesFacet=7&sortBy=POSTING_DATES_DESC",
     "job_type": "Part-time",
     "posted_date": "2026-05-28T00:00:00.000Z",
-    "id": 28
+    "id": 37
   },
   {
     "title": "Cashier Team Member (Front End Service)",
@@ -310,18 +410,7 @@
     "hourly_rate": "$18.00 - $25.40",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "2026-06-01T00:00:00.000Z",
-    "id": 29
-  },
-  {
-    "title": "Produce Production Team Member (Fruit and Vegetable Cutter)",
-    "company": "Whole Foods",
-    "location": "3600 Lake Tahoe Blvd",
-    "description": "Performs all functions related to processing (preparation) and merchandising in the produce department. All Whole Foods Market Retail jobs require ensuring a positive company image by providing courteous, friendly, and efficient service to customers and Team Members at all times. All positions must be performed in accordance with team and store Standard Operating Procedures. Further, Team Members must be prepared and able to perform the duties inherent in other Team Member job descriptions. All positions must strive to support WFM core values and goals, promote national, regional, and store programs and initiatives, and ensure adherence to all applicable health and safety regulations including Food Safety and regulatory duties required in the department.",
-    "apply_link": "https://careers.wholefoods.com/produce-production-team-member-fruit-and-vegetable-cutter-part-time/job/PAF-WFM-9572F38B-34BF-4921-9351-FCE6C2D70996_5308_1741849369_0",
-    "hourly_rate": "$18.00 - $25.40",
-    "job_type": "Part-time",
-    "posted_date": "2026-06-01T00:00:00.000Z",
-    "id": 30
+    "id": 38
   },
   {
     "title": "Bilingual Instructional Assistant",
@@ -332,18 +421,7 @@
     "hourly_rate": "$20.64 - $26.35",
     "job_type": "Part-time",
     "posted_date": "2026-05-27T00:00:00.000Z",
-    "id": 31
-  },
-  {
-    "title": "Multi-Purpose Clerk - Deli",
-    "company": "Save Mart",
-    "location": "1020 Al Tahoe Boulevard",
-    "description": "The Multi-Purpose Clerk may be assigned to one of several departments within the store – to include Center Store Market, Fresh Market Departments, or Guest Services Department.  The Multi-Purpose Clerk is responsible for promoting sales within assigned department, answering our guests’ questions, responding to guest requests for products, and accurately placing special orders. The Multi-Purpose Clerk practices safe food handling procedures, maintaining clean work area, orderly and free from safety hazards. The Clerk receives, inspects, and logs products for accuracy of shipment and quality as well as stocks, rotates, and merchandises product to maintain freshness and department appeal.",
-    "apply_link": "https://savemart.csod.com/ux/ats/careersite/25/home/requisition/41197?c=savemart&city=south%20lake%20tahoe&source=Indeed",
-    "hourly_rate": "$16.75 - $26.50",
-    "job_type": "Unknown",
-    "posted_date": "2026-05-15T00:00:00.000Z",
-    "id": 32
+    "id": 39
   },
   {
     "title": "Housekeeping Room Attendant",
@@ -354,7 +432,7 @@
     "hourly_rate": "$21",
     "job_type": "Full-time, Temporary/Seasonal",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 33
+    "id": 40
   },
   {
     "title": "Front Desk Agent",
@@ -365,7 +443,7 @@
     "hourly_rate": "$22",
     "job_type": "Full-time, Temporary/Seasonal",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 34
+    "id": 41
   },
   {
     "title": "Cage Cashier and Caesars Rewards Representative",
@@ -375,7 +453,7 @@
     "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs/preview/84678/?location=Stateline%2C+NV%2C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&sortBy=POSTING_DATES_DESC",
     "job_type": "Unknown",
     "posted_date": "2026-05-22T00:00:00.000Z",
-    "id": 35
+    "id": 42
   },
   {
     "title": "Overnight Grocery Team Member (Stocker, Inventory, Receiving)",
@@ -386,7 +464,7 @@
     "hourly_rate": "$18.00 - $25.40",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 36
+    "id": 43
   },
   {
     "title": "Specialty Team Member (Beer, Wine, Cheese & Chocolate)",
@@ -397,18 +475,7 @@
     "hourly_rate": "$18.00 - $25.40",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 37
-  },
-  {
-    "title": "Restaurant Line Cook",
-    "company": "South Lake Brewing Company",
-    "location": "South Lake Tahoe, CA",
-    "description": "South Lake Brewing Company is looking to hire a Line Cook to help operate our small kitchen and\r\nprepare food for customers at our brewpub, the Libation Lodge, located in the Tahoe Village Center.\r\nThe primary responsibility of this position is to prepare and cook food and meals for our customers at\r\nthe Libation Lodge under the direction of the head chef and/or Lead Line Cooks. Our kitchen is roughly\r\n300 square feet in size and the food menu consists of elevated pub fare. We serve large portion\r\nshareables/appetizers, hot sandwiches and burgers, a mixture of healthy and fried sides, and desserts.\r\nThe persons applying for this position must have at least 6 months of experience cooking professionally\r\nin a commercial kitchen as a line cook, restaurant cook, or prep cook. Formal culinary education is a plus\r\nbut not required. The ideal candidate is organized, reliable, and passionate about delivering exceptional\r\nfood experiences to our guests. Persons applying for this position must be able to speak, read, and write\r\nin the English language. If offered a position, applicants must show proof of current Food Handler’s\r\nCertificate in California or obtain one within 2 weeks of employment at SLBC.",
-    "application_instructions": "Line Cook Job Post, April 2026.pdf",
-    "hourly_rate": "$18 - $20",
-    "job_type": "Full-time",
-    "posted_date": "2026-05-13T00:00:00.000Z",
-    "id": 38
+    "id": 44
   },
   {
     "title": "Cashier / Sales Associate",
@@ -419,17 +486,7 @@
     "hourly_rate": "$17",
     "job_type": "Part-time",
     "posted_date": "2026-05-11T00:00:00.000Z",
-    "id": 39
-  },
-  {
-    "title": "Banquet - Set up",
-    "company": "Harrah's Lake Tahoe",
-    "location": "Stateline, NV",
-    "description": "Banquet Set-Up personnel are responsible for arranging meeting rooms in the Convention Center to accommodate scheduled convention groups. Included in this task is the set-up and dismantling of dance floors, tables, chairs, platforms and displays as specified by the Banquet Manager or the Sales prospectus.",
-    "apply_link": "https://edmn.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs/preview/84042/?location=Stateline%2C+NV%2C+United+States&locationId=300000002323814&locationLevel=city&mode=location&radius=25&radiusUnit=MI&sortBy=POSTING_DATES_DESC",
-    "job_type": "Full-time",
-    "posted_date": "2026-05-12T00:00:00.000Z",
-    "id": 40
+    "id": 45
   },
   {
     "title": "Barista",
@@ -440,18 +497,7 @@
     "hourly_rate": "$21.25 - $24.12",
     "job_type": "Unknown",
     "posted_date": "2026-05-04T00:00:00.000Z",
-    "id": 41
-  },
-  {
-    "title": "Barista",
-    "company": "Freel Perk Cafe",
-    "location": "South Lake Tahoe, CA",
-    "description": "We’re looking for someone friendly, reliable, and quick on their feet to join our café team.\r\n\r\nThis job is about more than making coffee. It’s about taking care of people. You’ll be greeting guests, ringing orders, making drinks, keeping things clean, and helping the shift run smoothly. We move fast, especially in busy seasons, so you need to stay focused and calm under pressure.\r\n\r\nIf you like being productive, enjoy talking to people, and take pride in doing things well, you’ll fit in here.",
-    "apply_link": "https://www.indeed.com/viewjob?cmp=Frescana-Mexican-Bistro-%2526-Freel-Perk-Cafe&t=Barista&jk=d7330d6d5ad7f5c7&xpse=SoAB67I3k8zGs0RWJp0LbzkdCdPP&xfps=5a347428-c307-4e50-99e3-5bf2446a75a5&xkcb=SoCr67M3k8yxw-SlyZ0JbzkdCdPP&vjs=3",
-    "hourly_rate": "$16.90",
-    "job_type": "Full-time, Part-time",
-    "posted_date": "2026-05-01T00:00:00.000Z",
-    "id": 42
+    "id": 46
   },
   {
     "title": "Guest Room Attendant / Housekeeper",
@@ -462,7 +508,7 @@
     "hourly_rate": "$17.50–$18.50",
     "job_type": "Full-time",
     "posted_date": "2026-05-31T00:00:00.000Z",
-    "id": 43
+    "id": 47
   },
   {
     "title": "QA Inspector",
@@ -473,7 +519,7 @@
     "hourly_rate": "$18.50–$19.00",
     "job_type": "Full-time",
     "posted_date": "2026-05-31T00:00:00.000Z",
-    "id": 44
+    "id": 48
   },
   {
     "title": "EVS Attendant / Janitor",
@@ -484,7 +530,7 @@
     "hourly_rate": "$16.50–$17.50",
     "job_type": "Full-time",
     "posted_date": "2026-05-31T00:00:00.000Z",
-    "id": 45
+    "id": 49
   },
   {
     "title": "Houseman and Driver",
@@ -495,7 +541,7 @@
     "hourly_rate": "$19.00–$19.50",
     "job_type": "Full-time",
     "posted_date": "2026-05-31T00:00:00.000Z",
-    "id": 46
+    "id": 50
   },
   {
     "title": "Seafood Team Memeber (Service Counter)",
@@ -506,7 +552,7 @@
     "hourly_rate": "$18.00 - $25.40",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 47
+    "id": 51
   },
   {
     "title": "Clerk",
@@ -517,7 +563,7 @@
     "hourly_rate": "$17.25 - $22.50",
     "job_type": "Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 48
+    "id": 52
   },
   {
     "title": "Cookie Crew",
@@ -527,8 +573,8 @@
     "apply_link": "https://jobs.lever.co/insomniacookies/9176727b-af98-4eb0-a1aa-980f826d9c92",
     "hourly_rate": "$20 + tips",
     "job_type": "Part-time",
-    "posted_date": "2026-04-20T00:00:00.000Z",
-    "id": 49
+    "posted_date": "1970-01-01T00:00:00.000Z",
+    "id": 53
   },
   {
     "title": "Vacation House Cleaner",
@@ -539,7 +585,7 @@
     "hourly_rate": "$25-$30",
     "job_type": "Full-time, Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 50
+    "id": 54
   },
   {
     "title": "Bartender",
@@ -550,7 +596,7 @@
     "hourly_rate": "$16.90 - $35.00",
     "job_type": "Full-time, Part-time, Temporary/Seasonal",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 51
+    "id": 55
   },
   {
     "title": "Sandwich Artist/Cashier/Supervisor",
@@ -561,7 +607,7 @@
     "hourly_rate": "$17.50 - $20.00",
     "job_type": "Full-time, Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 52
+    "id": 56
   },
   {
     "title": "Retail Attendant",
@@ -571,7 +617,7 @@
     "apply_link": "https://recruitingbypaycor.com/career/JobIntroduction.action?clientId=8a7883c689b7fbd50189c1277e00060b&id=8a78859f9cd55a16019d01f4e0840def&source=&lang=en",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 53
+    "id": 57
   },
   {
     "title": "Server",
@@ -581,7 +627,7 @@
     "apply_link": "https://recruitingbypaycor.com/career/JobIntroduction.action?clientId=8a7883c689b7fbd50189c1277e00060b&id=8a7885a89d02e553019d0863d1cd0eda&source=&lang=en",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 54
+    "id": 58
   },
   {
     "title": "Busser / Food Runner",
@@ -591,7 +637,7 @@
     "apply_link": "https://recruitingbypaycor.com/career/JobIntroduction.action?clientId=8a7883c689b7fbd50189c1277e00060b&id=8a7887ac9cbb3522019cc0003e314134&source=&lang=en",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 55
+    "id": 59
   },
   {
     "title": "Sales Associate",
@@ -602,7 +648,7 @@
     "hourly_rate": "$16 - $20",
     "job_type": "Part-time, Temporary/Seasonal",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 56
+    "id": 60
   },
   {
     "title": "Multiple Positions Available (Seasonal)",
@@ -613,7 +659,7 @@
     "hourly_rate": "Varies by role",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 57
+    "id": 61
   },
   {
     "title": "Maintenance Technician II - Recreation (Seasonal/Temporary)",
@@ -624,7 +670,7 @@
     "hourly_rate": "$23.66 - $26.12",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 58
+    "id": 62
   },
   {
     "title": "Shift Lead",
@@ -634,7 +680,7 @@
     "apply_link": "https://docs.google.com/forms/d/e/1FAIpQLSdfkNt_4gpkHNgHTQDoTV-qZeJm0UXCd1T4_e2xfRlMIRsR6g/viewform",
     "job_type": "Full-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 59
+    "id": 63
   },
   {
     "title": "Barista/Register/Back of House",
@@ -644,7 +690,7 @@
     "apply_link": "https://docs.google.com/forms/d/e/1FAIpQLSdfkNt_4gpkHNgHTQDoTV-qZeJm0UXCd1T4_e2xfRlMIRsR6g/viewform",
     "job_type": "Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 60
+    "id": 64
   },
   {
     "title": "Night Cleaner",
@@ -654,7 +700,7 @@
     "apply_link": "https://docs.google.com/forms/d/e/1FAIpQLSdfkNt_4gpkHNgHTQDoTV-qZeJm0UXCd1T4_e2xfRlMIRsR6g/viewform",
     "job_type": "Part-time",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 61
+    "id": 65
   },
   {
     "title": "Grocery Clerk- Freight",
@@ -664,7 +710,7 @@
     "apply_link": "https://www.paycomonline.net/v4/ats/web.php/portal/D0EAAF82D2F805FCF6412120F6BF9534/jobs/84699",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 62
+    "id": 66
   },
   {
     "title": "Produce Clerk",
@@ -674,7 +720,7 @@
     "apply_link": "https://www.paycomonline.net/v4/ats/web.php/portal/D0EAAF82D2F805FCF6412120F6BF9534/jobs/84690",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 63
+    "id": 67
   },
   {
     "title": "Meat Clerk",
@@ -684,7 +730,7 @@
     "apply_link": "https://www.paycomonline.net/v4/ats/web.php/portal/D0EAAF82D2F805FCF6412120F6BF9534/jobs/84680",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 64
+    "id": 68
   },
   {
     "title": "Grocery Clerk",
@@ -694,7 +740,7 @@
     "apply_link": "https://www.paycomonline.net/v4/ats/web.php/portal/D0EAAF82D2F805FCF6412120F6BF9534/jobs/84671",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 65
+    "id": 69
   },
   {
     "title": "Crew Member",
@@ -704,6 +750,6 @@
     "apply_link": "https://tmt.spotapps.co/job-listings?spot_id=135071&callback_url=http%3A%2F%2Fbluedogpizzatahoe.com%2F&_gl=1%2an7rwk9%2a_ga%2aOTI4NDUxMzQ2LjE3NjQ3MTQyNTc.%2a_ga_VG24VK2VKT%2aczE3NjQ3MTQyNTYkbzEkZzAkdDE3NjQ3MTQyNTgkajU4JGwwJGgw%2a_ga_FB6MG7Y9S1%2aczE3NjQ3MTQyNTckbzEkZzAkdDE3NjQ3MTQyNTgkajU5JGwwJGgw",
     "job_type": "Unknown",
     "posted_date": "1970-01-01T00:00:00.000Z",
-    "id": 66
+    "id": 70
   }
 ]

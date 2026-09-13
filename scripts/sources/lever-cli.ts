@@ -15,7 +15,7 @@ const COLUMNS: Array<{
   header: string;
   value: (posting: LeverPosting) => string;
 }> = [
-  { header: "POSTED", value: (posting) => posting.postedDate ?? "" },
+  { header: "POSTED", value: (posting) => posting.postedDate },
   { header: "TITLE", value: (posting) => posting.title },
   { header: "TYPE", value: (posting) => posting.commitment ?? "" },
   { header: "APPLY LINK", value: (posting) => posting.applyLink },

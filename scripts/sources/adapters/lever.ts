@@ -25,7 +25,7 @@ export interface LeverPosting {
   title: string;
   location: string;
   applyLink: string;
-  postedDate?: string;
+  postedDate: string;
   commitment?: string;
   description?: string;
 }
@@ -42,15 +42,6 @@ export class LeverResponseError extends Error {
     super(message);
     this.name = "LeverResponseError";
   }
-}
-
-interface RawPosting {
-  id: string;
-  text: string;
-  hostedUrl: string;
-  categories: { location: string; commitment?: unknown };
-  createdAt?: unknown;
-  descriptionPlain?: unknown;
 }
 
 export function buildUrl(config: LeverConfig): string {
@@ -82,11 +73,35 @@ function requireString(
   return value;
 }
 
+function requireNumber(
+  container: Record<string, unknown>,
+  field: string,
+  index: number,
+): number {
+  const value = container[field];
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    throw new LeverResponseError(
+      `Posting at index ${index} has no number "${field}"`,
+    );
+  }
+  return value;
+}
+
 function optionalString(value: unknown): string | undefined {
   return typeof value === "string" && value !== "" ? value : undefined;
 }
 
-function toRawPosting(entry: unknown, index: number): RawPosting {
+// Lever reports createdAt in epoch milliseconds. Local-time getters would shift
+// the date by a day for anyone west of UTC.
+function toPostedDate(createdAt: number): string {
+  const date = new Date(createdAt);
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function toPosting(entry: unknown, index: number): LeverPosting {
   if (!isObject(entry)) {
     throw new LeverResponseError(`Posting at index ${index} is not an object`);
   }
@@ -100,40 +115,13 @@ function toRawPosting(entry: unknown, index: number): RawPosting {
 
   return {
     id: requireString(entry, "id", index),
-    text: requireString(entry, "text", index),
-    hostedUrl: requireString(entry, "hostedUrl", index),
-    categories: {
-      location: requireString(categories, "location", index),
-      commitment: categories.commitment,
-    },
-    createdAt: entry.createdAt,
-    descriptionPlain: entry.descriptionPlain,
-  };
-}
-
-// Lever reports createdAt in epoch milliseconds. Local-time getters would shift
-// the date by a day for anyone west of UTC.
-function toPostedDate(createdAt: unknown): string | undefined {
-  if (typeof createdAt !== "number" || !Number.isFinite(createdAt)) {
-    return undefined;
-  }
-  const date = new Date(createdAt);
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-function toPosting(raw: RawPosting): LeverPosting {
-  return {
-    id: raw.id,
-    title: raw.text,
-    location: raw.categories.location,
+    title: requireString(entry, "text", index),
+    location: requireString(categories, "location", index),
     // hostedUrl is the public posting page. applyUrl is the application form.
-    applyLink: raw.hostedUrl,
-    postedDate: toPostedDate(raw.createdAt),
-    commitment: optionalString(raw.categories.commitment),
-    description: optionalString(raw.descriptionPlain),
+    applyLink: requireString(entry, "hostedUrl", index),
+    postedDate: toPostedDate(requireNumber(entry, "createdAt", index)),
+    commitment: optionalString(categories.commitment),
+    description: optionalString(entry.descriptionPlain),
   };
 }
 
@@ -153,13 +141,11 @@ export function parse(raw: string, config: LeverConfig): LeverParseResult {
     );
   }
 
-  const rawPostings = decoded.map(toRawPosting);
-
   // The server already filters on location. Re-asserting it locally catches a
   // filter that stops matching without failing.
-  const postings = rawPostings
-    .filter((posting) => posting.categories.location === config.location)
-    .map(toPosting);
+  const postings = decoded
+    .map(toPosting)
+    .filter((posting) => posting.location === config.location);
 
   return { postings, confirmedEmpty: decoded.length === 0 };
 }

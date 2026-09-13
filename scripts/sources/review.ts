@@ -1,4 +1,5 @@
 import { toSpreadsheetDate } from "./date";
+import { judgeFit } from "./fit";
 import {
   assess,
   observedFailure,
@@ -23,6 +24,7 @@ import {
   cellOf,
   decidedKeys,
   readReviewRows,
+  sortRowsByFit,
   toReviewRow,
   writeReviewCsv,
   type ReviewJob,
@@ -70,6 +72,8 @@ export function toReviewJob(
   source: ReviewSource,
   posting: SourcePosting,
 ): ReviewJob {
+  const fit = judgeFit(posting);
+
   return {
     // The spreadsheet column this value is copied into reads M/D/YYYY.
     datePosted: toSpreadsheetDate(posting.postedAt),
@@ -94,6 +98,8 @@ export function toReviewJob(
     // parameters change between runs and would make one posting look new every
     // time.
     postingKey: postingKey(source.accountId, posting.id),
+    fit: fit.verdict,
+    fitReason: fit.reason,
   };
 }
 
@@ -259,7 +265,13 @@ export function planReviewFile(input: ReviewPlanInput): ReviewPlan {
     });
   }
 
-  return { rows, state: pruneSourcesState(state, input.now), counts };
+  // Ordering is the last step, so a source that answered late in the run still
+  // reaches the top of the file when its postings are the ones to read first.
+  return {
+    rows: sortRowsByFit(rows),
+    state: pruneSourcesState(state, input.now),
+    counts,
+  };
 }
 
 export function formatReviewSummary(counts: readonly SourceRowCount[]): string {

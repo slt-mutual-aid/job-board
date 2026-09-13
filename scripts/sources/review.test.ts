@@ -14,6 +14,8 @@ import {
 import {
   BOARD_COLUMN_COUNT,
   DECISION_HEADER,
+  FIT_HEADER,
+  FIT_REASON_HEADER,
   POSTING_KEY_HEADER,
   REVIEW_COLUMN_HEADERS,
   REVIEW_CSV_PATH,
@@ -27,6 +29,8 @@ import {
   type ReviewReader,
   type ReviewSource,
 } from "./review";
+import { toSpreadsheetDate } from "./date";
+import { FIT_ORDER, type FitVerdict } from "./fit";
 import { postingKey } from "./state";
 import {
   SourceResponseError,
@@ -470,5 +474,91 @@ describe("a source whose listing does not carry a whole posting", () => {
     // The detail response publishes the description as markup, and a
     // spreadsheet cell is read by a person.
     expect(job.description).not.toContain("<p>");
+  });
+});
+describe("the order the review file puts its rows in", () => {
+  const RECORDED_ROW_COUNT =
+    leverPostings.length + icimsPostings.length + oraclePostings.length;
+
+  function rowFor(key: string): string[] {
+    const row = reviewRows().find(
+      (candidate) => candidate[columnOf(POSTING_KEY_HEADER)] === key,
+    );
+    if (row === undefined) {
+      throw new Error(`The review file carries no row for ${key}`);
+    }
+    return row;
+  }
+
+  it("puts every likely posting first and every unlikely posting last", async () => {
+    await runReview(readersFor(healthyPlan()), at(0), root);
+
+    const verdicts = cellsIn(FIT_HEADER);
+    // All three groups have to be on the file for the order to prove anything.
+    expect(new Set(verdicts)).toEqual(new Set(FIT_ORDER));
+
+    const ranks = verdicts.map((verdict) =>
+      FIT_ORDER.indexOf(verdict as FitVerdict),
+    );
+    expect(ranks).toEqual([...ranks].sort((left, right) => left - right));
+  });
+
+  it("carries every posting the sources returned, unlikely ones included", async () => {
+    await runReview(readersFor(healthyPlan()), at(0), root);
+
+    expect(reviewRows()).toHaveLength(RECORDED_ROW_COUNT);
+    expect(
+      cellsIn(FIT_HEADER).filter((verdict) => verdict === "unlikely").length,
+    ).toBeGreaterThan(0);
+  });
+
+  it("keeps one employer's rows together inside a group", async () => {
+    await runReview(readersFor(healthyPlan()), at(0), root);
+
+    const unknown = reviewRows().filter(
+      (row) => row[columnOf(FIT_HEADER)] === "unknown",
+    );
+    const employers = unknown.map((row) => row[columnOf(SOURCE_HEADER)]);
+    const runs = employers.filter(
+      (employer, index) => employer !== employers[index - 1],
+    );
+    expect(runs).toEqual([...new Set(employers)]);
+  });
+
+  it("leaves the nine board columns as the source published them", async () => {
+    await runReview(readersFor(healthyPlan()), at(0), root);
+
+    const posting = oraclePostings[0];
+    const row = rowFor(postingKey(oracleCaesarsSource.accountId, posting.id));
+
+    expect(row[columnOf(FIT_HEADER)]).not.toBe("");
+    expect(row.slice(0, BOARD_COLUMN_COUNT)).toEqual([
+      toSpreadsheetDate(posting.postedAt),
+      oracleCaesarsSource.companyName,
+      posting.title,
+      posting.applyLink,
+      "",
+      "",
+      posting.location,
+      "",
+      "",
+    ]);
+  });
+
+  it("says a posting is unknown where its source publishes no employment type", async () => {
+    const posting = oraclePostings.find(
+      (candidate) =>
+        candidate.commitment === undefined &&
+        candidate.description === undefined,
+    );
+    expect(posting).toBeDefined();
+
+    await runReview(readersFor(healthyPlan()), at(0), root);
+
+    const row = rowFor(
+      postingKey(oracleCaesarsSource.accountId, posting?.id ?? ""),
+    );
+    expect(row[columnOf(FIT_HEADER)]).toBe("unknown");
+    expect(row[columnOf(FIT_REASON_HEADER)]).toContain("no employment type");
   });
 });

@@ -14,6 +14,10 @@ const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const ABSOLUTE_HTTPS_URL = /^https:\/\/\S+$/;
 
 export interface AdapterContractFixtures {
+  // False for a source that publishes no posting date anywhere. The assertion
+  // then holds the parse to an empty date, so a date the source starts
+  // carrying is still a change the contract reports.
+  carriesPostedAt?: boolean;
   // A recorded listing carrying at least one posting at the configured location.
   listing: string;
   // A well-formed listing whose postings are all somewhere else.
@@ -29,12 +33,16 @@ export interface AdapterContractFixtures {
 interface ListingOnlyCase<Config> {
   adapter: ListingOnlyAdapter<Config>;
   config: Config;
+  // The employer's listing, not the adapter, because one adapter reads more
+  // than one employer and each of them owes the contract its own case.
+  sourceId: string;
   fixtures: AdapterContractFixtures;
 }
 
 interface ListingThenDetailCase<Config, Entry> {
   adapter: ListingThenDetailAdapter<Config, Entry>;
   config: Config;
+  sourceId: string;
   fixtures: AdapterContractFixtures;
   // A recorded detail response for the entry.
   detailFor(entry: Entry): string;
@@ -47,12 +55,12 @@ export function describeAdapterContract<Config, Entry>(
   testCase: ListingThenDetailCase<Config, Entry>,
 ): string;
 
-// Returns the adapter id so a caller can prove every registered adapter reached
+// Returns the source id so a caller can prove every registered source reached
 // this contract rather than only the ones somebody remembered to add.
 export function describeAdapterContract<Config, Entry>(
   testCase: ListingOnlyCase<Config> | ListingThenDetailCase<Config, Entry>,
 ): string {
-  const { adapter, config, fixtures } = testCase;
+  const { adapter, config, sourceId, fixtures } = testCase;
   const detailFor = "detailFor" in testCase ? testCase.detailFor : undefined;
 
   interface Reading {
@@ -73,7 +81,7 @@ export function describeAdapterContract<Config, Entry>(
 
     const { entries, confirmedEmpty } = adapter.parseListing(raw);
     if (detailFor === undefined) {
-      throw new Error(`The ${adapter.id} contract case carries no detailFor`);
+      throw new Error(`The ${sourceId} contract case carries no detailFor`);
     }
     const postings = adapter
       .selectLocal(entries, config)
@@ -81,7 +89,7 @@ export function describeAdapterContract<Config, Entry>(
     return { entryCount: entries.length, confirmedEmpty, postings };
   }
 
-  describe(`${adapter.id} adapter contract`, () => {
+  describe(`${sourceId} adapter contract`, () => {
     it("builds postings a consumer can read from the recorded listing", () => {
       const { postings } = read(fixtures.listing);
 
@@ -90,7 +98,11 @@ export function describeAdapterContract<Config, Entry>(
         expect(posting.title).not.toBe("");
         expect(posting.location).not.toBe("");
         expect(posting.applyLink).toMatch(ABSOLUTE_HTTPS_URL);
-        expect(posting.postedAt).toMatch(ISO_DATE);
+        if (fixtures.carriesPostedAt === false) {
+          expect(posting.postedAt).toBe("");
+        } else {
+          expect(posting.postedAt).toMatch(ISO_DATE);
+        }
       }
     });
 
@@ -134,5 +146,5 @@ export function describeAdapterContract<Config, Entry>(
     });
   });
 
-  return adapter.id;
+  return sourceId;
 }

@@ -62,13 +62,14 @@ describe("parse", () => {
     );
   });
 
-  it("omits fields the response does not carry", () => {
+  it("omits the optional fields the response does not carry", () => {
     const sparse = JSON.stringify([
       {
         id: "a",
         text: "Night Baker",
         hostedUrl: "https://jobs.lever.co/insomniacookies/a",
         categories: { location: config.location },
+        createdAt: Date.UTC(2026, 0, 2, 1, 0, 0),
       },
     ]);
 
@@ -77,10 +78,39 @@ describe("parse", () => {
       title: "Night Baker",
       location: config.location,
       applyLink: "https://jobs.lever.co/insomniacookies/a",
-      postedDate: undefined,
+      postedDate: "2026-01-02",
       commitment: undefined,
       description: undefined,
     });
+  });
+
+  it("throws when createdAt is missing", () => {
+    const undated = JSON.stringify([
+      {
+        id: "a",
+        text: "Night Baker",
+        hostedUrl: "https://jobs.lever.co/insomniacookies/a",
+        categories: { location: config.location },
+      },
+    ]);
+
+    expect(() => parse(undated, config)).toThrow(LeverResponseError);
+    expect(() => parse(undated, config)).toThrow(/no number "createdAt"/);
+  });
+
+  it("throws when createdAt is not a number", () => {
+    const stringDated = JSON.stringify([
+      {
+        id: "a",
+        text: "Night Baker",
+        hostedUrl: "https://jobs.lever.co/insomniacookies/a",
+        categories: { location: config.location },
+        createdAt: "2026-01-02",
+      },
+    ]);
+
+    expect(() => parse(stringDated, config)).toThrow(LeverResponseError);
+    expect(() => parse(stringDated, config)).toThrow(/no number "createdAt"/);
   });
 
   it("confirms emptiness for a well-formed empty array", () => {

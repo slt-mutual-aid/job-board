@@ -10,6 +10,7 @@ yarn build        # Production build
 yarn preview      # Preview production build
 yarn test         # Run tests (Vitest)
 yarn test:ui      # Tests with interactive UI
+yarn typecheck    # Type-check the project (runs in CI)
 
 # Updating job data
 yarn fetch-csv    # Download latest CSV from Google Sheets → slt-jobs.csv

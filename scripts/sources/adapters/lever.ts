@@ -1,10 +1,10 @@
 // Re-record the fixtures in scripts/sources/__fixtures__/lever-insomnia with:
 //
-//   curl -sS -A 'SLT-MutualAid-JobBoard/1.0 (+https://github.com/slt-mutual-aid/job-board)' \
+//   curl -sS -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
 //     'https://api.lever.co/v0/postings/insomniacookies?mode=json&location=South%20Lake%20Tahoe%20CA' \
 //     -o scripts/sources/__fixtures__/lever-insomnia/listing.json
 //
-//   curl -sS -A 'SLT-MutualAid-JobBoard/1.0 (+https://github.com/slt-mutual-aid/job-board)' \
+//   curl -sS -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
 //     'https://api.lever.co/v0/postings/insomniacookies?mode=json&location=South%20Lake%20Tahoe' \
 //     -o scripts/sources/__fixtures__/lever-insomnia/empty.json
 //

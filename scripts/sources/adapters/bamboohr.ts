@@ -1,10 +1,10 @@
 // Re-record the fixtures in scripts/sources/__fixtures__/bamboohr-vra with:
 //
-//   curl -sS -A 'SLT-MutualAid-JobBoard/1.0 (+https://github.com/slt-mutual-aid/job-board)' \
+//   curl -sS -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
 //     'https://vra.bamboohr.com/careers/list' \
 //     -o scripts/sources/__fixtures__/bamboohr-vra/listing.json
 //
-//   curl -sS -A 'SLT-MutualAid-JobBoard/1.0 (+https://github.com/slt-mutual-aid/job-board)' \
+//   curl -sS -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
 //     'https://vra.bamboohr.com/careers/32/detail' \
 //     -o scripts/sources/__fixtures__/bamboohr-vra/detail-32.json
 //

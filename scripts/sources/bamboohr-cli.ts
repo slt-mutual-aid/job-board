@@ -1,35 +1,30 @@
-import {
-  fetchListingRaw,
-  fetchDetailRaw,
-  parseListing,
-  parseDetail,
-  selectLocal,
-  listingUrl,
-  type BambooHrConfig,
-  type BambooHrPosting,
-} from "./adapters/bamboohr";
+import { toSpreadsheetDate } from "./date";
+import { bambooHrSource } from "./registry";
+import type { SourcePosting } from "./types";
 
-const config: BambooHrConfig = {
-  subdomain: "vra",
-  city: "South Lake Tahoe",
-};
+const { adapter, config } = bambooHrSource;
+
+function describeLiveness(posting: SourcePosting): string {
+  const { liveness } = posting;
+  if (liveness === undefined) {
+    return "unknown";
+  }
+  return liveness.isOpen ? liveness.status : `${liveness.status} (closed)`;
+}
 
 const COLUMNS: Array<{
   header: string;
-  value: (posting: BambooHrPosting) => string;
+  value: (posting: SourcePosting) => string;
 }> = [
-  { header: "POSTED", value: (posting) => posting.postedDate },
+  // The spreadsheet column this output is copied into reads M/D/YYYY.
+  { header: "POSTED", value: (posting) => toSpreadsheetDate(posting.postedAt) },
   { header: "TITLE", value: (posting) => posting.title },
-  { header: "TYPE", value: (posting) => posting.commitment },
-  {
-    header: "STATUS",
-    value: (posting) =>
-      posting.isOpen ? posting.status : `${posting.status} (closed)`,
-  },
+  { header: "TYPE", value: (posting) => posting.commitment ?? "" },
+  { header: "STATUS", value: describeLiveness },
   { header: "APPLY LINK", value: (posting) => posting.applyLink },
 ];
 
-function printTable(postings: BambooHrPosting[]): void {
+function printTable(postings: SourcePosting[]): void {
   const rows = [
     COLUMNS.map((column) => column.header),
     ...postings.map((posting) =>
@@ -50,11 +45,11 @@ function printTable(postings: BambooHrPosting[]): void {
 }
 
 async function main(): Promise<void> {
-  console.log(`Fetching ${listingUrl(config)}`);
-  const { entries, confirmedEmpty } = parseListing(
-    await fetchListingRaw(config),
+  console.log(`Fetching ${adapter.listingUrl(config)}`);
+  const { entries, confirmedEmpty } = adapter.parseListing(
+    await adapter.fetchListingRaw(config),
   );
-  const local = selectLocal(entries, config);
+  const local = adapter.selectLocal(entries, config);
 
   if (local.length === 0) {
     console.log(
@@ -66,9 +61,11 @@ async function main(): Promise<void> {
   }
 
   console.log(`Fetching ${local.length} detail page(s)...`);
-  const postings: BambooHrPosting[] = [];
+  const postings: SourcePosting[] = [];
   for (const entry of local) {
-    postings.push(parseDetail(await fetchDetailRaw(config, entry.id), entry));
+    postings.push(
+      adapter.parseDetail(await adapter.fetchDetailRaw(config, entry), entry),
+    );
   }
 
   printTable(postings);

@@ -9,6 +9,7 @@
     "astro": "astro",
     "test": "vitest",
     "test:ui": "vitest --ui",
+    "typecheck": "astro sync && tsc --noEmit",
     "import-csv": "tsx scripts/import-csv.ts",
     "fetch-csv": "curl -sL 'https://docs.google.com/spreadsheets/d/16sDYemc_Sn6gRM-cRiT1sEL1U-GJdhqcqmy_k5Z1M3Y/export?format=csv&gid=0' | tail -n +4 > slt-jobs.csv"
   },
@@ -33,6 +34,7 @@
     "jsdom": "^27.2.0",
     "prettier": "^3.7.1",
     "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
     "vitest": "^4.0.14"
   }
 }

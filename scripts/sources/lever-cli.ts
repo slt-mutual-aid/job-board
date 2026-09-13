@@ -3,9 +3,24 @@ import { toSpreadsheetDate } from "./date";
 import { leverSource } from "./registry";
 import { htmlToPlainText } from "./text";
 import { writeReviewCsv, type ReviewJob } from "./review-csv";
-import type { SourcePosting } from "./types";
+import {
+  loadSourcesState,
+  markReported,
+  postingKey,
+  pruneSourcesState,
+  recordFailedRun,
+  recordRun,
+  saveSourcesState,
+  type SeenPosting,
+} from "./state";
+import type { ListingResult, SourcePosting } from "./types";
 
 const { adapter, config } = leverSource;
+
+// The Lever account this command follows, and the namespace of every posting
+// key it records.
+export const SOURCE_ID = `lever:${config.company}`;
+
 // The Lever slug identifies an account. The board's Company column carries the
 // name a job seeker recognizes, which no Lever field supplies.
 const COMPANY_NAME = "Insomnia Cookies";
@@ -39,7 +54,17 @@ export function toReviewJob(posting: SourcePosting): ReviewJob {
       posting.description === undefined
         ? undefined
         : htmlToPlainText(posting.description),
-    sourceId: `lever:${config.company}:${posting.id}`,
+    sourceId: postingKey(SOURCE_ID, posting.id),
+  };
+}
+
+// Lever's posting id, not the apply link, which carries tracking parameters
+// that change between runs.
+function toSeenPosting(posting: SourcePosting): SeenPosting {
+  return {
+    key: postingKey(SOURCE_ID, posting.id),
+    title: posting.title,
+    url: posting.applyLink,
   };
 }
 
@@ -67,15 +92,28 @@ async function main(): Promise<void> {
   const writeReview = process.argv.slice(2).includes(WRITE_REVIEW_FLAG);
 
   console.log(`Fetching ${adapter.listingUrl(config)}`);
-  const raw = await adapter.fetchListingRaw(config);
 
-  console.log("Parsing response...");
-  const { entries, confirmedEmpty } = adapter.parseListing(raw);
-  const postings = adapter.selectLocal(entries, config);
+  let listing: ListingResult<SourcePosting>;
+  try {
+    const raw = await adapter.fetchListingRaw(config);
+    console.log("Parsing response...");
+    listing = adapter.parseListing(raw);
+  } catch (error) {
+    // Dating the attempt separates a source with nothing new from one that has
+    // stopped answering.
+    if (writeReview) {
+      saveSourcesState(
+        recordFailedRun(loadSourcesState(), SOURCE_ID, new Date()),
+      );
+    }
+    throw error;
+  }
+
+  const postings = adapter.selectLocal(listing.entries, config);
 
   if (postings.length === 0) {
     console.log(
-      confirmedEmpty
+      listing.confirmedEmpty
         ? `No postings at ${config.location}`
         : `No postings at ${config.location} after the local location filter`,
     );
@@ -85,9 +123,26 @@ async function main(): Promise<void> {
   }
 
   if (writeReview) {
-    // A run with no postings still rewrites the file, so a posting Lever has
-    // withdrawn stops facing the reviewer as if it were open.
-    console.log(`Wrote ${writeReviewCsv(postings.map(toReviewJob))}`);
+    const now = new Date();
+    const { state, unreported } = recordRun(
+      loadSourcesState(),
+      SOURCE_ID,
+      postings.map(toSeenPosting),
+      now,
+    );
+    const owed = new Set(unreported.map((posting) => posting.key));
+
+    // Only a first sighting reaches the reviewer. Putting a posting they
+    // already declined back in front of them is what empties a review queue of
+    // meaning, and the file is rewritten from this run alone so a posting Lever
+    // has withdrawn stops facing them as if it were open.
+    const fresh = postings.filter((posting) =>
+      owed.has(postingKey(SOURCE_ID, posting.id)),
+    );
+    console.log(`Wrote ${writeReviewCsv(fresh.map(toReviewJob))}`);
+    console.log(`${fresh.length} new posting(s) of ${postings.length}`);
+
+    saveSourcesState(pruneSourcesState(markReported(state, [...owed]), now));
   }
 }
 

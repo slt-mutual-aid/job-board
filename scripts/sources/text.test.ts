@@ -62,6 +62,57 @@ describe("htmlToPlainText", () => {
     );
   });
 
+  it("removes an interleaved script element together with its contents", () => {
+    expect(htmlToPlainText("<sc<script></script>ript>alert(1)</script>")).toBe(
+      "",
+    );
+  });
+
+  it("removes an interleaved style element together with its contents", () => {
+    expect(
+      htmlToPlainText("<st<style></style>yle>.a { color: red; }</style>"),
+    ).toBe("");
+  });
+
+  it("removes a tag that an earlier removal splices into being", () => {
+    expect(
+      htmlToPlainText(
+        "<p>Apply</p><scr<script>var a = 1;</script>ipt>alert(1)</script>",
+      ),
+    ).toBe("Apply");
+  });
+
+  it("removes interleaving nested more than one level deep", () => {
+    expect(
+      htmlToPlainText(
+        "<sc<sc<script></script>ript></script>ript>alert(1)</script>",
+      ),
+    ).toBe("");
+  });
+
+  it("leaves no markup behind for an interleaved tag that is never closed", () => {
+    const result = htmlToPlainText("<sc<script></script>ript>alert(1)");
+    expect(result).toBe("alert(1)");
+    expect(result).not.toMatch(/[<>]/);
+  });
+
+  it("leaves no markup behind when nesting outruns the sweep cap", () => {
+    let html = "<script>alert(1)</script>";
+    for (let level = 0; level < 40; level += 1) {
+      html = `<sc${html}ript></script>`;
+    }
+
+    const result = htmlToPlainText(html);
+    expect(result).not.toContain("<");
+    expect(result).not.toContain("alert");
+  });
+
+  it("decodes an entity only after every tag is gone, so the text stays text", () => {
+    expect(htmlToPlainText("&lt;script&gt;alert(1)&lt;/script&gt;")).toBe(
+      "<script>alert(1)</script>",
+    );
+  });
+
   it("drops an entity that appears only inside an attribute", () => {
     expect(
       htmlToPlainText(

@@ -9,12 +9,13 @@ import {
   REVIEW_CSV_PATH,
   WriteOutsideAllowlistError,
   formatReviewCsv,
+  toReviewRow,
   writeAllowedFile,
   writeReviewCsv,
   type ReviewJob,
 } from "./review-csv";
 import { leverSource } from "./registry";
-import { toReviewJob } from "./lever-cli";
+import { toReviewJob } from "./review";
 
 // The nine columns of slt-jobs.csv, which carries no header row and is read by
 // position. A reordering here is a silent field remap in the spreadsheet.
@@ -62,8 +63,13 @@ const job: ReviewJob = {
   typeOfWork: "Part-time",
   location: "South Lake Tahoe CA",
   description: "Bake cookies.",
-  sourceId: "lever:insomniacookies:abc",
+  sourceId: "lever",
+  postingKey: "lever:insomniacookies:abc",
 };
+
+function csvOf(jobs: readonly ReviewJob[]): string {
+  return formatReviewCsv(jobs.map(toReviewRow));
+}
 
 let root: string;
 
@@ -85,20 +91,36 @@ describe("the review file layout", () => {
   it("puts the review-only columns after the nine board columns", () => {
     expect(REVIEW_COLUMN_HEADERS.slice(BOARD_COLUMN_COUNT)).toEqual([
       "Decision",
-      "Source ID",
+      "Source",
+      "Posting Key",
       "Notes",
     ]);
   });
 
   it("leaves the decision and notes columns empty for the reviewer", () => {
-    const [, row] = parseCsv(formatReviewCsv([job])) as string[][];
-    expect(row[9]).toBe("");
-    expect(row[11]).toBe("");
+    const [, row] = parseCsv(csvOf([job])) as string[][];
+    expect(row[REVIEW_COLUMN_HEADERS.indexOf("Decision")]).toBe("");
+    expect(row[REVIEW_COLUMN_HEADERS.indexOf("Notes")]).toBe("");
+  });
+
+  it("names the listing each row came from", () => {
+    const [, row] = parseCsv(csvOf([job])) as string[][];
+    expect(row[REVIEW_COLUMN_HEADERS.indexOf("Source")]).toBe("lever");
+    expect(row[REVIEW_COLUMN_HEADERS.indexOf("Company")]).toBe(
+      "Insomnia Cookies",
+    );
   });
 
   it("leaves a field the source does not publish empty", () => {
     const [, row] = parseCsv(
-      formatReviewCsv([{ company: "A Bakery", title: "Baker", sourceId: "x" }]),
+      csvOf([
+        {
+          company: "A Bakery",
+          title: "Baker",
+          sourceId: "x",
+          postingKey: "x:1",
+        },
+      ]),
     ) as string[][];
     expect(row.slice(0, BOARD_COLUMN_COUNT)).toEqual([
       "",
@@ -116,47 +138,39 @@ describe("the review file layout", () => {
 
 describe("the review file format", () => {
   it("ends every record with CRLF, as slt-jobs.csv does", () => {
-    const text = formatReviewCsv([job]);
+    const text = csvOf([job]);
     expect(text.split("\r\n")).toHaveLength(2);
     expect(text.replace(/\r\n/g, "")).not.toContain("\n");
   });
 
   it("stops without a trailing newline, as slt-jobs.csv does", () => {
-    expect(formatReviewCsv([job]).endsWith("\n")).toBe(false);
+    expect(csvOf([job]).endsWith("\n")).toBe(false);
   });
 
   it("round-trips a description holding a comma, a quote, and a newline", () => {
     const description = 'Bake "fresh" cookies, nightly.\nDeliver them.';
-    const rows = readAsSpreadsheetWould(
-      formatReviewCsv([{ ...job, description }]),
-    );
+    const rows = readAsSpreadsheetWould(csvOf([{ ...job, description }]));
     expect(rows).toHaveLength(2);
     expect(rows[1][7]).toBe(description);
   });
 
   it("round-trips a description whose only special character is a newline", () => {
     const description = "Bake cookies.\nDeliver them.";
-    const rows = readAsSpreadsheetWould(
-      formatReviewCsv([{ ...job, description }]),
-    );
+    const rows = readAsSpreadsheetWould(csvOf([{ ...job, description }]));
     expect(rows).toHaveLength(2);
     expect(rows[1][7]).toBe(description);
   });
 
   it("round-trips a description whose only special character is a carriage return", () => {
     const description = "Bake cookies.\rDeliver them.";
-    const rows = readAsSpreadsheetWould(
-      formatReviewCsv([{ ...job, description }]),
-    );
+    const rows = readAsSpreadsheetWould(csvOf([{ ...job, description }]));
     expect(rows).toHaveLength(2);
     expect(rows[1][7]).toBe(description);
   });
 
   it("round-trips a description holding a carriage return", () => {
     const description = "Bake cookies.\r\nDeliver them.";
-    const rows = readAsSpreadsheetWould(
-      formatReviewCsv([{ ...job, description }]),
-    );
+    const rows = readAsSpreadsheetWould(csvOf([{ ...job, description }]));
     expect(rows).toHaveLength(2);
     expect(rows[1][7]).toBe(description);
   });
@@ -169,7 +183,10 @@ describe("the write allowlist", () => {
     const postings = adapter.selectLocal(entries, config);
     expect(postings.length).toBeGreaterThan(0);
 
-    writeReviewCsv(postings.map(toReviewJob), root);
+    writeReviewCsv(
+      postings.map((posting) => toReviewRow(toReviewJob(leverSource, posting))),
+      root,
+    );
 
     expect(listFiles(root)).toEqual(["review/new-jobs.csv"]);
   });
@@ -215,7 +232,7 @@ describe("the write allowlist", () => {
   });
 
   it("rewrites the review file in place on a second run", () => {
-    writeReviewCsv([job], root);
+    writeReviewCsv([toReviewRow(job)], root);
     writeReviewCsv([], root);
 
     const text = readFileSync(join(root, REVIEW_CSV_PATH), "utf-8");

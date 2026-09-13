@@ -66,13 +66,21 @@ export interface ReviewJob {
   location?: string;
   description?: string;
   closesBy?: string;
+  // The registry source id, which names one employer's listing.
   sourceId: string;
+  // The key the state file records the reviewer's decision against.
+  postingKey: string;
 }
 
-// The column the reviewer types into, and the column that ties a row back to
-// the posting key the state file records.
+// The column the reviewer types into.
 export const DECISION_HEADER = "Decision";
-export const SOURCE_ID_HEADER = "Source ID";
+
+// Names the listing a row was read from, which is what tells one employer's
+// rows from another's when the file carries every source at once.
+export const SOURCE_HEADER = "Source";
+
+// Ties a row back to the posting key the state file records.
+export const POSTING_KEY_HEADER = "Posting Key";
 
 // The first nine entries are the columns of slt-jobs.csv in the order the
 // importer reads them by position. Approving a row is then a matter of dropping
@@ -91,7 +99,8 @@ const COLUMNS: ReadonlyArray<{
   { header: "Description", value: (job) => job.description ?? "" },
   { header: "Job Closes by", value: (job) => job.closesBy ?? "" },
   { header: DECISION_HEADER, value: () => "" },
-  { header: SOURCE_ID_HEADER, value: (job) => job.sourceId },
+  { header: SOURCE_HEADER, value: (job) => job.sourceId },
+  { header: POSTING_KEY_HEADER, value: (job) => job.postingKey },
   { header: "Notes", value: () => "" },
 ];
 
@@ -101,13 +110,26 @@ export const REVIEW_COLUMN_HEADERS: readonly string[] = COLUMNS.map(
   (column) => column.header,
 );
 
-export function formatReviewCsv(jobs: readonly ReviewJob[]): string {
-  const rows = [
+// One row of the review file, keyed by header. A row a run carries over from
+// the previous file arrives in this shape rather than as a ReviewJob, because
+// the source it came from is the source this run could not read.
+export type ReviewRow = Record<string, string>;
+
+export function toReviewRow(job: ReviewJob): ReviewRow {
+  const row: ReviewRow = {};
+  for (const column of COLUMNS) {
+    row[column.header] = column.value(job);
+  }
+  return row;
+}
+
+export function formatReviewCsv(rows: readonly ReviewRow[]): string {
+  const records = [
     COLUMNS.map((column) => column.header),
-    ...jobs.map((job) => COLUMNS.map((column) => column.value(job))),
+    ...rows.map((row) => COLUMNS.map((column) => row[column.header] ?? "")),
   ];
 
-  const text = stringify(rows, {
+  const text = stringify(records, {
     record_delimiter: "\r\n",
     // csv-stringify quotes a value holding the whole record delimiter and
     // leaves a lone LF or CR bare. A job description carries lone newlines, and
@@ -123,18 +145,17 @@ export function formatReviewCsv(jobs: readonly ReviewJob[]): string {
 // Every run rewrites the same file. A dated filename would accumulate forever
 // in a repository that deploys from main, and git history already dates a run.
 export function writeReviewCsv(
-  jobs: readonly ReviewJob[],
+  rows: readonly ReviewRow[],
   root?: string,
 ): string {
-  return writeAllowedFile(REVIEW_CSV_PATH, formatReviewCsv(jobs), root);
+  return writeAllowedFile(REVIEW_CSV_PATH, formatReviewCsv(rows), root);
 }
 
-// The review file is rewritten on every run, so the decisions it carries are
-// read out of it first and kept in the state file. A row the reviewer left
-// blank is a posting still awaiting a decision, and it stays in the queue.
-// A file that cannot be parsed throws, which stops the run before the rewrite
-// that would discard the decisions inside it.
-export function readReviewDecisions(root: string = REPOSITORY_ROOT): string[] {
+// The review file is rewritten on every run, so what it already carries is
+// read back before the rewrite: the decisions a reviewer typed, and the rows of
+// a source this run could not read. A file that cannot be parsed throws, which
+// stops the run before the rewrite that would discard both.
+export function readReviewRows(root: string = REPOSITORY_ROOT): ReviewRow[] {
   let raw: string;
   try {
     raw = readFileSync(resolve(root, REVIEW_CSV_PATH), "utf-8");
@@ -142,16 +163,24 @@ export function readReviewDecisions(root: string = REPOSITORY_ROOT): string[] {
     return [];
   }
 
-  const rows = parse(raw, {
+  return parse(raw, {
     columns: true,
     // A spreadsheet saving the file back ends its rows with whichever newline
     // the program on the reviewer's machine prefers.
     record_delimiter: ["\r\n", "\n", "\r"],
     skip_empty_lines: true,
-  }) as Array<Record<string, string>>;
+  }) as ReviewRow[];
+}
 
+export function cellOf(row: ReviewRow, header: string): string {
+  return (row[header] ?? "").trim();
+}
+
+// A row the reviewer left blank is a posting still awaiting a decision, and it
+// stays in the queue.
+export function decidedKeys(rows: readonly ReviewRow[]): string[] {
   return rows
-    .filter((row) => (row[DECISION_HEADER] ?? "").trim() !== "")
-    .map((row) => (row[SOURCE_ID_HEADER] ?? "").trim())
-    .filter((sourceId) => sourceId !== "");
+    .filter((row) => cellOf(row, DECISION_HEADER) !== "")
+    .map((row) => cellOf(row, POSTING_KEY_HEADER))
+    .filter((key) => key !== "");
 }

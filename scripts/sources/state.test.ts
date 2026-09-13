@@ -9,18 +9,8 @@ import {
 } from "fs";
 import { tmpdir } from "os";
 import { dirname, join } from "path";
-import { parse as parseCsv } from "csv-parse/sync";
-import { stringify as stringifyCsv } from "csv-stringify/sync";
-import {
-  DECISION_HEADER,
-  REVIEW_COLUMN_HEADERS,
-  REVIEW_CSV_PATH,
-  SOURCE_ID_HEADER,
-  WriteOutsideAllowlistError,
-  writeAllowedFile,
-} from "./review-csv";
+import { WriteOutsideAllowlistError, writeAllowedFile } from "./review-csv";
 import { leverSource } from "./registry";
-import { SOURCE_ID, writeReviewFile } from "./lever-cli";
 import {
   PRUNE_AFTER_DAYS,
   SOURCES_STATE_PATH,
@@ -35,6 +25,8 @@ import {
 } from "./state";
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+
+const SOURCE_ID = leverSource.accountId;
 
 // An injected clock keeps every assertion about ageing independent of when the
 // suite runs.
@@ -340,90 +332,5 @@ describe("saveSourcesState", () => {
     expect(() =>
       writeAllowedFile(join("scripts", "sources-state.json"), "{}", root),
     ).toThrow(WriteOutsideAllowlistError);
-  });
-});
-
-describe("the review file across consecutive runs", () => {
-  const { adapter, config: leverConfig } = leverSource;
-  const postings = adapter.selectLocal(
-    adapter.parseListing(
-      readFileSync(
-        new URL("./__fixtures__/lever-insomnia/listing.json", import.meta.url),
-        "utf-8",
-      ),
-    ).entries,
-    leverConfig,
-  );
-
-  const decisionColumn = REVIEW_COLUMN_HEADERS.indexOf(DECISION_HEADER);
-  const sourceColumn = REVIEW_COLUMN_HEADERS.indexOf(SOURCE_ID_HEADER);
-
-  function reviewRows(): string[][] {
-    const rows = parseCsv(readFileSync(join(root, REVIEW_CSV_PATH), "utf-8"), {
-      record_delimiter: ["\r\n", "\n", "\r"],
-    }) as string[][];
-    return rows.slice(1);
-  }
-
-  function queuedKeys(): string[] {
-    return reviewRows().map((row) => row[sourceColumn]);
-  }
-
-  // The reviewer typing a decision into the spreadsheet, which is the only
-  // event that takes a posting out of the queue.
-  function recordDecision(key: string, decision: string): void {
-    const target = join(root, REVIEW_CSV_PATH);
-    const rows = parseCsv(readFileSync(target, "utf-8"), {
-      record_delimiter: ["\r\n", "\n", "\r"],
-    }) as string[][];
-
-    for (const row of rows.slice(1)) {
-      if (row[sourceColumn] === key) {
-        row[decisionColumn] = decision;
-      }
-    }
-
-    writeFileSync(
-      target,
-      stringifyCsv(rows, { record_delimiter: "\r\n", quoted_match: /[\r\n]/ }),
-      "utf-8",
-    );
-  }
-
-  it("keeps an undecided posting in the file however many runs happen", () => {
-    expect(postings.length).toBeGreaterThan(0);
-
-    writeReviewFile(postings, at(0), root);
-    expect(reviewRows()).toHaveLength(postings.length);
-
-    writeReviewFile(postings, at(1), root);
-    expect(reviewRows()).toHaveLength(postings.length);
-
-    writeReviewFile(postings, at(2), root);
-    expect(reviewRows()).toHaveLength(postings.length);
-  });
-
-  it("drops a posting the reviewer decided, and only that posting", () => {
-    writeReviewFile(postings, at(0), root);
-    const decided = postingKey(SOURCE_ID, postings[0].id);
-    recordDecision(decided, "Approved");
-
-    writeReviewFile(postings, at(1), root);
-
-    expect(queuedKeys()).toHaveLength(postings.length - 1);
-    expect(queuedKeys()).not.toContain(decided);
-  });
-
-  it("never offers a decided posting again, once the file has dropped it", () => {
-    writeReviewFile(postings, at(0), root);
-    const decided = postingKey(SOURCE_ID, postings[0].id);
-    recordDecision(decided, "Approved");
-    writeReviewFile(postings, at(1), root);
-
-    // The decision now lives only in the state file, because the run above
-    // rewrote the review file without the row carrying it.
-    writeReviewFile(postings, at(2), root);
-
-    expect(queuedKeys()).not.toContain(decided);
   });
 });

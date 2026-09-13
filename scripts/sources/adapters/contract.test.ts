@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import { describe, it, expect } from "vitest";
 import { describeAdapterContract } from "../adapter-contract";
+import { toPagedListing } from "./ukg";
 import {
   bambooHrSource,
   icimsDavidsonSource,
@@ -9,6 +10,7 @@ import {
   oracleCaesarsSource,
   oracleRaleysSource,
   sources,
+  ukgSource,
 } from "../registry";
 
 function fixture(path: string): string {
@@ -24,6 +26,12 @@ const icimsOvgListing = fixture("icims-ovg/listing.html.txt");
 const icimsDavidsonListing = fixture("icims-davidson/listing.html.txt");
 const oracleCaesarsListing = fixture("oracle-caesars/listing.json");
 const oracleRaleysListing = fixture("oracle-raleys/listing.json");
+// Three of the nine pages one run reads. Every Stateline posting sits in them,
+// and a page between two others is what a paging bug loses.
+const ukgPages = [0, 1, 2].map((index) =>
+  fixture(`ukg-ballys/page-${index}.json`),
+);
+const ukgListing = toPagedListing(ukgSource.config, ukgPages);
 
 function leverAtFarLocation(): string {
   const decoded = JSON.parse(leverListing) as Array<{
@@ -91,6 +99,31 @@ function oracleUnderRenamedContainer(listing: string): string {
   search.jobList = search.requisitionList;
   delete search.requisitionList;
   return JSON.stringify(decoded);
+}
+
+function ukgAtFarLocation(): string {
+  const pages = ukgPages.map((page) => {
+    const decoded = JSON.parse(page) as {
+      opportunities: Array<{ Locations: Array<{ Address: { City: string } }> }>;
+    };
+    for (const opportunity of decoded.opportunities) {
+      for (const location of opportunity.Locations) {
+        location.Address.City = "Reno";
+      }
+    }
+    return JSON.stringify(decoded);
+  });
+  return toPagedListing(ukgSource.config, pages);
+}
+
+function ukgUnderRenamedContainer(): string {
+  const decoded = JSON.parse(ukgPages[0]) as Record<string, unknown>;
+  decoded.jobs = decoded.opportunities;
+  delete decoded.opportunities;
+  return toPagedListing(ukgSource.config, [
+    JSON.stringify(decoded),
+    ...ukgPages.slice(1),
+  ]);
 }
 
 const contracted = [
@@ -166,6 +199,18 @@ const contracted = [
       empty: fixture("oracle-raleys/empty.json"),
       truncated: oracleRaleysListing.slice(0, 5000),
       renamedContainer: oracleUnderRenamedContainer(oracleRaleysListing),
+    },
+  }),
+  describeAdapterContract({
+    ...ukgSource,
+    fixtures: {
+      listing: ukgListing,
+      farLocation: ukgAtFarLocation(),
+      empty: toPagedListing(ukgSource.config, [
+        fixture("ukg-ballys/empty.json"),
+      ]),
+      truncated: ukgListing.slice(0, 5000),
+      renamedContainer: ukgUnderRenamedContainer(),
     },
   }),
 ];

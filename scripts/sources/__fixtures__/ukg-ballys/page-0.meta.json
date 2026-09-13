@@ -1,0 +1,7 @@
+{
+  "url": "https://recruiting.ultipro.com/TWI1006TRWH/JobBoard/b9cc79c4-75a2-4800-8508-16504f7a2d90/JobBoardView/LoadSearchResults",
+  "method": "POST",
+  "body": "{\"opportunitySearch\":{\"Top\":50,\"Skip\":0,\"QueryString\":\"\",\"OrderBy\":[{\"Value\":\"postedDateDesc\",\"PropertyName\":\"PostedDate\",\"Ascending\":false}],\"Filters\":[]}}",
+  "fetchedAt": "2026-09-13T17:22:47Z",
+  "status": 200
+}

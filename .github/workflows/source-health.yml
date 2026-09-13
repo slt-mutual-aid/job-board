@@ -1,0 +1,59 @@
+name: Source health
+
+on:
+  schedule:
+    # Weekday mornings, so a break is on record before a volunteer spends the
+    # day reading the board as complete.
+    - cron: "0 15 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Every run commits the recorded counts, so two runs at once would race for the
+# same branch.
+concurrency:
+  group: source-health
+
+jobs:
+  source-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # The recorded counts are what the next run compares against, so the
+      # check reports its verdict through the step outcome and the run commits
+      # the counts either way.
+      - name: Check every source for a silent failure
+        id: health
+        continue-on-error: true
+        run: yarn sources:health
+
+      - name: Commit the recorded counts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/data/source-health.json
+          if git diff --cached --quiet; then
+            echo "The recorded counts are unchanged."
+            exit 0
+          fi
+          git commit -m "record source counts $(date +'%b %-d')"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Report an unhealthy source
+        if: steps.health.outcome == 'failure'
+        run: |
+          echo "::error::A job source returned nothing, or nothing it could confirm as empty. Read the summary in the health check step."
+          exit 1

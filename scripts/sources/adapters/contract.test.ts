@@ -1,7 +1,13 @@
 import { readFileSync } from "fs";
 import { describe, it, expect } from "vitest";
 import { describeAdapterContract } from "../adapter-contract";
-import { bambooHrSource, leverSource, sources } from "../registry";
+import {
+  bambooHrSource,
+  icimsDavidsonSource,
+  icimsOvgSource,
+  leverSource,
+  sources,
+} from "../registry";
 
 function fixture(path: string): string {
   return readFileSync(new URL(`../__fixtures__/${path}`, import.meta.url), {
@@ -12,6 +18,8 @@ function fixture(path: string): string {
 const leverListing = fixture("lever-insomnia/listing.json");
 const bambooHrListing = fixture("bamboohr-vra/listing.json");
 const bambooHrDetail = fixture("bamboohr-vra/detail-32.json");
+const icimsOvgListing = fixture("icims-ovg/listing.html");
+const icimsDavidsonListing = fixture("icims-davidson/listing.html");
 
 function leverAtFarLocation(): string {
   const decoded = JSON.parse(leverListing) as Array<{
@@ -44,6 +52,18 @@ function bambooHrUnderRenamedContainer(): string {
   return JSON.stringify(decoded);
 }
 
+// The location is written into the card as text, so a listing from somewhere
+// else is the recorded one with that text replaced.
+function icimsAtFarLocation(listing: string, location: string): string {
+  return listing.split(location).join("US-NV-Reno");
+}
+
+// The parser finds the job table by the one class name, so renaming it is what
+// a redesign of the listing looks like from here.
+function icimsUnderRenamedContainer(listing: string): string {
+  return listing.split("iCIMS_JobsTable").join("iCIMS_JobsGrid");
+}
+
 const contracted = [
   describeAdapterContract({
     ...leverSource,
@@ -53,6 +73,35 @@ const contracted = [
       empty: fixture("lever-insomnia/empty.json"),
       truncated: leverListing.slice(0, 5000),
       renamedContainer: leverUnderRenamedContainer(),
+    },
+  }),
+  describeAdapterContract({
+    ...icimsOvgSource,
+    fixtures: {
+      listing: icimsOvgListing,
+      farLocation: icimsAtFarLocation(icimsOvgListing, "US-NV-Stateline"),
+      empty: fixture("icims-ovg/empty.html"),
+      // Cut after the page header and before the job table closes, which is
+      // the read that would otherwise report a page of postings as a few.
+      truncated: icimsOvgListing.slice(0, 50000),
+      renamedContainer: icimsUnderRenamedContainer(icimsOvgListing),
+    },
+  }),
+  describeAdapterContract({
+    ...icimsDavidsonSource,
+    fixtures: {
+      listing: icimsDavidsonListing,
+      farLocation: icimsAtFarLocation(
+        icimsDavidsonListing,
+        "US-CA-South Lake Tahoe",
+      ),
+      empty: fixture("icims-davidson/empty.html"),
+      truncated: icimsDavidsonListing.slice(0, 45000),
+      renamedContainer: icimsUnderRenamedContainer(icimsDavidsonListing),
+      // The Davidson account publishes no posted date on a card or on a
+      // posting page, and a date invented here would reach a job seeker as
+      // fact.
+      carriesPostedAt: false,
     },
   }),
   describeAdapterContract({
@@ -73,9 +122,9 @@ const contracted = [
 ];
 
 describe("adapter contract coverage", () => {
-  it("holds every adapter in the registry to the contract", () => {
+  it("holds every source in the registry to the contract", () => {
     expect([...contracted].sort()).toEqual(
-      sources.map((source) => source.adapter.id).sort(),
+      sources.map((source) => source.sourceId).sort(),
     );
   });
 });

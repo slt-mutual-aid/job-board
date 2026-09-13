@@ -7,7 +7,7 @@ describe("source health coverage", () => {
     // A source the health run never reads is a source whose silence the summary
     // reports as nothing to see.
     expect(readers.map((reader) => reader.id).sort()).toEqual(
-      sources.map((source) => source.adapter.id).sort(),
+      sources.map((source) => source.sourceId).sort(),
     );
   });
 });

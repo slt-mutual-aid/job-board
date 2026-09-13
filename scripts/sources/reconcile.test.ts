@@ -10,7 +10,13 @@ import {
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { assess, type SourceAssessment } from "./health";
-import { bambooHrSource, leverSource, sources } from "./registry";
+import {
+  bambooHrSource,
+  icimsDavidsonSource,
+  icimsOvgSource,
+  leverSource,
+  sources,
+} from "./registry";
 import {
   REPOSITORY_ROOT,
   WriteOutsideAllowlistError,
@@ -28,8 +34,8 @@ import {
 import { loadSourcesState, postingKey } from "./state";
 import type { IdentifiedEntry } from "./types";
 
-const LEVER_ID = leverSource.adapter.id;
-const BAMBOOHR_ID = bambooHrSource.adapter.id;
+const LEVER_ID = leverSource.sourceId;
+const BAMBOOHR_ID = bambooHrSource.sourceId;
 
 function fixture(name: string): string {
   return readFileSync(
@@ -143,14 +149,17 @@ describe("board row matching", () => {
     // nothing verified.
     "https://www.indeed.com/viewjob?cmp=Riva-Grill&jk=fc954657a71c2331",
     "https://savemart.csod.com/ux/ats/careersite/25/home/requisition/41554?c=savemart",
-    "https://careers-ovg.icims.com/jobs/33051/banquet-server/job",
     "https://theburkscompanies.applicantpro.com/jobs/3540383",
     "https://careers.wholefoods.com/seafood-team-member/job/PAF-WFM-17AD7D8C",
-    // A different Lever account, and a different BambooHR account.
+    // A different Lever account, a different BambooHR account, and an iCIMS
+    // account neither configuration names.
     "https://jobs.lever.co/someoneelse/9176727b-af98-4eb0-a1aa-980f826d9c92",
     "https://other.bamboohr.com/careers/34",
-    // Shapes the two hosts do not use for a posting page.
+    "https://careers-someoneelse.icims.com/jobs/33051/banquet-server/job",
+    // Shapes the hosts do not use for a posting page.
     "https://jobs.lever.co/insomniacookies",
+    "https://careers-ovg.icims.com/jobs/search?ss=1",
+    "https://careers-ovg.icims.com/jobs/33051/banquet-server",
     `https://${bambooHrSource.config.subdomain}.bamboohr.com/careers/34/detail`,
     `https://${bambooHrSource.config.subdomain}.bamboohr.com/careers/list`,
     "not a url",
@@ -162,8 +171,24 @@ describe("board row matching", () => {
 
   it("carries a link rule for every source the registry lists", () => {
     expect([...COVERED_SOURCE_IDS].sort()).toEqual(
-      sources.map((source) => source.adapter.id).sort(),
+      sources.map((source) => source.sourceId).sort(),
     );
+  });
+
+  it.each([
+    ["https://careers-ovg.icims.com/jobs/33051/banquet-server/job", "33051"],
+    [
+      "https://careers-davidsonhospitality.icims.com/jobs/26309/housekeeping-room-attendant/job?hub=10",
+      "26309",
+    ],
+    // The spreadsheet was filled in from the host the employer advertised,
+    // which is not the host the listing is read from.
+    [
+      "https://jobs-davidsonhospitality.icims.com/jobs/26309/housekeeping-room-attendant/job",
+      "26309",
+    ],
+  ])("reads %s as iCIMS posting %s", (link, postingId) => {
+    expect(matchBoardRow(boardRow(1, link))?.postingId).toBe(postingId);
   });
 
   it("matches only the committed board rows that live on a covered host", () => {
@@ -171,6 +196,8 @@ describe("board row matching", () => {
     const coveredHosts = [
       "jobs.lever.co",
       `${bambooHrSource.config.subdomain}.bamboohr.com`,
+      ...icimsOvgSource.config.linkHosts,
+      ...icimsDavidsonSource.config.linkHosts,
     ];
 
     const matched = rows.filter((row) => matchBoardRow(row) !== null);

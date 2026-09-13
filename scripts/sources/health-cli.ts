@@ -6,7 +6,12 @@ import {
   recordRun,
   type SourceObservation,
 } from "./health";
-import { bambooHrSource, leverSource } from "./registry";
+import {
+  bambooHrSource,
+  icimsDavidsonSource,
+  icimsOvgSource,
+  leverSource,
+} from "./registry";
 import type { AdapterBase, IdentifiedEntry } from "./types";
 
 // A detail request answers nothing about whether a source still responds, so
@@ -14,6 +19,9 @@ import type { AdapterBase, IdentifiedEntry } from "./types";
 interface ListingSource<Config, Entry extends IdentifiedEntry> {
   adapter: AdapterBase<Config, Entry>;
   config: Config;
+  // One employer's listing, which is what a health record is about. Two
+  // employers read by one adapter carry two of these.
+  sourceId: string;
 }
 
 export interface SourceReader {
@@ -28,22 +36,22 @@ export interface SourceReader {
 function readerFor<Config, Entry extends IdentifiedEntry>(
   source: ListingSource<Config, Entry>,
 ): SourceReader {
-  const { adapter, config } = source;
+  const { adapter, config, sourceId } = source;
   return {
-    id: adapter.id,
+    id: sourceId,
     read: async (): Promise<SourceObservation<IdentifiedEntry>> => {
       try {
         const raw = await adapter.fetchListingRaw(config);
         const { entries, confirmedEmpty } = adapter.parseListing(raw);
         return {
           kind: "reading",
-          sourceId: adapter.id,
+          sourceId,
           postings: adapter.selectLocal(entries, config),
           entryCount: entries.length,
           confirmedEmpty,
         };
       } catch (error) {
-        return observedFailure(adapter.id, error);
+        return observedFailure(sourceId, error);
       }
     },
   };
@@ -54,6 +62,8 @@ function readerFor<Config, Entry extends IdentifiedEntry>(
 export const readers: SourceReader[] = [
   readerFor(leverSource),
   readerFor(bambooHrSource),
+  readerFor(icimsOvgSource),
+  readerFor(icimsDavidsonSource),
 ];
 
 async function main(): Promise<void> {

@@ -49,7 +49,7 @@ function withOpening(
 describe("listingUrl and detailUrl", () => {
   it("build the careers paths for the configured subdomain", () => {
     expect(listingUrl(config)).toBe("https://vra.bamboohr.com/careers/list");
-    expect(detailUrl(config, "32")).toBe(
+    expect(detailUrl(config, entryFor("32"))).toBe(
       "https://vra.bamboohr.com/careers/32/detail",
     );
   });
@@ -180,10 +180,9 @@ describe("parseDetail", () => {
       department: "Cleaning",
       location: "South Lake Tahoe, California",
       applyLink: "https://vra.bamboohr.com/careers/32",
-      postedDate: "5/28/2025",
+      postedAt: "2025-05-28",
       commitment: "Full-Time",
-      status: "Open",
-      isOpen: true,
+      liveness: { status: "Open", isOpen: true },
     });
   });
 
@@ -201,8 +200,7 @@ describe("parseDetail", () => {
     });
     const posting = parseDetail(closed, entry);
 
-    expect(posting.status).toBe("Filled");
-    expect(posting.isOpen).toBe(false);
+    expect(posting.liveness).toEqual({ status: "Filled", isOpen: false });
     expect(posting.title).toBe(entry.title);
   });
 

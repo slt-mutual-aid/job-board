@@ -1,20 +1,11 @@
 import { fileURLToPath } from "url";
-import {
-  fetchRaw,
-  parse,
-  buildUrl,
-  type LeverConfig,
-  type LeverPosting,
-} from "./adapters/lever";
 import { toSpreadsheetDate } from "./date";
+import { leverSource } from "./registry";
 import { htmlToPlainText } from "./text";
 import { writeReviewCsv, type ReviewJob } from "./review-csv";
+import type { SourcePosting } from "./types";
 
-export const config: LeverConfig = {
-  company: "insomniacookies",
-  location: "South Lake Tahoe CA",
-};
-
+const { adapter, config } = leverSource;
 // The Lever slug identifies an account. The board's Company column carries the
 // name a job seeker recognizes, which no Lever field supplies.
 const COMPANY_NAME = "Insomnia Cookies";
@@ -25,9 +16,10 @@ const WRITE_REVIEW_FLAG = "--write-review";
 
 const COLUMNS: Array<{
   header: string;
-  value: (posting: LeverPosting) => string;
+  value: (posting: SourcePosting) => string;
 }> = [
-  { header: "POSTED", value: (posting) => posting.postedDate },
+  // The spreadsheet column this output is copied into reads M/D/YYYY.
+  { header: "POSTED", value: (posting) => toSpreadsheetDate(posting.postedAt) },
   { header: "TITLE", value: (posting) => posting.title },
   { header: "TYPE", value: (posting) => posting.commitment ?? "" },
   { header: "APPLY LINK", value: (posting) => posting.applyLink },
@@ -35,9 +27,9 @@ const COLUMNS: Array<{
 
 // Hourly Rate and Job Closes by stay absent: Lever publishes neither, and a
 // wage invented here would reach a job seeker as fact.
-export function toReviewJob(posting: LeverPosting): ReviewJob {
+export function toReviewJob(posting: SourcePosting): ReviewJob {
   return {
-    datePosted: toSpreadsheetDate(posting.postedDate),
+    datePosted: toSpreadsheetDate(posting.postedAt),
     company: COMPANY_NAME,
     title: posting.title,
     applicationLink: posting.applyLink,
@@ -51,7 +43,7 @@ export function toReviewJob(posting: LeverPosting): ReviewJob {
   };
 }
 
-function printTable(postings: LeverPosting[]): void {
+function printTable(postings: SourcePosting[]): void {
   const rows = [
     COLUMNS.map((column) => column.header),
     ...postings.map((posting) =>
@@ -74,11 +66,12 @@ function printTable(postings: LeverPosting[]): void {
 async function main(): Promise<void> {
   const writeReview = process.argv.slice(2).includes(WRITE_REVIEW_FLAG);
 
-  console.log(`Fetching ${buildUrl(config)}`);
-  const raw = await fetchRaw(config);
+  console.log(`Fetching ${adapter.listingUrl(config)}`);
+  const raw = await adapter.fetchListingRaw(config);
 
   console.log("Parsing response...");
-  const { postings, confirmedEmpty } = parse(raw, config);
+  const { entries, confirmedEmpty } = adapter.parseListing(raw);
+  const postings = adapter.selectLocal(entries, config);
 
   if (postings.length === 0) {
     console.log(

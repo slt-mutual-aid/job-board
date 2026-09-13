@@ -11,6 +11,13 @@
 // Update the fetchedAt timestamp in each accompanying .meta.json afterwards.
 
 import { fetchText } from "../http";
+import { toIsoDateFromEpochMs } from "../date";
+import {
+  SourceResponseError,
+  type ListingOnlyAdapter,
+  type ListingResult,
+  type SourcePosting,
+} from "../types";
 
 export interface LeverConfig {
   // The Lever account slug, as it appears in the posting API path.
@@ -20,39 +27,22 @@ export interface LeverConfig {
   location: string;
 }
 
-export interface LeverPosting {
-  id: string;
-  title: string;
-  location: string;
-  applyLink: string;
-  postedDate: string;
-  commitment?: string;
-  description?: string;
-}
-
-export interface LeverParseResult {
-  postings: LeverPosting[];
-  // True only when the response was a well-formed, genuinely empty array. A
-  // caller can then tell a quiet day from a parse that lost every posting.
-  confirmedEmpty: boolean;
-}
-
-export class LeverResponseError extends Error {
+export class LeverResponseError extends SourceResponseError {
   constructor(message: string) {
     super(message);
     this.name = "LeverResponseError";
   }
 }
 
-export function buildUrl(config: LeverConfig): string {
+export function listingUrl(config: LeverConfig): string {
   // URLSearchParams writes a space as a plus sign. The location filter is an
   // exact string match and is only verified against percent-encoded spaces.
   const location = encodeURIComponent(config.location);
   return `https://api.lever.co/v0/postings/${config.company}?mode=json&location=${location}`;
 }
 
-export async function fetchRaw(config: LeverConfig): Promise<string> {
-  return fetchText(buildUrl(config));
+export async function fetchListingRaw(config: LeverConfig): Promise<string> {
+  return fetchText(listingUrl(config));
 }
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -91,17 +81,7 @@ function optionalString(value: unknown): string | undefined {
   return typeof value === "string" && value !== "" ? value : undefined;
 }
 
-// Lever reports createdAt in epoch milliseconds. Local-time getters would shift
-// the date by a day for anyone west of UTC.
-function toPostedDate(createdAt: number): string {
-  const date = new Date(createdAt);
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-function toPosting(entry: unknown, index: number): LeverPosting {
+function toPosting(entry: unknown, index: number): SourcePosting {
   if (!isObject(entry)) {
     throw new LeverResponseError(`Posting at index ${index} is not an object`);
   }
@@ -113,19 +93,22 @@ function toPosting(entry: unknown, index: number): LeverPosting {
     );
   }
 
+  // liveness stays absent: Lever publishes no open or closed signal, and an
+  // open posting is the one thing an unchecked posting must not claim to be.
   return {
     id: requireString(entry, "id", index),
     title: requireString(entry, "text", index),
     location: requireString(categories, "location", index),
     // hostedUrl is the public posting page. applyUrl is the application form.
     applyLink: requireString(entry, "hostedUrl", index),
-    postedDate: toPostedDate(requireNumber(entry, "createdAt", index)),
+    // Lever reports createdAt in epoch milliseconds.
+    postedAt: toIsoDateFromEpochMs(requireNumber(entry, "createdAt", index)),
     commitment: optionalString(categories.commitment),
     description: optionalString(entry.descriptionPlain),
   };
 }
 
-export function parse(raw: string, config: LeverConfig): LeverParseResult {
+export function parseListing(raw: string): ListingResult<SourcePosting> {
   let decoded: unknown;
   try {
     decoded = JSON.parse(raw);
@@ -141,11 +124,26 @@ export function parse(raw: string, config: LeverConfig): LeverParseResult {
     );
   }
 
-  // The server already filters on location. Re-asserting it locally catches a
-  // filter that stops matching without failing.
-  const postings = decoded
-    .map(toPosting)
-    .filter((posting) => posting.location === config.location);
-
-  return { postings, confirmedEmpty: decoded.length === 0 };
+  return {
+    entries: decoded.map(toPosting),
+    confirmedEmpty: decoded.length === 0,
+  };
 }
+
+// The server already filters on location. Re-asserting it locally catches a
+// filter that stops matching without failing.
+export function selectLocal(
+  entries: SourcePosting[],
+  config: LeverConfig,
+): SourcePosting[] {
+  return entries.filter((entry) => entry.location === config.location);
+}
+
+export const leverAdapter: ListingOnlyAdapter<LeverConfig> = {
+  id: "lever",
+  shape: "listing-only",
+  listingUrl,
+  fetchListingRaw,
+  parseListing,
+  selectLocal,
+};

@@ -144,8 +144,8 @@ export function readReviewDecisions(root: string = REPOSITORY_ROOT): string[] {
 
   const rows = parse(raw, {
     columns: true,
-    // The spreadsheet ends a row at any newline, and a description carries
-    // lone newlines inside its quotes.
+    // A spreadsheet saving the file back ends its rows with whichever newline
+    // the program on the reviewer's machine prefers.
     record_delimiter: ["\r\n", "\n", "\r"],
     skip_empty_lines: true,
   }) as Array<Record<string, string>>;

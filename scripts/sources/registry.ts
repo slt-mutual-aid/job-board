@@ -74,11 +74,17 @@ const ukgConfig: UkgConfig = {
 // accountId namespaces every posting key recorded for the source. It names the
 // account rather than the platform, so two accounts on one platform cannot hand
 // out a key that overwrites the other.
+//
+// companyName fills the board's Company column, which no platform field
+// supplies. It is the name jobboard.json already carries for the employer where
+// exactly one row names it, so an approved row joins the rows already there
+// instead of opening a second spelling of one employer.
 export const leverSource = {
   adapter: leverAdapter,
   config: leverConfig,
   sourceId: "lever",
   accountId: `lever:${leverConfig.company}`,
+  companyName: "Insomnia Cookies",
 };
 
 export const bambooHrSource = {
@@ -86,6 +92,7 @@ export const bambooHrSource = {
   config: bambooHrConfig,
   sourceId: "bamboohr",
   accountId: `bamboohr:${bambooHrConfig.subdomain}`,
+  companyName: "VRA",
 };
 
 export const icimsOvgSource = {
@@ -93,6 +100,7 @@ export const icimsOvgSource = {
   config: icimsOvgConfig,
   sourceId: "icims:ovg",
   accountId: `icims:${icimsOvgConfig.host}`,
+  companyName: "Tahoe Blue Event Center",
 };
 
 export const icimsDavidsonSource = {
@@ -100,6 +108,7 @@ export const icimsDavidsonSource = {
   config: icimsDavidsonConfig,
   sourceId: "icims:davidson",
   accountId: `icims:${icimsDavidsonConfig.host}`,
+  companyName: "Davidson Hospitality Group",
 };
 
 // A requisition carries no posting URL, so the Oracle adapter builds the apply
@@ -110,6 +119,7 @@ export const oracleCaesarsSource = {
   config: oracleCaesarsConfig,
   sourceId: "oracle:caesars",
   accountId: `oracle:${oracleCaesarsConfig.host}`,
+  companyName: "Caesars Entertainment",
 };
 
 export const oracleRaleysSource = {
@@ -117,6 +127,7 @@ export const oracleRaleysSource = {
   config: oracleRaleysConfig,
   sourceId: "oracle:raleys",
   accountId: `oracle:${oracleRaleysConfig.host}`,
+  companyName: "Raley's",
 };
 
 export const ukgSource = {
@@ -124,6 +135,7 @@ export const ukgSource = {
   config: ukgConfig,
   sourceId: "ukg:ballys",
   accountId: `ukg:${ukgConfig.tenant}`,
+  companyName: "Bally's Hotel",
 };
 
 // Every source this project reads. A source missing from this list is a source

@@ -18,7 +18,7 @@
     "sources:oracle": "tsx scripts/sources/oracle-cli.ts",
     "sources:ukg": "tsx scripts/sources/ukg-cli.ts",
     "sources:health": "tsx scripts/sources/health-cli.ts",
-    "sources:lever:review": "tsx scripts/sources/lever-cli.ts --write-review",
+    "sources:review": "tsx scripts/sources/review-cli.ts",
     "sources:reconcile": "tsx scripts/sources/reconcile-cli.ts"
   },
   "dependencies": {

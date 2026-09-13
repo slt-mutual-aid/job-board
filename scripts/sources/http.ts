@@ -1,7 +1,10 @@
 import robotsParser from "robots-parser";
 
+// A generic browser string. It carries nothing that identifies the operator or
+// this repository, because a request leaving the machine must not name a
+// project one person maintains.
 const USER_AGENT =
-  "SLT-MutualAid-JobBoard/1.0 (+https://github.com/slt-mutual-aid/job-board)";
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 const TIMEOUT_MS = 15000;
 
 // Most of the employers on this list are small local businesses on shared

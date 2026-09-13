@@ -7,29 +7,31 @@ import {
   type SourceObservation,
 } from "./health";
 import { bambooHrSource, leverSource } from "./registry";
-import type { AdapterBase } from "./types";
+import type { AdapterBase, IdentifiedEntry } from "./types";
 
 // A detail request answers nothing about whether a source still responds, so
 // the check stops at the listing and costs one request per source.
-interface ListingSource<Config, Entry> {
+interface ListingSource<Config, Entry extends IdentifiedEntry> {
   adapter: AdapterBase<Config, Entry>;
   config: Config;
 }
 
 export interface SourceReader {
   id: string;
-  read(): Promise<SourceObservation>;
+  // The postings keep their identifiers, which is what lets a consumer ask
+  // whether one named posting is still listed.
+  read(): Promise<SourceObservation<IdentifiedEntry>>;
 }
 
 // Written one source at a time because the type parameters are inferred from a
 // single concrete source, which a loop over the registry cannot supply.
-function readerFor<Config, Entry>(
+function readerFor<Config, Entry extends IdentifiedEntry>(
   source: ListingSource<Config, Entry>,
 ): SourceReader {
   const { adapter, config } = source;
   return {
     id: adapter.id,
-    read: async (): Promise<SourceObservation> => {
+    read: async (): Promise<SourceObservation<IdentifiedEntry>> => {
       try {
         const raw = await adapter.fetchListingRaw(config);
         const { entries, confirmedEmpty } = adapter.parseListing(raw);

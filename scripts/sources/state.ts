@@ -25,8 +25,23 @@ export interface PostingRecord {
   decided: boolean;
 }
 
+// A board row whose posting no healthy listing carried. The count is what keeps
+// one quiet run from reaching a removal report, so it is recorded rather than
+// recomputed from the listing a run happens to hold.
+export interface MissingRecord {
+  // Consecutive healthy runs whose listing did not carry the posting. A run
+  // that carries it again drops the record rather than resetting the count,
+  // so a posting that returns leaves no trace to age.
+  misses: number;
+  firstMissedAt: string;
+  lastMissedAt: string;
+}
+
 export interface SourcesState {
   postings: Record<string, PostingRecord>;
+  // Keyed by the same posting key as postings, so one file answers both what a
+  // run has proposed and what a run has stopped finding.
+  missing: Record<string, MissingRecord>;
 }
 
 // One posting as a run found it. The key is the identity; the title and the
@@ -45,7 +60,7 @@ export interface RunResult {
 }
 
 export function emptyState(): SourcesState {
-  return { postings: {} };
+  return { postings: {}, missing: {} };
 }
 
 // The identifier comes from the platform rather than from the apply link,
@@ -62,6 +77,25 @@ function isObject(value: unknown): value is Record<string, unknown> {
 
 function isTimestamp(value: unknown): value is string {
   return typeof value === "string" && !Number.isNaN(Date.parse(value));
+}
+
+function toMissingRecord(value: unknown): MissingRecord | undefined {
+  if (!isObject(value)) {
+    return undefined;
+  }
+
+  const { misses, firstMissedAt, lastMissedAt } = value;
+  if (
+    typeof misses !== "number" ||
+    !Number.isInteger(misses) ||
+    misses < 1 ||
+    !isTimestamp(firstMissedAt) ||
+    !isTimestamp(lastMissedAt)
+  ) {
+    return undefined;
+  }
+
+  return { misses, firstMissedAt, lastMissedAt };
 }
 
 function toPostingRecord(value: unknown): PostingRecord | undefined {
@@ -103,6 +137,18 @@ export function parseSourcesState(raw: string): SourcesState | undefined {
     const record = toPostingRecord(value);
     if (record !== undefined) {
       state.postings[key] = record;
+    }
+  }
+
+  // A file written before the missing map existed is still a readable state
+  // file, and an unreadable map costs at most one extra healthy run before a
+  // posting reaches the removal report again.
+  if (isObject(decoded.missing)) {
+    for (const [key, value] of Object.entries(decoded.missing)) {
+      const record = toMissingRecord(value);
+      if (record !== undefined) {
+        state.missing[key] = record;
+      }
     }
   }
 
@@ -173,7 +219,7 @@ export function recordRun(
     }
   }
 
-  return { state: { postings: nextPostings }, undecided };
+  return { state: { ...state, postings: nextPostings }, undecided };
 }
 
 // Called with the decisions read out of the review file, before that file is

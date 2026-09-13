@@ -23,6 +23,7 @@ yarn sources:icims # Print the iCIMS postings for each configured employer
 yarn sources:oracle # Print the Oracle HCM Cloud postings for both employers
 yarn sources:ukg # Print the UKG postings for the configured location
 yarn sources:health   # Check every source for a silent failure; exits non-zero on one
+yarn sources:review # Read every source and queue the undecided postings for review
 yarn sources:reconcile # Report board rows their employer's listing no longer carries
 ```
 
@@ -47,7 +48,11 @@ Google Sheets → slt-jobs.csv → jobboard.json → src/lib/db.ts → component
 - `jobboard.json` — generated file, source of truth for job data at runtime
 - `slt-jobs.csv` — fetched from Google Sheets, input to import script
 
-**Job source review state:** `yarn sources:lever:review` writes the postings a reviewer has not decided about to `review/new-jobs.csv`, and records in `scripts/data/sources-state.json` which postings already carry a decision. A decision typed into the `Decision` column is read back on the next run, and the posting then leaves the review file. Both paths are gitignored per-machine state: deleting `scripts/data/sources-state.json` proposes every posting again.
+**Job source review state:** `yarn sources:review` reads every source in `scripts/sources/registry.ts` and writes the postings a reviewer has not decided about to `review/new-jobs.csv`, recording in `scripts/data/sources-state.json` which postings already carry a decision. One command owns that file: a second command writing it from one source's postings would drop every other employer's rows. A decision typed into the `Decision` column is read back on the next run, and the posting then leaves the review file. The `Source` column names the listing a row came from, and the key in `Posting Key` is namespaced by the account, so two employers on one platform cannot hand out a key that reads a decision back against the wrong posting. The first nine columns are the columns of `slt-jobs.csv` in the order the importer reads them by position, so an approved row pastes into the spreadsheet with no field moved. The per-source commands print and write nothing.
+
+A source the health rules do not call healthy contributes no rows of its own, and the rows an earlier run wrote for it stand instead. A rewrite that left the source out would read as an employer with nothing open, and the reviewer would watch its rows vanish on a run that only failed to reach the site. The command reads `scripts/data/source-health.json` for the previous counts and never writes it: a count this command appended would become the baseline the scheduled check compares against.
+
+Both written paths are gitignored per-machine state: deleting `scripts/data/sources-state.json` proposes every posting again.
 
 **Source health history:** `yarn sources:health` reads the listing of every source in `scripts/sources/registry.ts` and exits non-zero when one returns nothing, or nothing it can confirm as genuinely empty. `.github/workflows/source-health.yml` runs the check on a schedule and pushes the result. `scripts/data/source-health.json` holds the per-source count history and **is committed**: the suspicious-zero and drop rules compare a run against the previous run, so a history that never leaves one machine leaves both rules dormant in CI. Commit it with any change it carries rather than reverting it, EXCEPT on a feature branch: `.github/workflows/source-health.yml` owns the file on `main`, so a branch carrying counts from a local verification run collides with what the schedule pushes. Revert it there instead.
 

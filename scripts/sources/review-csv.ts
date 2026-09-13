@@ -3,6 +3,7 @@ import { dirname, isAbsolute, join, relative, resolve } from "path";
 import { fileURLToPath } from "url";
 import { parse } from "csv-parse/sync";
 import { stringify } from "csv-stringify/sync";
+import { fitRank, type FitVerdict } from "./fit";
 
 // scripts/sources/review-csv.ts sits two directories below the repository root.
 export const REPOSITORY_ROOT = resolve(
@@ -70,10 +71,18 @@ export interface ReviewJob {
   sourceId: string;
   // The key the state file records the reviewer's decision against.
   postingKey: string;
+  // What judgeFit read the posting as, which is what the file is ordered by.
+  fit: FitVerdict;
+  fitReason: string;
 }
 
 // The column the reviewer types into.
 export const DECISION_HEADER = "Decision";
+
+// The verdict the row is ordered by, and the evidence behind it. Both sit
+// beside the Decision column because a reviewer reads them to fill it in.
+export const FIT_HEADER = "Fit";
+export const FIT_REASON_HEADER = "Fit Reason";
 
 // Names the listing a row was read from, which is what tells one employer's
 // rows from another's when the file carries every source at once.
@@ -99,6 +108,8 @@ const COLUMNS: ReadonlyArray<{
   { header: "Description", value: (job) => job.description ?? "" },
   { header: "Job Closes by", value: (job) => job.closesBy ?? "" },
   { header: DECISION_HEADER, value: () => "" },
+  { header: FIT_HEADER, value: (job) => job.fit },
+  { header: FIT_REASON_HEADER, value: (job) => job.fitReason },
   { header: SOURCE_HEADER, value: (job) => job.sourceId },
   { header: POSTING_KEY_HEADER, value: (job) => job.postingKey },
   { header: "Notes", value: () => "" },
@@ -121,6 +132,17 @@ export function toReviewRow(job: ReviewJob): ReviewRow {
     row[column.header] = column.value(job);
   }
   return row;
+}
+
+// Verdict first, and inside a verdict the order the rows arrived in, which is
+// one employer at a time. A reviewer reading down the file then stays with one
+// employer's wording for a stretch, and a posting keeps its neighbours between
+// runs, so stopping half way and coming back lands in the same place.
+export function sortRowsByFit(rows: readonly ReviewRow[]): ReviewRow[] {
+  return [...rows].sort(
+    (left, right) =>
+      fitRank(cellOf(left, FIT_HEADER)) - fitRank(cellOf(right, FIT_HEADER)),
+  );
 }
 
 export function formatReviewCsv(rows: readonly ReviewRow[]): string {

@@ -65,6 +65,8 @@ const job: ReviewJob = {
   description: "Bake cookies.",
   sourceId: "lever",
   postingKey: "lever:insomniacookies:abc",
+  fit: "likely",
+  fitReason: 'The employment type says "Part-time".',
 };
 
 function csvOf(jobs: readonly ReviewJob[]): string {
@@ -91,10 +93,35 @@ describe("the review file layout", () => {
   it("puts the review-only columns after the nine board columns", () => {
     expect(REVIEW_COLUMN_HEADERS.slice(BOARD_COLUMN_COUNT)).toEqual([
       "Decision",
+      "Fit",
+      "Fit Reason",
       "Source",
       "Posting Key",
       "Notes",
     ]);
+  });
+
+  it("leaves the nine board columns the same whatever the verdict says", () => {
+    const [, likely] = readAsSpreadsheetWould(
+      csvOf([
+        { ...job, fit: "likely", fitReason: 'The title says "part time".' },
+      ]),
+    );
+    const [, unlikely] = readAsSpreadsheetWould(
+      csvOf([
+        {
+          ...job,
+          fit: "unlikely",
+          fitReason: "The title names a manager role.",
+        },
+      ]),
+    );
+
+    expect(likely.slice(0, BOARD_COLUMN_COUNT)).toEqual(
+      unlikely.slice(0, BOARD_COLUMN_COUNT),
+    );
+    expect(likely[REVIEW_COLUMN_HEADERS.indexOf("Fit")]).toBe("likely");
+    expect(unlikely[REVIEW_COLUMN_HEADERS.indexOf("Fit")]).toBe("unlikely");
   });
 
   it("leaves the decision and notes columns empty for the reviewer", () => {
@@ -119,6 +146,8 @@ describe("the review file layout", () => {
           title: "Baker",
           sourceId: "x",
           postingKey: "x:1",
+          fit: "unknown",
+          fitReason: "Nothing here decides it.",
         },
       ]),
     ) as string[][];

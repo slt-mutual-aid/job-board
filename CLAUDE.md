@@ -20,6 +20,7 @@ yarn import-csv   # Parse slt-jobs.csv → jobboard.json
 yarn sources:lever # Print the Lever postings for the configured location
 yarn sources:bamboohr # Print the BambooHR postings for the configured location
 yarn sources:icims # Print the iCIMS postings for each configured employer
+yarn sources:oracle # Print the Oracle HCM Cloud postings for both employers
 yarn sources:health   # Check every source for a silent failure; exits non-zero on one
 yarn sources:reconcile # Report board rows their employer's listing no longer carries
 ```

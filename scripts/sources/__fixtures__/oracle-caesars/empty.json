@@ -1,0 +1,80 @@
+{
+  "items" : [ {
+    "SearchId" : 1,
+    "Keyword" : null,
+    "CorrectedKeyword" : null,
+    "UseExactKeywordFlag" : false,
+    "SuggestedKeyword" : null,
+    "ExecuteSpellCheckFlag" : true,
+    "Location" : null,
+    "LocationId" : null,
+    "Radius" : 0,
+    "RadiusUnit" : "MI",
+    "SelectedTitlesFacet" : null,
+    "SelectedCategoriesFacet" : null,
+    "SelectedPostingDatesFacet" : null,
+    "SelectedLocationsFacet" : "1",
+    "LastSelectedFacet" : null,
+    "Facets" : "TITLES;LOCATIONS;LOCATION_LEVEL1;LOCATION_LEVEL2;LOCATION_LEVEL3;CATEGORIES;POSTING_DATES;WORK_LOCATIONS;FLEX_FIELDS;ORGANIZATIONS;WORKPLACE_TYPES",
+    "Offset" : 0,
+    "Limit" : 200,
+    "SortBy" : "POSTING_DATES_DESC",
+    "TotalJobsCount" : 0,
+    "Latitude" : null,
+    "Longitude" : null,
+    "SiteNumber" : "CX_1",
+    "JobFamilyId" : null,
+    "PostingStartDate" : null,
+    "PostingEndDate" : null,
+    "SelectedWorkLocationsFacet" : null,
+    "RequisitionId" : null,
+    "CandidateNumber" : null,
+    "WorkLocationZipCode" : null,
+    "WorkLocationCountryCode" : null,
+    "SelectedFlexFieldsFacets" : null,
+    "OrganizationId" : null,
+    "SelectedOrganizationsFacet" : null,
+    "UserTargetFacetName" : null,
+    "UserTargetFacetInputTerm" : null,
+    "HotJobFlag" : null,
+    "WorkplaceType" : null,
+    "SelectedWorkplaceTypesFacet" : null,
+    "BotQRShortCode" : null,
+    "requisitionList" : [ ],
+    "categoriesFacet" : [ ],
+    "locationsFacet" : [ {
+      "Id" : 1,
+      "Name" : "1",
+      "TotalCount" : 0
+    } ],
+    "postingDatesFacet" : [ ],
+    "titlesFacet" : [ ],
+    "workLocationsFacet" : [ ],
+    "flexFieldsFacet" : [ {
+      "Name" : "AttributeChar10",
+      "Label" : "Role Type"
+    } ],
+    "organizationsFacet" : [ ],
+    "workplaceTypesFacet" : [ ]
+  } ],
+  "count" : 1,
+  "hasMore" : false,
+  "limit" : 200,
+  "offset" : 0,
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://edmn.fa.us2.oraclecloud.com:443/hcmRestApi/resources/11.13.18.05/recruitingCEJobRequisitions",
+    "name" : "recruitingCEJobRequisitions",
+    "kind" : "collection"
+  }, {
+    "rel" : "action",
+    "href" : "https://edmn.fa.us2.oraclecloud.com:443/hcmRestApi/resources/11.13.18.05/recruitingCEJobRequisitions/action/getRequisitionsLocationCoordinates",
+    "name" : "getRequisitionsLocationCoordinates",
+    "kind" : "other"
+  }, {
+    "rel" : "action",
+    "href" : "https://edmn.fa.us2.oraclecloud.com:443/hcmRestApi/resources/11.13.18.05/recruitingCEJobRequisitions/action/getRequisitionDetailsForMap",
+    "name" : "getRequisitionDetailsForMap",
+    "kind" : "other"
+  } ]
+}

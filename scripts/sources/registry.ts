@@ -1,6 +1,7 @@
 import { leverAdapter, type LeverConfig } from "./adapters/lever";
 import { bambooHrAdapter, type BambooHrConfig } from "./adapters/bamboohr";
 import { icimsAdapter, type IcimsConfig } from "./adapters/icims";
+import { createOracleAdapter, type OracleConfig } from "./adapters/oracle";
 
 const leverConfig: LeverConfig = {
   company: "insomniacookies",
@@ -33,6 +34,22 @@ const icimsDavidsonConfig: IcimsConfig = {
     "jobs-davidsonhospitality.icims.com",
   ],
   locations: ["US-CA-South Lake Tahoe"],
+};
+
+// Oracle names the facet after Stateline, and every requisition behind it
+// writes its PrimaryLocation as South Lake Tahoe, NV.
+const oracleCaesarsConfig: OracleConfig = {
+  host: "edmn.fa.us2.oraclecloud.com",
+  siteNumber: "CX_1",
+  locationFacet: "300000002323814",
+  location: "South Lake Tahoe, NV, United States",
+};
+
+const oracleRaleysConfig: OracleConfig = {
+  host: "fa-epss-saasfaprod1.fa.ocs.oraclecloud.com",
+  siteNumber: "CX_1",
+  locationFacet: "300000002154145",
+  location: "South Lake Tahoe, CA, United States",
 };
 
 // sourceId names one employer's listing, which is what a health record, a
@@ -71,6 +88,23 @@ export const icimsDavidsonSource = {
   accountId: `icims:${icimsDavidsonConfig.host}`,
 };
 
+// A requisition carries no posting URL, so the Oracle adapter builds the apply
+// link from the host it read, and parseListing takes no config to read it from.
+// Each employer therefore holds an adapter carrying its own config.
+export const oracleCaesarsSource = {
+  adapter: createOracleAdapter(oracleCaesarsConfig),
+  config: oracleCaesarsConfig,
+  sourceId: "oracle:caesars",
+  accountId: `oracle:${oracleCaesarsConfig.host}`,
+};
+
+export const oracleRaleysSource = {
+  adapter: createOracleAdapter(oracleRaleysConfig),
+  config: oracleRaleysConfig,
+  sourceId: "oracle:raleys",
+  accountId: `oracle:${oracleRaleysConfig.host}`,
+};
+
 // Every source this project reads. A source missing from this list is a source
 // the shared contract test never runs against.
 export const sources = [
@@ -78,4 +112,6 @@ export const sources = [
   bambooHrSource,
   icimsOvgSource,
   icimsDavidsonSource,
+  oracleCaesarsSource,
+  oracleRaleysSource,
 ];

@@ -39,6 +39,11 @@ export interface SourcePosting extends IdentifiedEntry {
   commitment?: string;
   department?: string;
   description?: string;
+  // ISO 8601 UTC calendar date the posting stops accepting applications, and
+  // absent on a source that publishes no closing date. The board's Job Closes
+  // by column is empty on almost every row, so a source that states one is the
+  // only way that column ever carries a date.
+  closesAt?: string;
   // Absent on a source that publishes no open or closed signal. Absence means
   // nothing checked the posting, which is not the same as an open posting, so
   // there is no default to read it through.

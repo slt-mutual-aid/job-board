@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import { stringify } from "csv-stringify/sync";
 
 // scripts/sources/review-csv.ts sits two directories below the repository root.
-const REPOSITORY_ROOT = resolve(
+export const REPOSITORY_ROOT = resolve(
   dirname(fileURLToPath(import.meta.url)),
   "..",
   "..",

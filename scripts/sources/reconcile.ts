@@ -2,7 +2,13 @@ import { readFileSync } from "fs";
 import { join, resolve } from "path";
 import type { Job } from "../../src/lib/db";
 import type { SourceAssessment } from "./health";
-import { bambooHrSource, leverSource } from "./registry";
+import { boardLinkPostingId } from "./adapters/icims";
+import {
+  bambooHrSource,
+  icimsDavidsonSource,
+  icimsOvgSource,
+  leverSource,
+} from "./registry";
 import { REPOSITORY_ROOT, writeAllowedFile } from "./review-csv";
 import {
   loadSourcesState,
@@ -119,7 +125,8 @@ function bambooHrPostingId(link: URL): string | null {
 }
 
 interface CoveredSource {
-  // The identifier a health assessment carries for the source.
+  // The identifier a health assessment carries for the source, which names one
+  // employer's listing rather than the adapter that reads it.
   sourceId: string;
   // The namespace the posting key is recorded under.
   accountId: string;
@@ -131,14 +138,25 @@ interface CoveredSource {
 // adapter reads, and every one of those claims would be a guess.
 const COVERED_SOURCES: readonly CoveredSource[] = [
   {
-    sourceId: leverSource.adapter.id,
+    sourceId: leverSource.sourceId,
     accountId: leverSource.accountId,
     postingIdFor: leverPostingId,
   },
   {
-    sourceId: bambooHrSource.adapter.id,
+    sourceId: bambooHrSource.sourceId,
     accountId: bambooHrSource.accountId,
     postingIdFor: bambooHrPostingId,
+  },
+  {
+    sourceId: icimsOvgSource.sourceId,
+    accountId: icimsOvgSource.accountId,
+    postingIdFor: (link) => boardLinkPostingId(icimsOvgSource.config, link),
+  },
+  {
+    sourceId: icimsDavidsonSource.sourceId,
+    accountId: icimsDavidsonSource.accountId,
+    postingIdFor: (link) =>
+      boardLinkPostingId(icimsDavidsonSource.config, link),
   },
 ];
 

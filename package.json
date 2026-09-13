@@ -13,7 +13,8 @@
     "import-csv": "tsx scripts/import-csv.ts",
     "fetch-csv": "curl -sL 'https://docs.google.com/spreadsheets/d/16sDYemc_Sn6gRM-cRiT1sEL1U-GJdhqcqmy_k5Z1M3Y/export?format=csv&gid=0' | tail -n +4 > slt-jobs.csv",
     "sources:lever": "tsx scripts/sources/lever-cli.ts",
-    "sources:bamboohr": "tsx scripts/sources/bamboohr-cli.ts"
+    "sources:bamboohr": "tsx scripts/sources/bamboohr-cli.ts",
+    "sources:lever:review": "tsx scripts/sources/lever-cli.ts --write-review"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.1",
@@ -23,6 +24,7 @@
     "astro": "^5.16.2",
     "better-sqlite3": "^12.4.6",
     "csv-parse": "^6.1.0",
+    "csv-stringify": "^6.8.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "robots-parser": "^3.0.1"

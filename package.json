@@ -23,7 +23,8 @@
     "better-sqlite3": "^12.4.6",
     "csv-parse": "^6.1.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "robots-parser": "^3.0.1"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",

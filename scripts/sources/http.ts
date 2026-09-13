@@ -106,6 +106,21 @@ function releaseSlot(): void {
   requestsInFlight -= 1;
 }
 
+// A robots.txt path rule one source is permitted to ignore, carrying the reason
+// in the registry beside it. There is deliberately no global switch: an override
+// reaches exactly the source that declares it, and covers path permission only,
+// never the crawl delay, the per-host serialization, or the request budgets.
+export interface RobotsOverride {
+  reason: string;
+}
+
+export interface RequestOptions {
+  method?: "GET" | "POST";
+  body?: string;
+  contentType?: string;
+  robotsOverride?: RobotsOverride;
+}
+
 type Attempt =
   | { ok: true; body: string }
   | { ok: false; retryable: boolean; status?: number; error: Error };
@@ -116,11 +131,20 @@ function isRetryableStatus(status: number): boolean {
   return status === 429 || status >= 500;
 }
 
-async function attempt(url: string): Promise<Attempt> {
+async function attempt(url: string, options: RequestOptions): Promise<Attempt> {
+  const method = options.method ?? "GET";
   let response: Response;
   try {
     response = await fetch(url, {
-      headers: { "User-Agent": USER_AGENT },
+      method,
+      headers:
+        options.body === undefined
+          ? { "User-Agent": USER_AGENT }
+          : {
+              "User-Agent": USER_AGENT,
+              "Content-Type": options.contentType ?? "application/json",
+            },
+      body: options.body,
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
   } catch (error) {
@@ -132,7 +156,7 @@ async function attempt(url: string): Promise<Attempt> {
       ok: false,
       retryable: isRetryableStatus(response.status),
       status: response.status,
-      error: new Error(`GET ${url} returned HTTP ${response.status}`),
+      error: new Error(`${method} ${url} returned HTTP ${response.status}`),
     };
   }
 
@@ -154,7 +178,11 @@ function spendBudget(state: HostState, url: string): void {
   runRequestCount += 1;
 }
 
-async function politeAttempt(state: HostState, url: string): Promise<Attempt> {
+async function politeAttempt(
+  state: HostState,
+  url: string,
+  options: RequestOptions = {},
+): Promise<Attempt> {
   spendBudget(state, url);
 
   // Reading the delay here rather than at the end of the previous request lets
@@ -166,7 +194,7 @@ async function politeAttempt(state: HostState, url: string): Promise<Attempt> {
 
   await acquireSlot();
   try {
-    return await attempt(url);
+    return await attempt(url, options);
   } finally {
     // Measured from the end of one request so the quiet period is the full
     // delay whatever the host's response time.
@@ -175,12 +203,16 @@ async function politeAttempt(state: HostState, url: string): Promise<Attempt> {
   }
 }
 
-async function fetchWithRetry(state: HostState, url: string): Promise<Attempt> {
-  const first = await politeAttempt(state, url);
+async function fetchWithRetry(
+  state: HostState,
+  url: string,
+  options: RequestOptions = {},
+): Promise<Attempt> {
+  const first = await politeAttempt(state, url, options);
   if (first.ok || !first.retryable) {
     return first;
   }
-  return politeAttempt(state, url);
+  return politeAttempt(state, url, options);
 }
 
 function crawlDelayMs(robots: Robots | null): number {
@@ -226,7 +258,11 @@ function ruleAtLine(robotsText: string, lineNumber: number): string {
   return line === undefined ? "an unrecorded rule" : line.trim();
 }
 
-function assertAllowed(state: HostState, url: string): void {
+function assertAllowed(
+  state: HostState,
+  url: string,
+  override: RobotsOverride | undefined,
+): void {
   const robots = state.robots;
   // robots-parser answers true when no rule matches the path, and undefined
   // only for a URL belonging to another origin, which cannot reach this state.
@@ -238,6 +274,16 @@ function assertAllowed(state: HostState, url: string): void {
     state.robotsText,
     robots.getMatchingLineNumber(url, USER_AGENT),
   );
+
+  if (override !== undefined) {
+    // Announced on every run that uses one. An override nobody sees is an
+    // override that becomes a habit.
+    console.warn(
+      `robots.txt at ${state.origin} forbids ${url} (rule: "${rule}"). Fetching anyway under an override recorded for this source: ${override.reason}`,
+    );
+    return;
+  }
+
   throw new RobotsDisallowedError(
     `robots.txt at ${state.origin} forbids ${url} (rule: "${rule}"). This source is out of scope until the operator grants access.`,
   );
@@ -250,14 +296,17 @@ function enqueue<T>(state: HostState, task: () => Promise<T>): Promise<T> {
   return result;
 }
 
-export async function fetchText(url: string): Promise<string> {
+export async function fetchText(
+  url: string,
+  options: RequestOptions = {},
+): Promise<string> {
   const state = hostStateFor(new URL(url).origin);
 
   return enqueue(state, async () => {
     await loadRobots(state);
-    assertAllowed(state, url);
+    assertAllowed(state, url, options.robotsOverride);
 
-    const result = await fetchWithRetry(state, url);
+    const result = await fetchWithRetry(state, url, options);
     if (!result.ok) {
       throw result.error;
     }

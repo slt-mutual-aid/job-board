@@ -18,6 +18,7 @@ import {
   oracleCaesarsSource,
   oracleRaleysSource,
   sources,
+  ukgSource,
 } from "./registry";
 import {
   REPOSITORY_ROOT,
@@ -40,6 +41,12 @@ const LEVER_ID = leverSource.sourceId;
 const BAMBOOHR_ID = bambooHrSource.sourceId;
 const ORACLE_CAESARS_ID = oracleCaesarsSource.sourceId;
 const ORACLE_RALEYS_ID = oracleRaleysSource.sourceId;
+const UKG_ID = ukgSource.sourceId;
+
+function ukgLink(postingId: string): string {
+  const { tenant, jobBoardId } = ukgSource.config;
+  return `https://recruiting.ultipro.com/${tenant}/JobBoard/${jobBoardId}/OpportunityDetail?opportunityId=${postingId}`;
+}
 
 // The career site writes a posting page in both of these shapes, and the board
 // carries rows in each.
@@ -159,6 +166,11 @@ describe("board row matching", () => {
       ORACLE_RALEYS_ID,
       "16143",
     ],
+    [
+      ukgLink("a127e612-9821-4a77-be3b-bf13bf388762"),
+      UKG_ID,
+      "a127e612-9821-4a77-be3b-bf13bf388762",
+    ],
   ];
 
   it.each(covered)(
@@ -185,6 +197,9 @@ describe("board row matching", () => {
     "https://jobs.lever.co/someoneelse/9176727b-af98-4eb0-a1aa-980f826d9c92",
     "https://other.bamboohr.com/careers/34",
     "https://careers-someoneelse.icims.com/jobs/33051/banquet-server/job",
+    // Another UKG customer, and another job board of the same customer.
+    `https://recruiting.ultipro.com/OTH1000OTHR/JobBoard/${ukgSource.config.jobBoardId}/OpportunityDetail?opportunityId=a127e612-9821-4a77-be3b-bf13bf388762`,
+    `https://recruiting.ultipro.com/${ukgSource.config.tenant}/JobBoard/00000000-0000-0000-0000-000000000000/OpportunityDetail?opportunityId=a127e612-9821-4a77-be3b-bf13bf388762`,
     // A third employer on Oracle HCM Cloud, on a host neither config names.
     "https://other.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/85594/",
     // The internal candidate site on a covered host, which lists postings this
@@ -196,6 +211,7 @@ describe("board row matching", () => {
     "https://careers-ovg.icims.com/jobs/33051/banquet-server",
     `https://${bambooHrSource.config.subdomain}.bamboohr.com/careers/34/detail`,
     `https://${bambooHrSource.config.subdomain}.bamboohr.com/careers/list`,
+    ukgLink(""),
     `https://${oracleCaesarsSource.config.host}/hcmUI/CandidateExperience/en/sites/CX_1/job/`,
     `https://${oracleCaesarsSource.config.host}/hcmUI/CandidateExperience/en/sites/CX_1/job/not-a-number/`,
     "not a url",
@@ -236,6 +252,7 @@ describe("board row matching", () => {
       ...icimsDavidsonSource.config.linkHosts,
       oracleCaesarsSource.config.host,
       oracleRaleysSource.config.host,
+      "recruiting.ultipro.com",
     ];
 
     const matched = rows.filter((row) => matchBoardRow(row) !== null);

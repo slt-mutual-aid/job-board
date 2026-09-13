@@ -2,6 +2,7 @@ import { leverAdapter, type LeverConfig } from "./adapters/lever";
 import { bambooHrAdapter, type BambooHrConfig } from "./adapters/bamboohr";
 import { icimsAdapter, type IcimsConfig } from "./adapters/icims";
 import { createOracleAdapter, type OracleConfig } from "./adapters/oracle";
+import { ukgAdapter, type UkgConfig } from "./adapters/ukg";
 
 const leverConfig: LeverConfig = {
   company: "insomniacookies",
@@ -50,6 +51,19 @@ const oracleRaleysConfig: OracleConfig = {
   siteNumber: "CX_1",
   locationFacet: "300000002154145",
   location: "South Lake Tahoe, CA, United States",
+};
+
+const ukgConfig: UkgConfig = {
+  tenant: "TWI1006TRWH",
+  jobBoardId: "b9cc79c4-75a2-4800-8508-16504f7a2d90",
+  // Bally's Lake Tahoe stands in Stateline, Nevada, and shares one job board
+  // with the rest of a national company.
+  city: "Stateline",
+  state: "NV",
+  robotsOverride: {
+    reason:
+      "recruiting.ultipro.com allows */JobBoard/ and then forbids */JobBoardView, which is where the search carrying the postings lives. The operator of this board reads it anyway: robots.txt is a convention rather than law, the board is a volunteer project serving one town, and a run is nine requests at the same crawl delay every other source keeps.",
+  },
 };
 
 // sourceId names one employer's listing, which is what a health record, a
@@ -105,6 +119,13 @@ export const oracleRaleysSource = {
   accountId: `oracle:${oracleRaleysConfig.host}`,
 };
 
+export const ukgSource = {
+  adapter: ukgAdapter,
+  config: ukgConfig,
+  sourceId: "ukg:ballys",
+  accountId: `ukg:${ukgConfig.tenant}`,
+};
+
 // Every source this project reads. A source missing from this list is a source
 // the shared contract test never runs against.
 export const sources = [
@@ -114,4 +135,5 @@ export const sources = [
   icimsDavidsonSource,
   oracleCaesarsSource,
   oracleRaleysSource,
+  ukgSource,
 ];

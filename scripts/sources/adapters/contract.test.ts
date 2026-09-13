@@ -18,8 +18,8 @@ function fixture(path: string): string {
 const leverListing = fixture("lever-insomnia/listing.json");
 const bambooHrListing = fixture("bamboohr-vra/listing.json");
 const bambooHrDetail = fixture("bamboohr-vra/detail-32.json");
-const icimsOvgListing = fixture("icims-ovg/listing.html");
-const icimsDavidsonListing = fixture("icims-davidson/listing.html");
+const icimsOvgListing = fixture("icims-ovg/listing.html.txt");
+const icimsDavidsonListing = fixture("icims-davidson/listing.html.txt");
 
 function leverAtFarLocation(): string {
   const decoded = JSON.parse(leverListing) as Array<{
@@ -80,7 +80,7 @@ const contracted = [
     fixtures: {
       listing: icimsOvgListing,
       farLocation: icimsAtFarLocation(icimsOvgListing, "US-NV-Stateline"),
-      empty: fixture("icims-ovg/empty.html"),
+      empty: fixture("icims-ovg/empty.html.txt"),
       // Cut after the page header and before the job table closes, which is
       // the read that would otherwise report a page of postings as a few.
       truncated: icimsOvgListing.slice(0, 50000),
@@ -95,7 +95,7 @@ const contracted = [
         icimsDavidsonListing,
         "US-CA-South Lake Tahoe",
       ),
-      empty: fixture("icims-davidson/empty.html"),
+      empty: fixture("icims-davidson/empty.html.txt"),
       truncated: icimsDavidsonListing.slice(0, 45000),
       renamedContainer: icimsUnderRenamedContainer(icimsDavidsonListing),
       // The Davidson account publishes no posted date on a card or on a

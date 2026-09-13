@@ -35,8 +35,8 @@ function fixture(name: string): string {
   );
 }
 
-const ovgListing = fixture("icims-ovg/listing.html");
-const davidsonListing = fixture("icims-davidson/listing.html");
+const ovgListing = fixture("icims-ovg/listing.html.txt");
+const davidsonListing = fixture("icims-davidson/listing.html.txt");
 
 describe("listingUrl", () => {
   it("asks for the listing rather than the consent wrapper", () => {
@@ -98,7 +98,10 @@ describe("parseListing", () => {
   });
 
   it("reads the recorded no-results page as genuinely empty", () => {
-    for (const name of ["icims-ovg/empty.html", "icims-davidson/empty.html"]) {
+    for (const name of [
+      "icims-ovg/empty.html.txt",
+      "icims-davidson/empty.html.txt",
+    ]) {
       expect(parseListing(fixture(name))).toEqual({
         entries: [],
         confirmedEmpty: true,

@@ -1,0 +1,3179 @@
+{
+  "opportunities": [
+    {
+      "Id": "110c6259-f5e3-4ebe-b10c-dec020bed0cb",
+      "Featured": false,
+      "Title": "Cashier - Cage",
+      "RequisitionNumber": "CASHI012008",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Cage",
+      "Locations": [
+        {
+          "Id": "43fac945-14c3-5cd6-bc4c-d1638bb00992",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "DraftKings at CQ",
+          "Address": {
+            "Line1": "200 Front St",
+            "Line2": null,
+            "City": "East Saint Louis",
+            "PostalCode": "62201",
+            "State": {
+              "Code": "IL",
+              "Name": "Illinois"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 38.626127763943,
+            "Longitude": -90.174952237948
+          }
+        }
+      ],
+      "PostedDate": "2026-09-13T17:14:57.878Z",
+      "BriefDescription": "The Cage Cashier is responsible for conducting monetary transactions for patrons, table games and slots departments in a timely, friendly, and enthusiastic manner.  The Cage Cashier position interacts directly with patrons and is expected to meet standards of exceptional service at all times.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "5b181180-ea2b-419a-90dc-259dbf6b4869",
+      "Featured": false,
+      "Title": "Assistant Shift Manager - Cage",
+      "RequisitionNumber": "ASSIS011816",
+      "FullTime": true,
+      "JobCategoryName": "Marketing - Players Club",
+      "Locations": [
+        {
+          "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Hard Rock Hotel & Casinos",
+          "Address": {
+            "Line1": "777 Beach Blvd",
+            "Line2": null,
+            "City": "Biloxi",
+            "PostalCode": "39530",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.392909493077294,
+            "Longitude": -88.88834728942865
+          }
+        }
+      ],
+      "PostedDate": "2026-09-11T21:26:24.958Z",
+      "BriefDescription": "Operates the Player Services Department during assigned shift to include effective scheduling, completion of all necessary accountability/compliance duties and paperwork to ensure effective service and coordination.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "90039263-82ac-4cea-9179-1c1e60235e1d",
+      "Featured": false,
+      "Title": "Specialist - Database Marketing",
+      "RequisitionNumber": "SPECI012007",
+      "FullTime": true,
+      "JobCategoryName": "Marketing - Database",
+      "Locations": [
+        {
+          "Id": "b313cf1e-08a5-5011-b227-0b9fd70ac269",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Black Hawk",
+          "Address": {
+            "Line1": "300 Main St",
+            "Line2": null,
+            "City": "Black Hawk",
+            "PostalCode": "80422",
+            "State": {
+              "Code": "CO",
+              "Name": "Colorado"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.79909606039547,
+            "Longitude": -105.48932372577518
+          }
+        }
+      ],
+      "PostedDate": "2026-09-11T20:29:07.17Z",
+      "BriefDescription": "The Marketing Database Specialist supports the casino’s player development, loyalty, direct marketing, and promotional strategies by maintaining accurate guest data, building targeted campaign lists, analyzing player behavior, and producing reports that help drive visitation, retention, reinvestment, and revenue.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "931b952b-7891-4702-8c7e-60a3e7d5fbde",
+      "Featured": false,
+      "Title": "Cook II - Cavanaughs",
+      "RequisitionNumber": "COOKI012005",
+      "FullTime": true,
+      "JobCategoryName": "Food - Back of House",
+      "Locations": [
+        {
+          "Id": "ce965eb1-9855-5c37-a13c-4e50f4ec3c35",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Evansville",
+          "Address": {
+            "Line1": "421 NW Riverside Dr",
+            "Line2": null,
+            "City": "Evansville",
+            "PostalCode": "47708",
+            "State": {
+              "Code": "IN",
+              "Name": "Indiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 37.97257526756719,
+            "Longitude": -87.57857452961152
+          }
+        }
+      ],
+      "PostedDate": "2026-09-11T18:02:09.326Z",
+      "BriefDescription": "To prepare all hot and cold food items for service in the food and beverage outlets ensuring that all are prepared according to the company’s standards and specifications.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "15b8b485-db21-4e2e-9a60-1c995c490c8b",
+      "Featured": false,
+      "Title": "Table Games - Dealer PT",
+      "RequisitionNumber": "TABLE012004",
+      "FullTime": false,
+      "JobCategoryName": "Gaming - Table Games",
+      "Locations": [
+        {
+          "Id": "b0481720-5fbe-5452-b84a-70c84b10f5d8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Atlantic City",
+          "Address": {
+            "Line1": "1900 Pacific Ave",
+            "Line2": null,
+            "City": "Atlantic City",
+            "PostalCode": "08401",
+            "State": {
+              "Code": "NJ",
+              "Name": "New Jersey"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.357744494465535,
+            "Longitude": -74.43394047182923
+          }
+        }
+      ],
+      "PostedDate": "2026-09-11T17:58:45.791Z",
+      "BriefDescription": "Table Games Dealer Exchanges cash for gaming chips according to procedure and deals card games while providing excellent customer service.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "693202ba-dfd4-4c2d-82fe-9a93df5cbf1e",
+      "Featured": false,
+      "Title": "Cage - Main Banker Overnight (Full Time)",
+      "RequisitionNumber": "CAGEM012003",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Cage",
+      "Locations": [
+        {
+          "Id": "b313cf1e-08a5-5011-b227-0b9fd70ac269",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Black Hawk",
+          "Address": {
+            "Line1": "300 Main St",
+            "Line2": null,
+            "City": "Black Hawk",
+            "PostalCode": "80422",
+            "State": {
+              "Code": "CO",
+              "Name": "Colorado"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.79909606039547,
+            "Longitude": -105.48932372577518
+          }
+        }
+      ],
+      "PostedDate": "2026-09-11T16:26:10.042Z",
+      "BriefDescription": "Operates main banks and serves as central source of cash and cash equivalents for the Company and patrons.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "602049eb-93a4-42eb-97a6-499ce382db4b",
+      "Featured": false,
+      "Title": "Manager - Warehouse",
+      "RequisitionNumber": "MANAG011998",
+      "FullTime": true,
+      "JobCategoryName": "Operations - Warehouse and Receiving",
+      "Locations": [
+        {
+          "Id": "21291367-98fe-5f49-950e-1ed833c71df2",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Quad Cities",
+          "Address": {
+            "Line1": "777 Bally Blvd",
+            "Line2": null,
+            "City": "Rock Island",
+            "PostalCode": "61201",
+            "State": {
+              "Code": "IL",
+              "Name": "Illinois"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.50515498363317,
+            "Longitude": -90.57283152885454
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T22:43:55.568Z",
+      "BriefDescription": "As a Warehouse Manager, you will be planning, directing, organizing, and controlling warehouse activities for the company.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "cc8b9287-dcf7-4e25-979e-bc21275fe22f",
+      "Featured": false,
+      "Title": "Host Person - Sports Bar",
+      "RequisitionNumber": "HOSTP011997",
+      "FullTime": false,
+      "JobCategoryName": "Food - Front of House",
+      "Locations": [
+        {
+          "Id": "21291367-98fe-5f49-950e-1ed833c71df2",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Quad Cities",
+          "Address": {
+            "Line1": "777 Bally Blvd",
+            "Line2": null,
+            "City": "Rock Island",
+            "PostalCode": "61201",
+            "State": {
+              "Code": "IL",
+              "Name": "Illinois"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.50515498363317,
+            "Longitude": -90.57283152885454
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T22:16:59.167Z",
+      "BriefDescription": "As a Sports Bar Host, you will greet and seat guest in a positive, welcoming manner as they arrive and depart Bally's Sports Bar, take reservations and create daily pre-assigned seating arrangements.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "64adcc56-93d5-4cf8-85e6-355a718956c2",
+      "Featured": false,
+      "Title": "Facilities Tech I (Full Time)",
+      "RequisitionNumber": "FACIL011996",
+      "FullTime": true,
+      "JobCategoryName": "Operations - Maintenance",
+      "Locations": [
+        {
+          "Id": "f0d2028f-83af-552c-8abd-8d42c38ade65",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Lake Tahoe",
+          "Address": {
+            "Line1": "55 US 50",
+            "Line2": null,
+            "City": "Stateline",
+            "PostalCode": "89449",
+            "State": {
+              "Code": "NV",
+              "Name": "Nevada"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 38.96248287120424,
+            "Longitude": -119.93981294771987
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T21:30:47.188Z",
+      "BriefDescription": "SUMMARY: The Maintenance Person is responsible for providing maintenance to the property as required, through project assignments or work orders.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "d2426c38-34c7-484d-8600-c283f4432149",
+      "Featured": true,
+      "Title": "Representative - Count Room",
+      "RequisitionNumber": "REPRE011995",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Count",
+      "Locations": [
+        {
+          "Id": "cb82e3ee-41a4-527d-9f0f-7bd4e69b780f",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Dover",
+          "Address": {
+            "Line1": "1131 N Dupont Hwy",
+            "Line2": null,
+            "City": "Dover",
+            "PostalCode": "19901",
+            "State": {
+              "Code": "DE",
+              "Name": "Delaware"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.186981206120464,
+            "Longitude": -75.53719823855417
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T20:41:52.506Z",
+      "BriefDescription": "Participates in the Count operations including the daily currency drops and subsequent currency processing.  Responsible for the collection, sorting, counting and recording of gaming results and the overall operation and maintenance of the Count Room and currency counting equipment.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "d180f905-48a0-4796-a8c0-81b1124d2bd7",
+      "Featured": false,
+      "Title": "Director - Food and Beverage",
+      "RequisitionNumber": "DIREC011993",
+      "FullTime": true,
+      "JobCategoryName": "Administration",
+      "Locations": [
+        {
+          "Id": "9b9fddec-e825-5417-b55d-57d89d3d9d65",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Shreveport",
+          "Address": {
+            "Line1": "451 Clyde Fant Pkwy",
+            "Line2": null,
+            "City": "Shreveport",
+            "PostalCode": "71101",
+            "State": {
+              "Code": "LA",
+              "Name": "Louisiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 32.51699164590394,
+            "Longitude": -93.74477939906221
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T20:01:32.106Z",
+      "BriefDescription": "The Role: To oversee all daily operations of the food and beverage department.  Monitor, adjust and forecast cost and expenses to maintain the departmental budget.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "568d3deb-becd-40e9-b7ea-b3030c7b6b79",
+      "Featured": true,
+      "Title": "Auditor - Revenue",
+      "RequisitionNumber": "AUDIT011820",
+      "FullTime": true,
+      "JobCategoryName": "Finance - Audit",
+      "Locations": [
+        {
+          "Id": "8eb73d5d-39c1-5a84-85d7-2dc216953a27",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Chicago",
+          "Address": {
+            "Line1": "763 W Chicago Ave",
+            "Line2": null,
+            "City": "Chicago",
+            "PostalCode": "60654",
+            "State": {
+              "Code": "IL",
+              "Name": "Illinois"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.89640281726219,
+            "Longitude": -87.64687946781898
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T19:37:42.094Z",
+      "BriefDescription": "As a Revenue Auditor, you will perform daily audits of gaming and non-gaming revenues, reconcile financial records, complete audit checklists, and help ensure accurate and compliant revenue reporting.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "4b438190-9077-469e-bd0a-550a40ea3bfb",
+      "Featured": false,
+      "Title": "Food Runner - Noodle Bar",
+      "RequisitionNumber": "FOODR011992",
+      "FullTime": false,
+      "JobCategoryName": "Food - Front of House",
+      "Locations": [
+        {
+          "Id": "9b9fddec-e825-5417-b55d-57d89d3d9d65",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Shreveport",
+          "Address": {
+            "Line1": "451 Clyde Fant Pkwy",
+            "Line2": null,
+            "City": "Shreveport",
+            "PostalCode": "71101",
+            "State": {
+              "Code": "LA",
+              "Name": "Louisiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 32.51699164590394,
+            "Longitude": -93.74477939906221
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T19:31:44.259Z",
+      "BriefDescription": "Provides helpful and courteous service to all guests throughout their dining experience. Maintain cleanliness and quality of food and work area.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "b9a9d138-a5b9-4275-96fc-f5bc185d5286",
+      "Featured": true,
+      "Title": "Manager - Food and Beverage - Tiverton",
+      "RequisitionNumber": "MANAG011990",
+      "FullTime": true,
+      "JobCategoryName": "Food - Administration",
+      "Locations": [
+        {
+          "Id": "d1ab0a4f-68b7-5dbf-a43f-f2f3f252d08a",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Tiverton",
+          "Address": {
+            "Line1": "777 Tiverton Casino Blvd",
+            "Line2": null,
+            "City": "Tiverton",
+            "PostalCode": "02878",
+            "State": {
+              "Code": "RI",
+              "Name": "Rhode Island"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.66551900368894,
+            "Longitude": -71.18490150392964
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T18:20:18.355Z",
+      "BriefDescription": "The Manager is responsible for assisting the Regional Food & Beverage Manager with the current operations in accordance with established standards and procedures. Increase sales by ensuring memorable guest experiences that create a sense of value and great customer service. Optimizes profits by assisting in controlling cost of goods and labor. Supervises operations and ensures that all standards for quality and service are met.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "c5538bb6-1405-4d68-bd14-7a84361f7050",
+      "Featured": true,
+      "Title": "Dishwasher - Banquets",
+      "RequisitionNumber": "DISHW011989",
+      "FullTime": false,
+      "JobCategoryName": "Food - Back of House",
+      "Locations": [
+        {
+          "Id": "664a575c-56ad-5fd8-a57f-f1715267454f",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Lincoln",
+          "Address": {
+            "Line1": "100 Twin River Rd",
+            "Line2": null,
+            "City": "Lincoln",
+            "PostalCode": "02865",
+            "State": {
+              "Code": "RI",
+              "Name": "Rhode Island"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.89072899910654,
+            "Longitude": -71.45576870697184
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T16:36:41.48Z",
+      "BriefDescription": "Dishwasher’s duties range from washing dishes and cleaning and organizing all the kitchen and dish room areas to helping the cooks in transportation of raw products.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "9339f53f-7f7a-43cc-8801-fcc7b8e7b684",
+      "Featured": true,
+      "Title": "Table Games Floor Manager",
+      "RequisitionNumber": "TABLE011846",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Table Games",
+      "Locations": [
+        {
+          "Id": "8eb73d5d-39c1-5a84-85d7-2dc216953a27",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Chicago",
+          "Address": {
+            "Line1": "763 W Chicago Ave",
+            "Line2": null,
+            "City": "Chicago",
+            "PostalCode": "60654",
+            "State": {
+              "Code": "IL",
+              "Name": "Illinois"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.89640281726219,
+            "Longitude": -87.64687946781898
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T16:28:34.512Z",
+      "BriefDescription": "As a Table Games Floor (Pit) Manager, you will be responsible for the overall management of multiple casino table games while on duty. You will review spread and staffing levels. In addition, you will ensure compliance with all applicable regulations.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "bd81cea1-7736-4ffb-868f-afe591109d47",
+      "Featured": true,
+      "Title": "Table Games Dealer (Full-Time Experienced Dealer)",
+      "RequisitionNumber": "TABLE011229",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Table Games",
+      "Locations": [
+        {
+          "Id": "8eb73d5d-39c1-5a84-85d7-2dc216953a27",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Chicago",
+          "Address": {
+            "Line1": "763 W Chicago Ave",
+            "Line2": null,
+            "City": "Chicago",
+            "PostalCode": "60654",
+            "State": {
+              "Code": "IL",
+              "Name": "Illinois"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.89640281726219,
+            "Longitude": -87.64687946781898
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T16:28:13.432Z",
+      "BriefDescription": "Conduct table games with customers according to casino policies and procedures.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "1f6f43b1-2085-4f84-9862-78d457b9b443",
+      "Featured": true,
+      "Title": "Supervisor - Table Games",
+      "RequisitionNumber": "SUPER011228",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Table Games",
+      "Locations": [
+        {
+          "Id": "8eb73d5d-39c1-5a84-85d7-2dc216953a27",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Chicago",
+          "Address": {
+            "Line1": "763 W Chicago Ave",
+            "Line2": null,
+            "City": "Chicago",
+            "PostalCode": "60654",
+            "State": {
+              "Code": "IL",
+              "Name": "Illinois"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.89640281726219,
+            "Longitude": -87.64687946781898
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T16:27:44.05Z",
+      "BriefDescription": "As a Table Games Supervisor, you will ensure integrity and compliance with all company and departmental policies and procedures and state regulations as it relates to this position.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "10814f67-2cbe-4f0e-9f81-0d0150993f17",
+      "Featured": false,
+      "Title": "Promotions and Events Rep- On Call",
+      "RequisitionNumber": "PROMO011985",
+      "FullTime": false,
+      "JobCategoryName": "Marketing - Promotions",
+      "Locations": [
+        {
+          "Id": "b0481720-5fbe-5452-b84a-70c84b10f5d8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Atlantic City",
+          "Address": {
+            "Line1": "1900 Pacific Ave",
+            "Line2": null,
+            "City": "Atlantic City",
+            "PostalCode": "08401",
+            "State": {
+              "Code": "NJ",
+              "Name": "New Jersey"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.357744494465535,
+            "Longitude": -74.43394047182923
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T15:03:54.142Z",
+      "BriefDescription": "Promotions and Events Rep Assists in the planning and implementation of marketing events.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "52d93e21-b055-4047-84a7-1a19215f1bbf",
+      "Featured": false,
+      "Title": "Host - Casino Senior",
+      "RequisitionNumber": "HOSTC011983",
+      "FullTime": true,
+      "JobCategoryName": "Marketing - Player Development",
+      "Locations": [
+        {
+          "Id": "ce965eb1-9855-5c37-a13c-4e50f4ec3c35",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Evansville",
+          "Address": {
+            "Line1": "421 NW Riverside Dr",
+            "Line2": null,
+            "City": "Evansville",
+            "PostalCode": "47708",
+            "State": {
+              "Code": "IN",
+              "Name": "Indiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 37.97257526756719,
+            "Longitude": -87.57857452961152
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T14:07:31.18Z",
+      "BriefDescription": "Responsible for the membership, retention, and development of the player database through the building of relationships with players.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "3185c5ac-5f6e-4109-af3b-c821bc5c8630",
+      "Featured": false,
+      "Title": "Coordinator - Events and Promotions",
+      "RequisitionNumber": "COORD011982",
+      "FullTime": true,
+      "JobCategoryName": "Marketing - Promotions",
+      "Locations": [
+        {
+          "Id": "ce965eb1-9855-5c37-a13c-4e50f4ec3c35",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Evansville",
+          "Address": {
+            "Line1": "421 NW Riverside Dr",
+            "Line2": null,
+            "City": "Evansville",
+            "PostalCode": "47708",
+            "State": {
+              "Code": "IN",
+              "Name": "Indiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 37.97257526756719,
+            "Longitude": -87.57857452961152
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T13:56:01.89Z",
+      "BriefDescription": "Prepares all required documentation for the Indiana Gaming Commission for events. Facilitates all events \nwithin the Indiana Gaming Commission guidelines.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "a9b54ab2-b576-4a08-92b3-2d254baf8388",
+      "Featured": false,
+      "Title": "Table Games - Trainee Dealer",
+      "RequisitionNumber": "TABLE011981",
+      "FullTime": false,
+      "JobCategoryName": "Administration",
+      "Locations": [
+        {
+          "Id": "ce965eb1-9855-5c37-a13c-4e50f4ec3c35",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Evansville",
+          "Address": {
+            "Line1": "421 NW Riverside Dr",
+            "Line2": null,
+            "City": "Evansville",
+            "PostalCode": "47708",
+            "State": {
+              "Code": "IN",
+              "Name": "Indiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 37.97257526756719,
+            "Longitude": -87.57857452961152
+          }
+        }
+      ],
+      "PostedDate": "2026-09-10T13:47:40.887Z",
+      "BriefDescription": "Candidates will learn to deal the game of Blackjack during on the job training. The course will last approximately 80 to 120 hours. When training is completed, candidates must be able to deal the game proficiently enough to pass an audition, according to current policies and procedures set forth in the company’s Standard Operating Procedures and in accordance with Indiana Gaming Commission regulations. Candidates must be at least 21 years of age.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "e55b7b12-4bda-471d-9d2d-522f55e53005",
+      "Featured": false,
+      "Title": "Server - Food - Oyster Bar",
+      "RequisitionNumber": "SERVE010193",
+      "FullTime": true,
+      "JobCategoryName": "Food - Front of House",
+      "Locations": [
+        {
+          "Id": "3262ef48-c521-57b3-865b-5e35cd8867b1",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Belle of Baton Rouge",
+          "Address": {
+            "Line1": "103 France St",
+            "Line2": null,
+            "City": "Baton Rouge",
+            "PostalCode": "70802",
+            "State": {
+              "Code": "LA",
+              "Name": "Louisiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.442878082601,
+            "Longitude": -91.188920285175
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T20:12:05.276Z",
+      "BriefDescription": "The Food Servers are responsible for providing exceptional customer service to both our internal and external guests. A smile, kindness, courtesy, and industry knowledge are all pre-requisites of the job. Preparing and serving drinks, serving food, and managing a clean and organized workstation are the daily responsibilities for this position. Customer service, salesmanship, timeliness, and being a team player are the values that make our food servers and the property successful. Responsible for performing all duties according to company policies, procedures, Internal Controls, guidelines, and state alcohol laws.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "a57f2f90-524b-4723-806a-5cea64c1c7eb",
+      "Featured": false,
+      "Title": "Cook",
+      "RequisitionNumber": "COOK0011980",
+      "FullTime": true,
+      "JobCategoryName": "Food - Back of House",
+      "Locations": [
+        {
+          "Id": "3262ef48-c521-57b3-865b-5e35cd8867b1",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Belle of Baton Rouge",
+          "Address": {
+            "Line1": "103 France St",
+            "Line2": null,
+            "City": "Baton Rouge",
+            "PostalCode": "70802",
+            "State": {
+              "Code": "LA",
+              "Name": "Louisiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.442878082601,
+            "Longitude": -91.188920285175
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T20:11:32.583Z",
+      "BriefDescription": "A Cook safely prepare food items, following menu specifications and standard recipes, for service to guests in all outlets. In addition to providing outstanding guest service to internal and external guests.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "6ee4e9e0-ab68-47ab-bfa0-cad67180a57c",
+      "Featured": true,
+      "Title": "Cage Shift Manager",
+      "RequisitionNumber": "SHIFT011563",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Cage",
+      "Locations": [
+        {
+          "Id": "8eb73d5d-39c1-5a84-85d7-2dc216953a27",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Chicago",
+          "Address": {
+            "Line1": "763 W Chicago Ave",
+            "Line2": null,
+            "City": "Chicago",
+            "PostalCode": "60654",
+            "State": {
+              "Code": "IL",
+              "Name": "Illinois"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.89640281726219,
+            "Longitude": -87.64687946781898
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T18:49:28.702Z",
+      "BriefDescription": "As a Cage Shift Manager you will manage all cage operations. In addition, you will ensure the team adheres to company and state policies and regulatory requirements.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "62e81074-e1ed-4355-a565-c6f7fc4eb2ed",
+      "Featured": true,
+      "Title": "Manager - Financial Planning and Analysis",
+      "RequisitionNumber": "MANAG010363",
+      "FullTime": true,
+      "JobCategoryName": "Finance - Financial Planning and Analysis",
+      "Locations": [
+        {
+          "Id": "8eb73d5d-39c1-5a84-85d7-2dc216953a27",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Chicago",
+          "Address": {
+            "Line1": "763 W Chicago Ave",
+            "Line2": null,
+            "City": "Chicago",
+            "PostalCode": "60654",
+            "State": {
+              "Code": "IL",
+              "Name": "Illinois"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 41.89640281726219,
+            "Longitude": -87.64687946781898
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T18:48:37.447Z",
+      "BriefDescription": "As a Financial Planning and Analysis Manager, you will develop, implement, and manage short and long-term financial planning and analysis for the Company. You will also monitor the achievement of performance against profit objectives.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "03518ff3-191b-4bf7-a1dd-f35616dc5eec",
+      "Featured": false,
+      "Title": "Slot Attendant - (Full Time)",
+      "RequisitionNumber": "SLOTA011712",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Slots",
+      "Locations": [
+        {
+          "Id": "b313cf1e-08a5-5011-b227-0b9fd70ac269",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Black Hawk",
+          "Address": {
+            "Line1": "300 Main St",
+            "Line2": null,
+            "City": "Black Hawk",
+            "PostalCode": "80422",
+            "State": {
+              "Code": "CO",
+              "Name": "Colorado"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.79909606039547,
+            "Longitude": -105.48932372577518
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T18:03:16.939Z",
+      "BriefDescription": "$12.50/hour base rate plus guaranteed tips for up to $25 or more!\n\nThe Slot Attendant encourages new guest enrollments into the A-Play Club while acknowledging and maintain all aspects of slot related duties, such as identifying jackpots, generating documents through the online system and answering all guest questions.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "f83ea35a-37d9-456a-a720-45fbcb3c8663",
+      "Featured": false,
+      "Title": "Chef - Sous",
+      "RequisitionNumber": "CHEFS011977",
+      "FullTime": true,
+      "JobCategoryName": "Food - Back of House",
+      "Locations": [
+        {
+          "Id": "3262ef48-c521-57b3-865b-5e35cd8867b1",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Belle of Baton Rouge",
+          "Address": {
+            "Line1": "103 France St",
+            "Line2": null,
+            "City": "Baton Rouge",
+            "PostalCode": "70802",
+            "State": {
+              "Code": "LA",
+              "Name": "Louisiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.442878082601,
+            "Longitude": -91.188920285175
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T18:02:10.837Z",
+      "BriefDescription": "The Sous Chef supervises and coordinates activities of cooks and other culinary workers and manage the kitchen in the absence of the Executive Chef. In addition to providing outstanding guest service to internal and external guests.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "fbd2d220-2276-4e97-9a1c-fa4b1822f8f2",
+      "Featured": false,
+      "Title": "Supervisor - Food and Beverage",
+      "RequisitionNumber": "SUPER011976",
+      "FullTime": true,
+      "JobCategoryName": "Food - Administration",
+      "Locations": [
+        {
+          "Id": "3262ef48-c521-57b3-865b-5e35cd8867b1",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Belle of Baton Rouge",
+          "Address": {
+            "Line1": "103 France St",
+            "Line2": null,
+            "City": "Baton Rouge",
+            "PostalCode": "70802",
+            "State": {
+              "Code": "LA",
+              "Name": "Louisiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.442878082601,
+            "Longitude": -91.188920285175
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T17:58:10.026Z",
+      "BriefDescription": "The F&B Supervisor oversees the operation of the food and beverage outlets. They’re responsible for learning and communicating the various policies and procedure required of the F&B department and ensuring quality guest service and a favorable dining experience for guests. In addition to providing outstanding guest service to internal and external guests.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "4bd03334-9f2d-4230-8fc3-65fc28181b3e",
+      "Featured": false,
+      "Title": "EVS - Utility Grave",
+      "RequisitionNumber": "EVSUT011793",
+      "FullTime": false,
+      "JobCategoryName": "Hotel - Operations",
+      "Locations": [
+        {
+          "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Hard Rock Hotel & Casinos",
+          "Address": {
+            "Line1": "777 Beach Blvd",
+            "Line2": null,
+            "City": "Biloxi",
+            "PostalCode": "39530",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.392909493077294,
+            "Longitude": -88.88834728942865
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T16:41:11.913Z",
+      "BriefDescription": "Cleans and maintains the property’s public space – casino, lobbies, front drive, pool deck, spa/salon, elevators - ensuring guest comfort, safety, and satisfaction.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "5553f063-f651-4fa1-8309-0025224da2ea",
+      "Featured": false,
+      "Title": "Cashier - Double Down Bistro (Full Time)",
+      "RequisitionNumber": "CASHI011971",
+      "FullTime": true,
+      "JobCategoryName": "Food - Front of House",
+      "Locations": [
+        {
+          "Id": "b313cf1e-08a5-5011-b227-0b9fd70ac269",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Black Hawk",
+          "Address": {
+            "Line1": "300 Main St",
+            "Line2": null,
+            "City": "Black Hawk",
+            "PostalCode": "80422",
+            "State": {
+              "Code": "CO",
+              "Name": "Colorado"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.79909606039547,
+            "Longitude": -105.48932372577518
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T14:55:30.229Z",
+      "BriefDescription": "As the Food and Beverage Cashier, you will provide all of our guests with efficient and great quality food, drinks, and service.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "93f61bea-eb93-4487-a484-2f17037ec575",
+      "Featured": false,
+      "Title": "Security - Officer (Seasonal)",
+      "RequisitionNumber": "SECUR011970",
+      "FullTime": false,
+      "JobCategoryName": "Operations - Security",
+      "Locations": [
+        {
+          "Id": "2382c53e-9727-551c-9790-53ae258522f5",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Arapahoe Park",
+          "Address": {
+            "Line1": "26000 E Quincy Ave",
+            "Line2": null,
+            "City": "Aurora",
+            "PostalCode": "80016",
+            "State": {
+              "Code": "CO",
+              "Name": "Colorado"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.63832331140629,
+            "Longitude": -104.67924145084751
+          }
+        }
+      ],
+      "PostedDate": "2026-09-09T14:48:24.546Z",
+      "BriefDescription": "Conducts security operations at Bally's Arapahoe Park Horse Track , placing special emphasis on compliance with federal and state law, Colorado Division of Racing Regulations and Internal Control Minimum Procedures, and house policies and procedures.  Assists and supports the Supervisor through personal interactions and by supporting the operations of the many racing and non-racing facets of the security and racing operations.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "3749392f-3503-4f28-8b4e-5b4d81091e90",
+      "Featured": false,
+      "Title": "Hotel Front Office Clerk",
+      "RequisitionNumber": "HOTEL011968",
+      "FullTime": true,
+      "JobCategoryName": "Hotel - Front Office",
+      "Locations": [
+        {
+          "Id": "d4a889d8-4502-52e5-82ee-04d57c8b396c",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Vicksburg",
+          "Address": {
+            "Line1": "1380 Warrenton Rd",
+            "Line2": null,
+            "City": "Vicksburg",
+            "PostalCode": "39180",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 32.293652776188885,
+            "Longitude": -90.9128990583888
+          }
+        }
+      ],
+      "PostedDate": "2026-09-08T18:59:13.427Z",
+      "BriefDescription": "Front desk clerks are responsible for timely check-ins and check-outs. They maintain constant awareness of hotel occupancy. Answers telephones in a courteous, informative, and timely manner. Assists guest with luggage needs. Assist PBX with taking incoming phone calls when needed.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "f5f271d7-9dc4-419c-95f5-62bda396ef39",
+      "Featured": false,
+      "Title": "EVS - Utility Lead",
+      "RequisitionNumber": "EVSUT011967",
+      "FullTime": true,
+      "JobCategoryName": "Operations - Environmental Services",
+      "Locations": [
+        {
+          "Id": "d4a889d8-4502-52e5-82ee-04d57c8b396c",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Vicksburg",
+          "Address": {
+            "Line1": "1380 Warrenton Rd",
+            "Line2": null,
+            "City": "Vicksburg",
+            "PostalCode": "39180",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 32.293652776188885,
+            "Longitude": -90.9128990583888
+          }
+        }
+      ],
+      "PostedDate": "2026-09-08T18:53:26.356Z",
+      "BriefDescription": "The EVS Utility Lead is responsible for assisting the EVS Supervisor in guiding the activities of the EVS & Various  departments as subject to established company policies and local, state, and federal regulations. Completes a work schedule for assigned shift. Resolves problems that are within the position’s scope of authority and recommends courses of actions that are beyond the scope of authority to the department manager or appropriate shift supervisor.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "3da8b523-9261-4c67-878a-5cb6c799bcfc",
+      "Featured": false,
+      "Title": "Revenue Audit Clerk (Full Time)",
+      "RequisitionNumber": "REVEN011966",
+      "FullTime": true,
+      "JobCategoryName": "Finance - Revenue",
+      "Locations": [
+        {
+          "Id": "f2f61b69-8308-59cf-84c6-d31b67db9e08",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Kansas City",
+          "Address": {
+            "Line1": "1800 E Front St",
+            "Line2": null,
+            "City": "Kansas City",
+            "PostalCode": "64120",
+            "State": {
+              "Code": "MO",
+              "Name": "Missouri"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.121190143386556,
+            "Longitude": -94.56375671205002
+          }
+        }
+      ],
+      "PostedDate": "2026-09-08T17:01:23.685Z",
+      "BriefDescription": "Compile and audit revenue, records, and control documents. Prepare reports for all areas of casino operations.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "1c091ea0-2b31-4f01-b400-8c1684294d60",
+      "Featured": false,
+      "Title": "Marketing Coordinator (Full Time)",
+      "RequisitionNumber": "MARKE011949",
+      "FullTime": true,
+      "JobCategoryName": "Marketing - Administration",
+      "Locations": [
+        {
+          "Id": "f2f61b69-8308-59cf-84c6-d31b67db9e08",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Kansas City",
+          "Address": {
+            "Line1": "1800 E Front St",
+            "Line2": null,
+            "City": "Kansas City",
+            "PostalCode": "64120",
+            "State": {
+              "Code": "MO",
+              "Name": "Missouri"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.121190143386556,
+            "Longitude": -94.56375671205002
+          }
+        }
+      ],
+      "PostedDate": "2026-09-08T16:45:40.639Z",
+      "BriefDescription": "As a Marketing Coordinator, you will be the linchpin of our marketing efforts. You will play a vital role in planning, executing, and optimizing our marketing campaigns. Your ability to juggle multiple projects and your keen eye for detail will ensure our marketing initiatives run smoothly and effectively.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "e7f2f161-72ed-4fd9-a173-c87eefe40c79",
+      "Featured": false,
+      "Title": "Revenue Audit Supervisor",
+      "RequisitionNumber": "SUPER011582",
+      "FullTime": true,
+      "JobCategoryName": "Finance - Revenue",
+      "Locations": [
+        {
+          "Id": "f2f61b69-8308-59cf-84c6-d31b67db9e08",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Kansas City",
+          "Address": {
+            "Line1": "1800 E Front St",
+            "Line2": null,
+            "City": "Kansas City",
+            "PostalCode": "64120",
+            "State": {
+              "Code": "MO",
+              "Name": "Missouri"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.121190143386556,
+            "Longitude": -94.56375671205002
+          }
+        }
+      ],
+      "PostedDate": "2026-09-08T16:38:43.979Z",
+      "BriefDescription": "Actively manage daily accounting and reporting of all gaming and non-gaming revenue. Assist Revenue Accounting Manager with routine oversight of the department, and act as Manager in Manager’s absence.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "35dd518a-a52a-4603-9dd1-b7c4d576bb24",
+      "Featured": false,
+      "Title": "Kitchen Steward - CCL (Full Time)",
+      "RequisitionNumber": "STEWA011939",
+      "FullTime": true,
+      "JobCategoryName": "Food - Back of House",
+      "Locations": [
+        {
+          "Id": "f2f61b69-8308-59cf-84c6-d31b67db9e08",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Kansas City",
+          "Address": {
+            "Line1": "1800 E Front St",
+            "Line2": null,
+            "City": "Kansas City",
+            "PostalCode": "64120",
+            "State": {
+              "Code": "MO",
+              "Name": "Missouri"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.121190143386556,
+            "Longitude": -94.56375671205002
+          }
+        }
+      ],
+      "PostedDate": "2026-09-08T16:36:39.698Z",
+      "BriefDescription": "Provide the bar area with supplies and provide the bartender with items on request. Assure that guests have a favorable gaming experience.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "caad76ba-a535-4ef3-b322-30273d412240",
+      "Featured": true,
+      "Title": "Main Banker",
+      "RequisitionNumber": "MAINB011057",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Cage",
+      "Locations": [
+        {
+          "Id": "cb82e3ee-41a4-527d-9f0f-7bd4e69b780f",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Dover",
+          "Address": {
+            "Line1": "1131 N Dupont Hwy",
+            "Line2": null,
+            "City": "Dover",
+            "PostalCode": "19901",
+            "State": {
+              "Code": "DE",
+              "Name": "Delaware"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.186981206120464,
+            "Longitude": -75.53719823855417
+          }
+        }
+      ],
+      "PostedDate": "2026-09-08T14:50:57.399Z",
+      "BriefDescription": "Responsible for the smooth and efficient operation of the Cage, Vault, Main Bank, Chip Bank and Marker Bank. Maintain tracking of coin and currency for Cage, Vaults, Main Bank and Marker Bank on approved logs. Count and verify all cash/coin/ticket transactions in all Cage areas and assist Cage Supervisor with all transactions within the department.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "63a5d3c6-c9a1-4637-a9ed-4bcf46e297a2",
+      "Featured": false,
+      "Title": "Security Officer",
+      "RequisitionNumber": "SECUR011965",
+      "FullTime": true,
+      "JobCategoryName": "Operations - Security",
+      "Locations": [
+        {
+          "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Hard Rock Hotel & Casinos",
+          "Address": {
+            "Line1": "777 Beach Blvd",
+            "Line2": null,
+            "City": "Biloxi",
+            "PostalCode": "39530",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.392909493077294,
+            "Longitude": -88.88834728942865
+          }
+        }
+      ],
+      "PostedDate": "2026-09-08T14:27:14.508Z",
+      "BriefDescription": "Executes security duties on assigned shift to adequately protect the life and property of guests, employees, and the property.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "3f0b7262-f580-48fd-ac90-45fd9b69d620",
+      "Featured": true,
+      "Title": "Cashier - Cage",
+      "RequisitionNumber": "CASHI009204",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Cage",
+      "Locations": [
+        {
+          "Id": "ce965eb1-9855-5c37-a13c-4e50f4ec3c35",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Evansville",
+          "Address": {
+            "Line1": "421 NW Riverside Dr",
+            "Line2": null,
+            "City": "Evansville",
+            "PostalCode": "47708",
+            "State": {
+              "Code": "IN",
+              "Name": "Indiana"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 37.97257526756719,
+            "Longitude": -87.57857452961152
+          }
+        }
+      ],
+      "PostedDate": "2026-09-08T14:01:06.936Z",
+      "BriefDescription": "Handles internal and external guest’s transactions in the Casino Cage.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "4db65ec6-6e3a-4298-b97d-a2eda42bb89e",
+      "Featured": false,
+      "Title": "Cook III - Ciera Steak and Chophouse",
+      "RequisitionNumber": "COOKI011961",
+      "FullTime": true,
+      "JobCategoryName": "Food - Back of House",
+      "Locations": [
+        {
+          "Id": "f0d2028f-83af-552c-8abd-8d42c38ade65",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Lake Tahoe",
+          "Address": {
+            "Line1": "55 US 50",
+            "Line2": null,
+            "City": "Stateline",
+            "PostalCode": "89449",
+            "State": {
+              "Code": "NV",
+              "Name": "Nevada"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 38.96248287120424,
+            "Longitude": -119.93981294771987
+          }
+        }
+      ],
+      "PostedDate": "2026-09-07T14:43:22.162Z",
+      "BriefDescription": "The Cook III is responsible for preparing and cooking menu items in accordance with company standards and supporting the Lead Cook and Sous Chef in maintaining quality and consistency.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "1bdf15e7-6a72-4a10-9c53-ed092e7cae42",
+      "Featured": true,
+      "Title": "Security Officer (Full Time)",
+      "RequisitionNumber": "SECUR011960",
+      "FullTime": true,
+      "JobCategoryName": "Operations - Security",
+      "Locations": [
+        {
+          "Id": "b313cf1e-08a5-5011-b227-0b9fd70ac269",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Black Hawk",
+          "Address": {
+            "Line1": "300 Main St",
+            "Line2": null,
+            "City": "Black Hawk",
+            "PostalCode": "80422",
+            "State": {
+              "Code": "CO",
+              "Name": "Colorado"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 39.79909606039547,
+            "Longitude": -105.48932372577518
+          }
+        }
+      ],
+      "PostedDate": "2026-09-04T22:04:44.037Z",
+      "BriefDescription": "Conducts security operations and Bally's Standard Guest Service at each of the three Bally's Black Hawk retail licensed casinos, placing special emphasis on compliance with federal and state law, Colorado Division of Gaming regulations and ICMPs, and property's policies and procedures.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "9817a6bf-9df0-4b54-85db-46921a66531f",
+      "Featured": false,
+      "Title": "Main Banker",
+      "RequisitionNumber": "MAINB010213",
+      "FullTime": true,
+      "JobCategoryName": "Gaming - Cage",
+      "Locations": [
+        {
+          "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Hard Rock Hotel & Casinos",
+          "Address": {
+            "Line1": "777 Beach Blvd",
+            "Line2": null,
+            "City": "Biloxi",
+            "PostalCode": "39530",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.392909493077294,
+            "Longitude": -88.88834728942865
+          }
+        }
+      ],
+      "PostedDate": "2026-09-04T19:54:23.528Z",
+      "BriefDescription": "Operates Main Bank, Fill Bank, Marker Bank, and Player Services Support Bank as required /scheduled.  Serves as central source of cash, cash equivalents for the company internal areas and prepares outside bank deposits.\nDepending on experience, this position may have the opportunity to dual rate as the Assistant Manager at times.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "4ec440a7-0eda-46fa-b038-0a6263dd044a",
+      "Featured": false,
+      "Title": "Table Games Dealer",
+      "RequisitionNumber": "TABLE009845",
+      "FullTime": false,
+      "JobCategoryName": "Gaming - Table Games",
+      "Locations": [
+        {
+          "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Hard Rock Hotel & Casinos",
+          "Address": {
+            "Line1": "777 Beach Blvd",
+            "Line2": null,
+            "City": "Biloxi",
+            "PostalCode": "39530",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.392909493077294,
+            "Longitude": -88.88834728942865
+          }
+        }
+      ],
+      "PostedDate": "2026-09-04T19:54:12.629Z",
+      "BriefDescription": "Performs the acts of dealing all table games in a proficient manner, according to current policies and procedures, while maintaining a courteous and friendly manner to our guests.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "1ebf713e-d578-4489-9188-87a775a7f21d",
+      "Featured": false,
+      "Title": "Table Games Supervisor",
+      "RequisitionNumber": "TABLE009836",
+      "FullTime": false,
+      "JobCategoryName": "Gaming - Table Games",
+      "Locations": [
+        {
+          "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Hard Rock Hotel & Casinos",
+          "Address": {
+            "Line1": "777 Beach Blvd",
+            "Line2": null,
+            "City": "Biloxi",
+            "PostalCode": "39530",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.392909493077294,
+            "Longitude": -88.88834728942865
+          }
+        }
+      ],
+      "PostedDate": "2026-09-04T19:54:03.299Z",
+      "BriefDescription": "Protects the integrity of the table games. Provides direction, guidance and supervision of all dealers.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "62dd130f-ab73-4370-8918-ee191760a183",
+      "Featured": false,
+      "Title": "Steward Full Time",
+      "RequisitionNumber": "STEWA011777",
+      "FullTime": true,
+      "JobCategoryName": "Food - Stewarding",
+      "Locations": [
+        {
+          "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Hard Rock Hotel & Casinos",
+          "Address": {
+            "Line1": "777 Beach Blvd",
+            "Line2": null,
+            "City": "Biloxi",
+            "PostalCode": "39530",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.392909493077294,
+            "Longitude": -88.88834728942865
+          }
+        }
+      ],
+      "PostedDate": "2026-09-04T19:50:07.538Z",
+      "BriefDescription": "Responsible for the heavy-duty cleaning of kitchen, such as sweeping and mopping the kitchen floors, as well as cleaning and detailing the equipment.  Also responsible for washing dishes, flatware, cutlery, crockery, kitchen vessels.   Maintains the kitchen, dish washing and back areas in an inspection-ready condition in accordance Hard Rock standards.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "f2c26b96-0118-42a5-b008-5b31ec9acc30",
+      "Featured": false,
+      "Title": "Food Runner - Sportsbook Bar and Grill",
+      "RequisitionNumber": "FOODR011858",
+      "FullTime": false,
+      "JobCategoryName": "Food - Front of House",
+      "Locations": [
+        {
+          "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Hard Rock Hotel & Casinos",
+          "Address": {
+            "Line1": "777 Beach Blvd",
+            "Line2": null,
+            "City": "Biloxi",
+            "PostalCode": "39530",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.392909493077294,
+            "Longitude": -88.88834728942865
+          }
+        }
+      ],
+      "PostedDate": "2026-09-04T19:49:27.168Z",
+      "BriefDescription": "Takes food orders from guests in the Sports Bar; brings prepared dishes from the kitchen to guests quickly, accurately, and safely; ensures table satisfaction, maintains a clean work area, and communicates food and beverage needs with the culinary and beverage team members.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "8fb36d80-fddb-4bc9-9c2b-5e3a30f5e91a",
+      "Featured": false,
+      "Title": "Electrician",
+      "RequisitionNumber": "ELECT011911",
+      "FullTime": true,
+      "JobCategoryName": "Operations - Maintenance",
+      "Locations": [
+        {
+          "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Hard Rock Hotel & Casinos",
+          "Address": {
+            "Line1": "777 Beach Blvd",
+            "Line2": null,
+            "City": "Biloxi",
+            "PostalCode": "39530",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 30.392909493077294,
+            "Longitude": -88.88834728942865
+          }
+        }
+      ],
+      "PostedDate": "2026-09-04T19:49:16.735Z",
+      "BriefDescription": "Completes all repairs and maintenance, along with construction of electrical work within casino/hotel.",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": null,
+      "OpportunityType": 0
+    },
+    {
+      "Id": "543ac94b-cb76-480f-abee-94aa7b4c2f6a",
+      "Featured": false,
+      "Title": "Set Up - Promotions/Event",
+      "RequisitionNumber": "SETUP011959",
+      "FullTime": true,
+      "JobCategoryName": "Marketing - Administration",
+      "Locations": [
+        {
+          "Id": "d4a889d8-4502-52e5-82ee-04d57c8b396c",
+          "LocalizedName": null,
+          "LocalizedLocationId": null,
+          "LocalizedDescription": "Bally's Vicksburg",
+          "Address": {
+            "Line1": "1380 Warrenton Rd",
+            "Line2": null,
+            "City": "Vicksburg",
+            "PostalCode": "39180",
+            "State": {
+              "Code": "MS",
+              "Name": "Mississippi"
+            },
+            "Country": {
+              "Code": "USA",
+              "Name": "United States"
+            }
+          },
+          "DisplayName": false,
+          "DisplayLocationId": false,
+          "DisplayAddress": true,
+          "DisplayStreetAddress": false,
+          "DisplayDescription": false,
+          "SourceOfTruth": 1,
+          "Coordinates": {
+            "Latitude": 32.293652776188885,
+            "Longitude": -90.9128990583888
+          }
+        }
+      ],
+      "PostedDate": "2026-09-04T19:34:12.006Z",
+      "BriefDescription": "Assists marketing, setting up events and promotions. Retrieves pallets from receiving and delivers to the proper location. Moves pallets; sets up pipe and drape and stanchions; unboxes gifts; bails cardboard boxes; arranges tables and chairs; and decorates special events",
+      "MatchScore": 1.0,
+      "MatchedLocations": [],
+      "Distance": null,
+      "JobLocationType": 1,
+      "OpportunityType": 0
+    }
+  ],
+  "totalCount": 412,
+  "locations": [
+    {
+      "PhysicalLocation": {
+        "Id": "43fac945-14c3-5cd6-bc4c-d1638bb00992",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "DraftKings at CQ",
+        "Address": {
+          "Line1": "200 Front St",
+          "Line2": null,
+          "City": "East Saint Louis",
+          "PostalCode": "62201",
+          "State": {
+            "Code": "IL",
+            "Name": "Illinois"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 38.626127763943,
+          "Longitude": -90.174952237948
+        }
+      },
+      "Count": 11
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "3262ef48-c521-57b3-865b-5e35cd8867b1",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Belle of Baton Rouge",
+        "Address": {
+          "Line1": "103 France St",
+          "Line2": null,
+          "City": "Baton Rouge",
+          "PostalCode": "70802",
+          "State": {
+            "Code": "LA",
+            "Name": "Louisiana"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 30.442878082601,
+          "Longitude": -91.188920285175
+        }
+      },
+      "Count": 20
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "664a575c-56ad-5fd8-a57f-f1715267454f",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Lincoln",
+        "Address": {
+          "Line1": "100 Twin River Rd",
+          "Line2": null,
+          "City": "Lincoln",
+          "PostalCode": "02865",
+          "State": {
+            "Code": "RI",
+            "Name": "Rhode Island"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 41.89072899910654,
+          "Longitude": -71.45576870697184
+        }
+      },
+      "Count": 34
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "f2f61b69-8308-59cf-84c6-d31b67db9e08",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Kansas City",
+        "Address": {
+          "Line1": "1800 E Front St",
+          "Line2": null,
+          "City": "Kansas City",
+          "PostalCode": "64120",
+          "State": {
+            "Code": "MO",
+            "Name": "Missouri"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 39.121190143386556,
+          "Longitude": -94.56375671205002
+        }
+      },
+      "Count": 14
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "d1ab0a4f-68b7-5dbf-a43f-f2f3f252d08a",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Tiverton",
+        "Address": {
+          "Line1": "777 Tiverton Casino Blvd",
+          "Line2": null,
+          "City": "Tiverton",
+          "PostalCode": "02878",
+          "State": {
+            "Code": "RI",
+            "Name": "Rhode Island"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 41.66551900368894,
+          "Longitude": -71.18490150392964
+        }
+      },
+      "Count": 19
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "6bf7ad12-0258-507a-93ed-155e82f3ae5f",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Stadium Gaming",
+        "Address": {
+          "Line1": "1901 West Madison",
+          "Line2": null,
+          "City": "Chicago",
+          "PostalCode": "60612",
+          "State": {
+            "Code": "IL",
+            "Name": "Illinois"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 41.87687057940133,
+          "Longitude": -87.6838106802953
+        }
+      },
+      "Count": 2
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "79937f44-5726-53cc-817b-6daa1e575ca8",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Ballys New York",
+        "Address": {
+          "Line1": "500 Hutchinson River Pkwy",
+          "Line2": null,
+          "City": "Bronx",
+          "PostalCode": "10465",
+          "State": {
+            "Code": "NY",
+            "Name": "New York"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 40.81136701568685,
+          "Longitude": -73.83537123607078
+        }
+      },
+      "Count": 8
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "9b9fddec-e825-5417-b55d-57d89d3d9d65",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Shreveport",
+        "Address": {
+          "Line1": "451 Clyde Fant Pkwy",
+          "Line2": null,
+          "City": "Shreveport",
+          "PostalCode": "71101",
+          "State": {
+            "Code": "LA",
+            "Name": "Louisiana"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 32.51699164590394,
+          "Longitude": -93.74477939906221
+        }
+      },
+      "Count": 19
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "f0d2028f-83af-552c-8abd-8d42c38ade65",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Lake Tahoe",
+        "Address": {
+          "Line1": "55 US 50",
+          "Line2": null,
+          "City": "Stateline",
+          "PostalCode": "89449",
+          "State": {
+            "Code": "NV",
+            "Name": "Nevada"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 38.96248287120424,
+          "Longitude": -119.93981294771987
+        }
+      },
+      "Count": 33
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "25bb3d30-de8f-5b3e-8801-080c44cf0488",
+        "LocalizedName": null,
+        "LocalizedLocationId": "STS",
+        "LocalizedDescription": "Sam's Town Hotel & Casino",
+        "Address": {
+          "Line1": "315 Clyde Fant Pkwy",
+          "Line2": null,
+          "City": "Shreveport",
+          "PostalCode": "71101",
+          "State": {
+            "Code": "LA",
+            "Name": "Louisiana"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 32.51819401631,
+          "Longitude": -93.745341996544
+        }
+      },
+      "Count": 20
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "37331347-f04a-4a0d-90d2-7f9c55886869",
+        "LocalizedName": "Bally's Corporation",
+        "LocalizedLocationId": null,
+        "LocalizedDescription": null,
+        "Address": {
+          "Line1": "100 Westminster St",
+          "Line2": null,
+          "City": "Providence",
+          "PostalCode": "02903",
+          "State": {
+            "Code": "RI",
+            "Name": "Rhode Island"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": true,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": true,
+        "DisplayDescription": false,
+        "SourceOfTruth": 0,
+        "Coordinates": {
+          "Latitude": 41.8244251412921,
+          "Longitude": -71.41045698188272
+        }
+      },
+      "Count": 6
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "c781c400-530d-5ccf-858c-e66b688551c2",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Warwick, Rhode Island",
+        "Address": {
+          "Line1": "475 Kilvert St",
+          "Line2": null,
+          "City": "Warwick",
+          "PostalCode": "02886",
+          "State": {
+            "Code": "RI",
+            "Name": "Rhode Island"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 41.72917459212799,
+          "Longitude": -71.45299127852152
+        }
+      },
+      "Count": 2
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "cb82e3ee-41a4-527d-9f0f-7bd4e69b780f",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Dover",
+        "Address": {
+          "Line1": "1131 N Dupont Hwy",
+          "Line2": null,
+          "City": "Dover",
+          "PostalCode": "19901",
+          "State": {
+            "Code": "DE",
+            "Name": "Delaware"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 39.186981206120464,
+          "Longitude": -75.53719823855417
+        }
+      },
+      "Count": 45
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "b313cf1e-08a5-5011-b227-0b9fd70ac269",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Black Hawk",
+        "Address": {
+          "Line1": "300 Main St",
+          "Line2": null,
+          "City": "Black Hawk",
+          "PostalCode": "80422",
+          "State": {
+            "Code": "CO",
+            "Name": "Colorado"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 39.79909606039547,
+          "Longitude": -105.48932372577518
+        }
+      },
+      "Count": 18
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "2382c53e-9727-551c-9790-53ae258522f5",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Arapahoe Park",
+        "Address": {
+          "Line1": "26000 E Quincy Ave",
+          "Line2": null,
+          "City": "Aurora",
+          "PostalCode": "80016",
+          "State": {
+            "Code": "CO",
+            "Name": "Colorado"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 39.63832331140629,
+          "Longitude": -104.67924145084751
+        }
+      },
+      "Count": 1
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "916523b1-63e4-5534-9ed7-322c26c8c69f",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Queen Baton Rouge",
+        "Address": {
+          "Line1": "1717 River Park Blvd",
+          "Line2": null,
+          "City": "Baton Rouge",
+          "PostalCode": "70802",
+          "State": {
+            "Code": "LA",
+            "Name": "Louisiana"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 30.459698592527,
+          "Longitude": -91.191424378749
+        }
+      },
+      "Count": 19
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "ce965eb1-9855-5c37-a13c-4e50f4ec3c35",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Evansville",
+        "Address": {
+          "Line1": "421 NW Riverside Dr",
+          "Line2": null,
+          "City": "Evansville",
+          "PostalCode": "47708",
+          "State": {
+            "Code": "IN",
+            "Name": "Indiana"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 37.97257526756719,
+          "Longitude": -87.57857452961152
+        }
+      },
+      "Count": 31
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "27d1acdd-039d-52cb-9949-947f1e3111f8",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Hard Rock Hotel & Casinos",
+        "Address": {
+          "Line1": "777 Beach Blvd",
+          "Line2": null,
+          "City": "Biloxi",
+          "PostalCode": "39530",
+          "State": {
+            "Code": "MS",
+            "Name": "Mississippi"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 30.392909493077294,
+          "Longitude": -88.88834728942865
+        }
+      },
+      "Count": 13
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "1efb2ae6-ddd6-5b29-9df5-5a7b896e2ef9",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Malta - Msida",
+        "Address": {
+          "Line1": "175 The Emporium",
+          "Line2": "Rue D'Argens Street",
+          "City": "Malta",
+          "PostalCode": "1362",
+          "State": null,
+          "Country": {
+            "Code": "MLT",
+            "Name": "Malta"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 45.856947576384066,
+          "Longitude": -108.93409916453744
+        }
+      },
+      "Count": 1
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "36455d49-56b8-469f-a95f-cb1e3282be59",
+        "LocalizedName": "Bally's Chicago River West",
+        "LocalizedLocationId": "BCRW",
+        "LocalizedDescription": null,
+        "Address": {
+          "Line1": "777 W Chicago Ave",
+          "Line2": null,
+          "City": "Chicago",
+          "PostalCode": "60654",
+          "State": {
+            "Code": "IL",
+            "Name": "Illinois"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": true,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": true,
+        "DisplayDescription": false,
+        "SourceOfTruth": 0,
+        "Coordinates": {
+          "Latitude": 41.895529414478,
+          "Longitude": -87.64566433972
+        }
+      },
+      "Count": 4
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "b0481720-5fbe-5452-b84a-70c84b10f5d8",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Atlantic City",
+        "Address": {
+          "Line1": "1900 Pacific Ave",
+          "Line2": null,
+          "City": "Atlantic City",
+          "PostalCode": "08401",
+          "State": {
+            "Code": "NJ",
+            "Name": "New Jersey"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 39.357744494465535,
+          "Longitude": -74.43394047182923
+        }
+      },
+      "Count": 9
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "8eb73d5d-39c1-5a84-85d7-2dc216953a27",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Chicago",
+        "Address": {
+          "Line1": "763 W Chicago Ave",
+          "Line2": null,
+          "City": "Chicago",
+          "PostalCode": "60654",
+          "State": {
+            "Code": "IL",
+            "Name": "Illinois"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 41.89640281726219,
+          "Longitude": -87.64687946781898
+        }
+      },
+      "Count": 21
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "21291367-98fe-5f49-950e-1ed833c71df2",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Quad Cities",
+        "Address": {
+          "Line1": "777 Bally Blvd",
+          "Line2": null,
+          "City": "Rock Island",
+          "PostalCode": "61201",
+          "State": {
+            "Code": "IL",
+            "Name": "Illinois"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 41.50515498363317,
+          "Longitude": -90.57283152885454
+        }
+      },
+      "Count": 23
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "2b9d5112-defa-593c-b218-b694ae10752a",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Casino Queen Marquette",
+        "Address": {
+          "Line1": "100 Antimonopoly St",
+          "Line2": null,
+          "City": "Marquette",
+          "PostalCode": "52158",
+          "State": {
+            "Code": "IA",
+            "Name": "Iowa"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 43.041205407605,
+          "Longitude": -91.178488587578
+        }
+      },
+      "Count": 30
+    },
+    {
+      "PhysicalLocation": {
+        "Id": "d4a889d8-4502-52e5-82ee-04d57c8b396c",
+        "LocalizedName": null,
+        "LocalizedLocationId": null,
+        "LocalizedDescription": "Bally's Vicksburg",
+        "Address": {
+          "Line1": "1380 Warrenton Rd",
+          "Line2": null,
+          "City": "Vicksburg",
+          "PostalCode": "39180",
+          "State": {
+            "Code": "MS",
+            "Name": "Mississippi"
+          },
+          "Country": {
+            "Code": "USA",
+            "Name": "United States"
+          }
+        },
+        "DisplayName": false,
+        "DisplayLocationId": false,
+        "DisplayAddress": true,
+        "DisplayStreetAddress": false,
+        "DisplayDescription": false,
+        "SourceOfTruth": 1,
+        "Coordinates": {
+          "Latitude": 32.293652776188885,
+          "Longitude": -90.9128990583888
+        }
+      },
+      "Count": 12
+    }
+  ]
+}

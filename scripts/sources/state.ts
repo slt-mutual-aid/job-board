@@ -177,8 +177,8 @@ export function recordRun(
 }
 
 // Called with the decisions read out of the review file, before that file is
-// rewritten. A key with no record is a posting the source no longer lists,
-// and pruning has already forgotten it.
+// rewritten. A key the state file does not carry is skipped, whether the
+// posting was pruned, dropped as a damaged record, or typed by hand.
 export function markDecided(
   state: SourcesState,
   keys: readonly string[],

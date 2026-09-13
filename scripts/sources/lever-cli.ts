@@ -117,11 +117,14 @@ export function writeReviewFile(
   const queued = postings.filter((posting) =>
     owed.has(postingKey(SOURCE_ID, posting.id)),
   );
-  const target = writeReviewCsv(queued.map(toReviewJob), root);
 
-  // Saved after the write. A failed write leaves the decisions where they
-  // already are, in the review file, for the next run to read again.
+  // Saved before the rewrite, because the rewrite is what drops a decided row
+  // from the review file. A write that fails after the save leaves the review
+  // file holding those same decisions, and the state file already carries
+  // them, so neither copy of a decision depends on the other write reaching
+  // disk.
   saveSourcesState(pruneSourcesState(state, now), root);
+  const target = writeReviewCsv(queued.map(toReviewJob), root);
 
   return { target, queued: queued.length };
 }

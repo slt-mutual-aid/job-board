@@ -1,3 +1,24 @@
 {
-  "sources": {}
+  "sources": {
+    "lever": {
+      "lastRunAt": "2026-09-13T16:18:42.668Z",
+      "lastSuccessfulRunAt": "2026-09-13T16:18:42.668Z",
+      "history": [
+        {
+          "at": "2026-09-13T16:18:42.668Z",
+          "count": 3
+        }
+      ]
+    },
+    "bamboohr": {
+      "lastRunAt": "2026-09-13T16:18:42.668Z",
+      "lastSuccessfulRunAt": "2026-09-13T16:18:42.668Z",
+      "history": [
+        {
+          "at": "2026-09-13T16:18:42.668Z",
+          "count": 3
+        }
+      ]
+    }
+  }
 }

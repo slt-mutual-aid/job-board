@@ -15,7 +15,8 @@
     "sources:lever": "tsx scripts/sources/lever-cli.ts",
     "sources:bamboohr": "tsx scripts/sources/bamboohr-cli.ts",
     "sources:health": "tsx scripts/sources/health-cli.ts",
-    "sources:lever:review": "tsx scripts/sources/lever-cli.ts --write-review"
+    "sources:lever:review": "tsx scripts/sources/lever-cli.ts --write-review",
+    "sources:reconcile": "tsx scripts/sources/reconcile-cli.ts"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.1",

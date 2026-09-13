@@ -20,6 +20,7 @@ yarn import-csv   # Parse slt-jobs.csv → jobboard.json
 yarn sources:lever # Print the Lever postings for the configured location
 yarn sources:bamboohr # Print the BambooHR postings for the configured location
 yarn sources:health   # Check every source for a silent failure; exits non-zero on one
+yarn sources:reconcile # Report board rows their employer's listing no longer carries
 ```
 
 To run a single test file: `yarn test src/components/JobBoard.test.tsx`
@@ -46,6 +47,8 @@ Google Sheets → slt-jobs.csv → jobboard.json → src/lib/db.ts → component
 **Job source review state:** `yarn sources:lever:review` writes the postings a reviewer has not decided about to `review/new-jobs.csv`, and records in `scripts/data/sources-state.json` which postings already carry a decision. A decision typed into the `Decision` column is read back on the next run, and the posting then leaves the review file. Both paths are gitignored per-machine state: deleting `scripts/data/sources-state.json` proposes every posting again.
 
 **Source health history:** `yarn sources:health` reads the listing of every source in `scripts/sources/registry.ts` and exits non-zero when one returns nothing, or nothing it can confirm as genuinely empty. `.github/workflows/source-health.yml` runs the check on a schedule and pushes the result. `scripts/data/source-health.json` holds the per-source count history and **is committed**: the suspicious-zero and drop rules compare a run against the previous run, so a history that never leaves one machine leaves both rules dormant in CI. Commit it with any change it carries rather than reverting it.
+
+**Board reconciliation:** `yarn sources:reconcile` fetches the listing of every source in `scripts/sources/registry.ts` and reports the board rows those listings no longer carry, to `review/missing-jobs.md`. Only the rows whose apply link one of the adapters recognizes are reconciled; every other row is left alone, because no adapter can say whether its posting is still open. An expired posting page answers with the same HTTP 200 as a live one on most of the platforms the board links to, so membership of a freshly fetched listing is the only evidence the report rests on. A source the health rules do not call healthy produces no conclusions at all, and a posting has to be absent from two consecutive healthy listings before it reaches the report. The count lives in `scripts/data/sources-state.json` beside the review decisions. Nothing on the board is removed by the command: a person confirms each posting and removes the row from the spreadsheet.
 
 ## Deployment
 

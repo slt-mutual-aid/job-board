@@ -112,8 +112,10 @@ function posting(title: string): SourcePosting {
   const match = RECORDED.filter(
     (entry) => entry.posting.title.toLowerCase() === title.toLowerCase(),
   );
-  if (match.length === 0) {
-    throw new Error(`No recorded posting is titled ${title}`);
+  if (match.length !== 1) {
+    throw new Error(
+      `The recordings hold ${match.length} postings titled ${title}`,
+    );
   }
   return match[0].posting;
 }

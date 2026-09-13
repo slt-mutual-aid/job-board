@@ -35,3 +35,7 @@ scripts/data/sources-state.json
 # suspicious-zero and drop rules compare a run against the previous run, so a
 # count history that stays on one machine leaves both rules dormant everywhere
 # else. Never ignore scripts/data as a whole.
+
+# Local spreadsheet export. It carries contact details the published board
+# does not, so it must never be committed.
+*.ods

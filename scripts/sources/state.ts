@@ -10,36 +10,23 @@ export const SOURCES_STATE_PATH = join("scripts", "data", "sources-state.json");
 // which is the longest absence that still means one hiring decision.
 export const PRUNE_AFTER_DAYS = 90;
 
-// Long enough to show a source sliding towards zero, short enough that the
-// file does not grow with every run.
-export const RUN_COUNT_HISTORY = 10;
-
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
 export interface PostingRecord {
-  firstSeen: string;
+  // Dates the last run that found the posting, which is what pruning ages out.
   lastSeen: string;
+  // Carried so a person opening the state file recognizes the posting a key
+  // stands for.
   title: string;
   url: string;
-  // True once the posting has reached a reviewer. It never returns to false,
-  // because a reviewer who declined a posting has already decided it.
-  reported: boolean;
-}
-
-export interface SourceRecord {
-  lastRun: string;
-  // Absent until one run of the source reaches a posting list. A gap between
-  // the two timestamps is a source that answers with an error.
-  lastSuccessfulRun?: string;
-  // Postings returned by each of the most recent successful runs, oldest
-  // first. Nothing reads it yet; it is here so a later change can tell a
-  // source that has silently stopped returning results from a quiet week.
-  recentCounts: number[];
+  // True once the reviewer has recorded a decision about the posting in the
+  // review file. It never returns to false: the review file is rewritten on
+  // every run, so the state file holds the only lasting record of a decision.
+  decided: boolean;
 }
 
 export interface SourcesState {
   postings: Record<string, PostingRecord>;
-  sources: Record<string, SourceRecord>;
 }
 
 // One posting as a run found it. The key is the identity; the title and the
@@ -52,12 +39,13 @@ export interface SeenPosting {
 
 export interface RunResult {
   state: SourcesState;
-  // Postings seen for the first time and still owed to a reviewer.
-  unreported: SeenPosting[];
+  // Postings the reviewer has not decided about, which is what the review file
+  // carries.
+  undecided: SeenPosting[];
 }
 
 export function emptyState(): SourcesState {
-  return { postings: {}, sources: {} };
+  return { postings: {} };
 }
 
 // The identifier comes from the platform rather than from the apply link,
@@ -81,97 +69,76 @@ function toPostingRecord(value: unknown): PostingRecord | undefined {
     return undefined;
   }
 
-  const { firstSeen, lastSeen, title, url, reported } = value;
+  const { lastSeen, title, url, decided } = value;
   if (
-    !isTimestamp(firstSeen) ||
     !isTimestamp(lastSeen) ||
     typeof title !== "string" ||
     typeof url !== "string" ||
-    typeof reported !== "boolean"
+    typeof decided !== "boolean"
   ) {
     return undefined;
   }
 
-  return { firstSeen, lastSeen, title, url, reported };
-}
-
-function toSourceRecord(value: unknown): SourceRecord | undefined {
-  if (!isObject(value)) {
-    return undefined;
-  }
-
-  const { lastRun, lastSuccessfulRun, recentCounts } = value;
-  if (!isTimestamp(lastRun)) {
-    return undefined;
-  }
-  if (lastSuccessfulRun !== undefined && !isTimestamp(lastSuccessfulRun)) {
-    return undefined;
-  }
-  if (
-    !Array.isArray(recentCounts) ||
-    !recentCounts.every(
-      (count) => typeof count === "number" && Number.isFinite(count),
-    )
-  ) {
-    return undefined;
-  }
-
-  const record: SourceRecord = { lastRun, recentCounts };
-  if (lastSuccessfulRun !== undefined) {
-    record.lastSuccessfulRun = lastSuccessfulRun;
-  }
-  return record;
+  return { lastSeen, title, url, decided };
 }
 
 // A record that fails to parse is dropped on its own rather than taking the
 // file with it, so one damaged entry re-proposes one posting instead of every
-// posting the reviewer has already seen.
-export function parseSourcesState(raw: string): SourcesState {
+// posting the reviewer has already decided. A document that is not a state
+// file at all yields undefined, which the caller reports.
+export function parseSourcesState(raw: string): SourcesState | undefined {
   let decoded: unknown;
   try {
     decoded = JSON.parse(raw);
   } catch {
-    return emptyState();
+    return undefined;
   }
 
-  if (!isObject(decoded)) {
-    return emptyState();
+  if (!isObject(decoded) || !isObject(decoded.postings)) {
+    return undefined;
   }
 
   const state = emptyState();
-
-  if (isObject(decoded.postings)) {
-    for (const [key, value] of Object.entries(decoded.postings)) {
-      const record = toPostingRecord(value);
-      if (record !== undefined) {
-        state.postings[key] = record;
-      }
-    }
-  }
-
-  if (isObject(decoded.sources)) {
-    for (const [key, value] of Object.entries(decoded.sources)) {
-      const record = toSourceRecord(value);
-      if (record !== undefined) {
-        state.sources[key] = record;
-      }
+  for (const [key, value] of Object.entries(decoded.postings)) {
+    const record = toPostingRecord(value);
+    if (record !== undefined) {
+      state.postings[key] = record;
     }
   }
 
   return state;
 }
 
-// An unreadable file is treated as a first run. Refusing to run instead would
-// leave the reviewer with no way to fetch postings until someone repaired a
-// file that only holds a record of past runs.
+// A damaged file is treated as a first run and said out loud, because the
+// quiet version of the same fallback looks exactly like a genuine first run
+// while it re-proposes every posting the reviewer has already decided.
+// Refusing to run instead would leave the reviewer with no way to fetch
+// postings until someone repaired a file that only records past runs.
 export function loadSourcesState(root: string = REPOSITORY_ROOT): SourcesState {
+  const target = resolve(root, SOURCES_STATE_PATH);
+
   let raw: string;
   try {
-    raw = readFileSync(resolve(root, SOURCES_STATE_PATH), "utf-8");
-  } catch {
+    raw = readFileSync(target, "utf-8");
+  } catch (error) {
+    const { code } = error as NodeJS.ErrnoException;
+    if (code !== "ENOENT") {
+      console.warn(
+        `Warning: ${SOURCES_STATE_PATH} cannot be read (${code ?? "unknown error"}). Every posting found now counts as undecided.`,
+      );
+    }
     return emptyState();
   }
-  return parseSourcesState(raw);
+
+  const state = parseSourcesState(raw);
+  if (state === undefined) {
+    console.warn(
+      `Warning: ${SOURCES_STATE_PATH} is not a readable state file. Every posting found now counts as undecided.`,
+    );
+    return emptyState();
+  }
+
+  return state;
 }
 
 // Routed through the allowlist of review-csv.ts, which already permits
@@ -186,68 +153,33 @@ export function saveSourcesState(state: SourcesState, root?: string): string {
 
 export function recordRun(
   state: SourcesState,
-  sourceId: string,
   postings: readonly SeenPosting[],
   now: Date,
 ): RunResult {
   const timestamp = now.toISOString();
   const nextPostings = { ...state.postings };
-  const unreported: SeenPosting[] = [];
+  const undecided: SeenPosting[] = [];
 
   for (const posting of postings) {
     const existing = nextPostings[posting.key];
     nextPostings[posting.key] = {
-      firstSeen: existing?.firstSeen ?? timestamp,
       lastSeen: timestamp,
       title: posting.title,
       url: posting.url,
-      reported: existing?.reported ?? false,
+      decided: existing?.decided ?? false,
     };
-    if (existing?.reported !== true) {
-      unreported.push(posting);
+    if (existing?.decided !== true) {
+      undecided.push(posting);
     }
   }
 
-  const previous = state.sources[sourceId];
-  const record: SourceRecord = {
-    lastRun: timestamp,
-    lastSuccessfulRun: timestamp,
-    recentCounts: [...(previous?.recentCounts ?? []), postings.length].slice(
-      -RUN_COUNT_HISTORY,
-    ),
-  };
-
-  return {
-    state: {
-      postings: nextPostings,
-      sources: { ...state.sources, [sourceId]: record },
-    },
-    unreported,
-  };
+  return { state: { postings: nextPostings }, undecided };
 }
 
-// A run that never reached a posting list appends no count, so the history
-// keeps meaning the number of postings a source returned when it answered.
-export function recordFailedRun(
-  state: SourcesState,
-  sourceId: string,
-  now: Date,
-): SourcesState {
-  const previous = state.sources[sourceId];
-  const record: SourceRecord = {
-    lastRun: now.toISOString(),
-    recentCounts: previous?.recentCounts ?? [],
-  };
-  if (previous?.lastSuccessfulRun !== undefined) {
-    record.lastSuccessfulRun = previous.lastSuccessfulRun;
-  }
-
-  return { ...state, sources: { ...state.sources, [sourceId]: record } };
-}
-
-// Called once the review file is on disk. Marking before the write would lose
-// a posting to a failed write with nothing left to say it was never delivered.
-export function markReported(
+// Called with the decisions read out of the review file, before that file is
+// rewritten. A key with no record is a posting the source no longer lists,
+// and pruning has already forgotten it.
+export function markDecided(
   state: SourcesState,
   keys: readonly string[],
 ): SourcesState {
@@ -255,7 +187,7 @@ export function markReported(
   for (const key of keys) {
     const record = postings[key];
     if (record !== undefined) {
-      postings[key] = { ...record, reported: true };
+      postings[key] = { ...record, decided: true };
     }
   }
 

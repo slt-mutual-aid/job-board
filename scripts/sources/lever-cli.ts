@@ -2,18 +2,21 @@ import { fileURLToPath } from "url";
 import { toSpreadsheetDate } from "./date";
 import { leverSource } from "./registry";
 import { htmlToPlainText } from "./text";
-import { writeReviewCsv, type ReviewJob } from "./review-csv";
+import {
+  readReviewDecisions,
+  writeReviewCsv,
+  type ReviewJob,
+} from "./review-csv";
 import {
   loadSourcesState,
-  markReported,
+  markDecided,
   postingKey,
   pruneSourcesState,
-  recordFailedRun,
   recordRun,
   saveSourcesState,
   type SeenPosting,
 } from "./state";
-import type { ListingResult, SourcePosting } from "./types";
+import type { SourcePosting } from "./types";
 
 const { adapter, config } = leverSource;
 
@@ -88,26 +91,49 @@ function printTable(postings: SourcePosting[]): void {
   }
 }
 
+// The work behind --write-review, with the repository root as a parameter so a
+// test can drive it against a temporary directory.
+export function writeReviewFile(
+  postings: readonly SourcePosting[],
+  now: Date,
+  root?: string,
+): { target: string; queued: number } {
+  const decided = markDecided(
+    loadSourcesState(root),
+    readReviewDecisions(root),
+  );
+  const { state, undecided } = recordRun(
+    decided,
+    postings.map(toSeenPosting),
+    now,
+  );
+  const owed = new Set(undecided.map((posting) => posting.key));
+
+  // The file carries every posting the reviewer has not decided about, not
+  // only the ones this run saw first. A rewrite holding the new ones alone
+  // drops postings an earlier run put there, and no later run offers them
+  // again. A posting Lever has withdrawn leaves the listing and therefore the
+  // file, so nobody reviews an opening that is closed.
+  const queued = postings.filter((posting) =>
+    owed.has(postingKey(SOURCE_ID, posting.id)),
+  );
+  const target = writeReviewCsv(queued.map(toReviewJob), root);
+
+  // Saved after the write. A failed write leaves the decisions where they
+  // already are, in the review file, for the next run to read again.
+  saveSourcesState(pruneSourcesState(state, now), root);
+
+  return { target, queued: queued.length };
+}
+
 async function main(): Promise<void> {
   const writeReview = process.argv.slice(2).includes(WRITE_REVIEW_FLAG);
 
   console.log(`Fetching ${adapter.listingUrl(config)}`);
 
-  let listing: ListingResult<SourcePosting>;
-  try {
-    const raw = await adapter.fetchListingRaw(config);
-    console.log("Parsing response...");
-    listing = adapter.parseListing(raw);
-  } catch (error) {
-    // Dating the attempt separates a source with nothing new from one that has
-    // stopped answering.
-    if (writeReview) {
-      saveSourcesState(
-        recordFailedRun(loadSourcesState(), SOURCE_ID, new Date()),
-      );
-    }
-    throw error;
-  }
+  const raw = await adapter.fetchListingRaw(config);
+  console.log("Parsing response...");
+  const listing = adapter.parseListing(raw);
 
   const postings = adapter.selectLocal(listing.entries, config);
 
@@ -123,26 +149,11 @@ async function main(): Promise<void> {
   }
 
   if (writeReview) {
-    const now = new Date();
-    const { state, unreported } = recordRun(
-      loadSourcesState(),
-      SOURCE_ID,
-      postings.map(toSeenPosting),
-      now,
+    const { target, queued } = writeReviewFile(postings, new Date());
+    console.log(`Wrote ${target}`);
+    console.log(
+      `${queued} posting(s) of ${postings.length} awaiting a decision`,
     );
-    const owed = new Set(unreported.map((posting) => posting.key));
-
-    // Only a first sighting reaches the reviewer. Putting a posting they
-    // already declined back in front of them is what empties a review queue of
-    // meaning, and the file is rewritten from this run alone so a posting Lever
-    // has withdrawn stops facing them as if it were open.
-    const fresh = postings.filter((posting) =>
-      owed.has(postingKey(SOURCE_ID, posting.id)),
-    );
-    console.log(`Wrote ${writeReviewCsv(fresh.map(toReviewJob))}`);
-    console.log(`${fresh.length} new posting(s) of ${postings.length}`);
-
-    saveSourcesState(pruneSourcesState(markReported(state, [...owed]), now));
   }
 }
 

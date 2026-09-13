@@ -5,6 +5,24 @@ import type { SourcePosting } from "./types";
 // nothing could be read from stays "unknown".
 export type FitVerdict = "likely" | "unknown" | "unlikely";
 
+// The order a reviewer reads the file in: the postings the board most likely
+// carries first, the ones nothing decided next, the ones it does not carry
+// last.
+export const FIT_ORDER: readonly FitVerdict[] = [
+  "likely",
+  "unknown",
+  "unlikely",
+];
+
+const UNKNOWN_RANK = FIT_ORDER.indexOf("unknown");
+
+// A value no verdict matches is a posting nothing judged, which is what
+// unknown says, so it reads in the middle rather than sinking to the bottom.
+export function fitRank(verdict: string): number {
+  const rank = FIT_ORDER.indexOf(verdict as FitVerdict);
+  return rank === -1 ? UNKNOWN_RANK : rank;
+}
+
 export interface PostingFit {
   verdict: FitVerdict;
   // Plain language, naming the evidence, for a volunteer reading a queue.

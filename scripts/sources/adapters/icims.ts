@@ -3,19 +3,19 @@
 //
 //   curl -sS -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
 //     'https://careers-ovg.icims.com/jobs/search?ss=1&searchZip=96150&searchRadius=20&in_iframe=1' \
-//     -o scripts/sources/__fixtures__/icims-ovg/listing.html
+//     -o scripts/sources/__fixtures__/icims-ovg/listing.html.txt
 //
 //   curl -sS -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
 //     'https://careers-ovg.icims.com/jobs/search?ss=1&searchZip=99801&searchRadius=5&in_iframe=1' \
-//     -o scripts/sources/__fixtures__/icims-ovg/empty.html
+//     -o scripts/sources/__fixtures__/icims-ovg/empty.html.txt
 //
 //   curl -sS -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
 //     'https://careers-davidsonhospitality.icims.com/jobs/search?ss=1&searchZip=96150&searchRadius=20&in_iframe=1' \
-//     -o scripts/sources/__fixtures__/icims-davidson/listing.html
+//     -o scripts/sources/__fixtures__/icims-davidson/listing.html.txt
 //
 //   curl -sS -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
 //     'https://careers-davidsonhospitality.icims.com/jobs/search?ss=1&searchZip=99801&searchRadius=5&in_iframe=1' \
-//     -o scripts/sources/__fixtures__/icims-davidson/empty.html
+//     -o scripts/sources/__fixtures__/icims-davidson/empty.html.txt
 //
 // Update the fetchedAt timestamp in each accompanying .meta.json afterwards.
 

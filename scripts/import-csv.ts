@@ -1,6 +1,7 @@
 import { parse } from "csv-parse/sync";
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
+import { fileURLToPath } from "url";
 import type { Job } from "../src/lib/db";
 
 const jsonPath = join(process.cwd(), "jobboard.json");
@@ -10,7 +11,7 @@ const csvPath = join(process.cwd(), "slt-jobs.csv");
 const UNKNOWN_DATE = new Date(0).toISOString();
 
 // Parse date from MM/DD/YYYY format to ISO string
-function parseDate(dateStr: string | undefined): string {
+export function parseDate(dateStr: string | undefined): string {
   if (!dateStr || dateStr.trim() === "") {
     return UNKNOWN_DATE;
   }
@@ -25,7 +26,7 @@ function parseDate(dateStr: string | undefined): string {
     const month = parseInt(parts[0], 10) - 1; // Month is 0-indexed
     const day = parseInt(parts[1], 10);
     const year = parseInt(parts[2], 10);
-    const date = new Date(year, month, day);
+    const date = new Date(Date.UTC(year, month, day));
     return date.toISOString();
   }
 
@@ -137,5 +138,8 @@ function importCsvToJson() {
   console.log(`Successfully imported ${jobs.length} jobs`);
 }
 
-importCsvToJson();
-
+// Run the import only when executed directly, so importing parseDate in a test
+// does not rewrite jobboard.json.
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  importCsvToJson();
+}

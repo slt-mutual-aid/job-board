@@ -1,0 +1,4 @@
+# Recorded API payloads stay byte-exact so a fixture keeps matching what the
+# endpoint returned. The hand-written .meta.json files stay formatted.
+scripts/sources/__fixtures__/**/*.json
+!scripts/sources/__fixtures__/**/*.meta.json

@@ -6,6 +6,8 @@ import {
   icimsDavidsonSource,
   icimsOvgSource,
   leverSource,
+  oracleCaesarsSource,
+  oracleRaleysSource,
   sources,
 } from "../registry";
 
@@ -20,6 +22,8 @@ const bambooHrListing = fixture("bamboohr-vra/listing.json");
 const bambooHrDetail = fixture("bamboohr-vra/detail-32.json");
 const icimsOvgListing = fixture("icims-ovg/listing.html.txt");
 const icimsDavidsonListing = fixture("icims-davidson/listing.html.txt");
+const oracleCaesarsListing = fixture("oracle-caesars/listing.json");
+const oracleRaleysListing = fixture("oracle-raleys/listing.json");
 
 function leverAtFarLocation(): string {
   const decoded = JSON.parse(leverListing) as Array<{
@@ -62,6 +66,31 @@ function icimsAtFarLocation(listing: string, location: string): string {
 // a redesign of the listing looks like from here.
 function icimsUnderRenamedContainer(listing: string): string {
   return listing.split("iCIMS_JobsTable").join("iCIMS_JobsGrid");
+}
+
+interface OracleResponse {
+  items: Array<{
+    TotalJobsCount: number;
+    requisitionList: Array<{ PrimaryLocation: string }>;
+  }>;
+}
+
+function oracleAtFarLocation(listing: string): string {
+  const decoded = JSON.parse(listing) as OracleResponse;
+  for (const requisition of decoded.items[0].requisitionList) {
+    requisition.PrimaryLocation = "Reno, NV, United States";
+  }
+  return JSON.stringify(decoded);
+}
+
+function oracleUnderRenamedContainer(listing: string): string {
+  const decoded = JSON.parse(listing) as {
+    items: Array<Record<string, unknown>>;
+  };
+  const search = decoded.items[0];
+  search.jobList = search.requisitionList;
+  delete search.requisitionList;
+  return JSON.stringify(decoded);
 }
 
 const contracted = [
@@ -118,6 +147,26 @@ const contracted = [
     // parseDetail takes identity, title, and location from the listing entry,
     // so one recorded detail body stands in for every selected entry.
     detailFor: () => bambooHrDetail,
+  }),
+  describeAdapterContract({
+    ...oracleCaesarsSource,
+    fixtures: {
+      listing: oracleCaesarsListing,
+      farLocation: oracleAtFarLocation(oracleCaesarsListing),
+      empty: fixture("oracle-caesars/empty.json"),
+      truncated: oracleCaesarsListing.slice(0, 5000),
+      renamedContainer: oracleUnderRenamedContainer(oracleCaesarsListing),
+    },
+  }),
+  describeAdapterContract({
+    ...oracleRaleysSource,
+    fixtures: {
+      listing: oracleRaleysListing,
+      farLocation: oracleAtFarLocation(oracleRaleysListing),
+      empty: fixture("oracle-raleys/empty.json"),
+      truncated: oracleRaleysListing.slice(0, 5000),
+      renamedContainer: oracleUnderRenamedContainer(oracleRaleysListing),
+    },
   }),
 ];
 

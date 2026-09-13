@@ -8,6 +8,8 @@ import {
   icimsDavidsonSource,
   icimsOvgSource,
   leverSource,
+  oracleCaesarsSource,
+  oracleRaleysSource,
 } from "./registry";
 import { REPOSITORY_ROOT, writeAllowedFile } from "./review-csv";
 import {
@@ -17,6 +19,7 @@ import {
   type MissingRecord,
   type SourcesState,
 } from "./state";
+import type { OracleConfig } from "./adapters/oracle";
 import type { IdentifiedEntry } from "./types";
 
 // review/new-jobs.csv is rewritten on every source run and carries postings a
@@ -124,6 +127,32 @@ function bambooHrPostingId(link: URL): string | null {
   return /^\d+$/.test(segments[1]) ? segments[1] : null;
 }
 
+// Oracle writes a posting page as /hcmUI/CandidateExperience/<locale>/sites/
+// <site>/job/<posting id>, and the board also carries the /jobs/preview/<posting
+// id> form the career site hands out from a search result. Each employer has a
+// host of its own, so the host is what keeps the two Oracle accounts apart.
+function oraclePostingId(link: URL, config: OracleConfig): string | null {
+  if (link.hostname !== config.host) {
+    return null;
+  }
+
+  const segments = pathSegments(link);
+  const site = segments.indexOf("sites");
+  if (site === -1 || segments[site + 1] !== config.siteNumber) {
+    return null;
+  }
+
+  const tail = segments.slice(site + 2);
+  const id =
+    tail.length === 2 && tail[0] === "job"
+      ? tail[1]
+      : tail.length === 3 && tail[0] === "jobs" && tail[1] === "preview"
+        ? tail[2]
+        : null;
+
+  return id !== null && /^\d+$/.test(id) ? id : null;
+}
+
 interface CoveredSource {
   // The identifier a health assessment carries for the source, which names one
   // employer's listing rather than the adapter that reads it.
@@ -157,6 +186,16 @@ const COVERED_SOURCES: readonly CoveredSource[] = [
     accountId: icimsDavidsonSource.accountId,
     postingIdFor: (link) =>
       boardLinkPostingId(icimsDavidsonSource.config, link),
+  },
+  {
+    sourceId: oracleCaesarsSource.sourceId,
+    accountId: oracleCaesarsSource.accountId,
+    postingIdFor: (link) => oraclePostingId(link, oracleCaesarsSource.config),
+  },
+  {
+    sourceId: oracleRaleysSource.sourceId,
+    accountId: oracleRaleysSource.accountId,
+    postingIdFor: (link) => oraclePostingId(link, oracleRaleysSource.config),
   },
 ];
 

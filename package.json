@@ -15,6 +15,7 @@
     "sources:lever": "tsx scripts/sources/lever-cli.ts",
     "sources:bamboohr": "tsx scripts/sources/bamboohr-cli.ts",
     "sources:icims": "tsx scripts/sources/icims-cli.ts",
+    "sources:oracle": "tsx scripts/sources/oracle-cli.ts",
     "sources:health": "tsx scripts/sources/health-cli.ts",
     "sources:lever:review": "tsx scripts/sources/lever-cli.ts --write-review",
     "sources:reconcile": "tsx scripts/sources/reconcile-cli.ts"

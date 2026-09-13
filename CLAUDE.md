@@ -18,6 +18,7 @@ yarn import-csv   # Parse slt-jobs.csv → jobboard.json
 
 # Job source adapters
 yarn sources:lever # Print the Lever postings for the configured location
+yarn sources:bamboohr # Print the BambooHR postings for the configured location
 ```
 
 To run a single test file: `yarn test src/components/JobBoard.test.tsx`

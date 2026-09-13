@@ -116,6 +116,11 @@ export function htmlToPlainText(html: string): string {
     .replace(/\r\n?/g, "\n")
     .replace(/^﻿/, "")
     .replace(/[​-‍⁠]/g, "")
+    // Trimming each line first empties a whitespace-only line, so the collapse
+    // below sees the whole run of newlines around it.
+    .split("\n")
+    .map((line) => line.trim())
+    .join("\n")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 

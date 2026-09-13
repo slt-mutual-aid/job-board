@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import {
   existsSync,
   mkdirSync,
@@ -10,27 +10,28 @@ import {
 import { tmpdir } from "os";
 import { dirname, join } from "path";
 import { parse as parseCsv } from "csv-parse/sync";
+import { stringify as stringifyCsv } from "csv-stringify/sync";
 import {
+  DECISION_HEADER,
+  REVIEW_COLUMN_HEADERS,
+  REVIEW_CSV_PATH,
+  SOURCE_ID_HEADER,
   WriteOutsideAllowlistError,
   writeAllowedFile,
-  writeReviewCsv,
 } from "./review-csv";
 import { leverSource } from "./registry";
-import { SOURCE_ID, toReviewJob } from "./lever-cli";
+import { SOURCE_ID, writeReviewFile } from "./lever-cli";
 import {
   PRUNE_AFTER_DAYS,
-  RUN_COUNT_HISTORY,
   SOURCES_STATE_PATH,
   emptyState,
   loadSourcesState,
-  markReported,
+  markDecided,
   postingKey,
   pruneSourcesState,
-  recordFailedRun,
   recordRun,
   saveSourcesState,
   type SeenPosting,
-  type SourcesState,
 } from "./state";
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
@@ -83,58 +84,56 @@ describe("postingKey", () => {
 });
 
 describe("recordRun", () => {
-  it("reports every posting on the first run", () => {
-    const { unreported } = recordRun(
+  it("queues every posting on the first run", () => {
+    const { undecided } = recordRun(
       emptyState(),
-      SOURCE_ID,
       [posting("abc"), posting("def")],
       at(0),
     );
 
-    expect(unreported.map((entry) => entry.key)).toEqual([
+    expect(undecided.map((entry) => entry.key)).toEqual([
       postingKey(SOURCE_ID, "abc"),
       postingKey(SOURCE_ID, "def"),
     ]);
   });
 
-  it("reports nothing on a second identical run", () => {
+  it("queues nothing the reviewer has decided about", () => {
     const postings = [posting("abc"), posting("def")];
-    const first = recordRun(emptyState(), SOURCE_ID, postings, at(0));
-    const reported = markReported(
+    const first = recordRun(emptyState(), postings, at(0));
+    const decided = markDecided(
       first.state,
-      first.unreported.map((entry) => entry.key),
+      first.undecided.map((entry) => entry.key),
     );
 
-    const second = recordRun(reported, SOURCE_ID, postings, at(1));
+    const second = recordRun(decided, postings, at(1));
 
-    expect(second.unreported).toEqual([]);
+    expect(second.undecided).toEqual([]);
   });
 
-  it("holds a posting back until the reviewer has actually been handed it", () => {
-    const first = recordRun(emptyState(), SOURCE_ID, [posting("abc")], at(0));
+  it("queues a posting again while no decision stands against it", () => {
+    const first = recordRun(emptyState(), [posting("abc")], at(0));
 
-    // The review file was never written, so the posting is still owed to the
-    // reviewer on the next run.
-    const second = recordRun(first.state, SOURCE_ID, [posting("abc")], at(1));
+    // Nobody typed a decision between the two runs, so the posting belongs in
+    // the review file the second run writes.
+    const second = recordRun(first.state, [posting("abc")], at(1));
 
-    expect(second.unreported.map((entry) => entry.key)).toEqual([
+    expect(second.undecided.map((entry) => entry.key)).toEqual([
       postingKey(SOURCE_ID, "abc"),
     ]);
   });
 
-  it("keeps the first sighting and advances the last sighting", () => {
-    const first = recordRun(emptyState(), SOURCE_ID, [posting("abc")], at(0));
-    const second = recordRun(first.state, SOURCE_ID, [posting("abc")], at(3));
+  it("advances the last sighting", () => {
+    const first = recordRun(emptyState(), [posting("abc")], at(0));
+    const second = recordRun(first.state, [posting("abc")], at(3));
 
-    const record = second.state.postings[postingKey(SOURCE_ID, "abc")];
-    expect(record.firstSeen).toBe(at(0).toISOString());
-    expect(record.lastSeen).toBe(at(3).toISOString());
+    expect(second.state.postings[postingKey(SOURCE_ID, "abc")].lastSeen).toBe(
+      at(3).toISOString(),
+    );
   });
 
   it("records the title and the url of each posting", () => {
     const { state } = recordRun(
       emptyState(),
-      SOURCE_ID,
       [posting("abc", "Shift Lead")],
       at(0),
     );
@@ -146,96 +145,23 @@ describe("recordRun", () => {
     );
   });
 
-  it("does not report a posting again after it disappears and returns", () => {
-    const first = recordRun(emptyState(), SOURCE_ID, [posting("abc")], at(0));
-    const reported = markReported(
+  it("holds a decision through a posting disappearing and returning", () => {
+    const first = recordRun(emptyState(), [posting("abc")], at(0));
+    const decided = markDecided(
       first.state,
-      first.unreported.map((entry) => entry.key),
+      first.undecided.map((entry) => entry.key),
     );
 
-    const gone = recordRun(reported, SOURCE_ID, [], at(1));
-    const back = recordRun(gone.state, SOURCE_ID, [posting("abc")], at(2));
+    const gone = recordRun(decided, [], at(1));
+    const back = recordRun(gone.state, [posting("abc")], at(2));
 
-    expect(back.unreported).toEqual([]);
-    expect(back.state.postings[postingKey(SOURCE_ID, "abc")].firstSeen).toBe(
-      at(0).toISOString(),
-    );
-  });
-
-  it("dates the run and the successful run of the source", () => {
-    const { state } = recordRun(emptyState(), SOURCE_ID, [], at(4));
-
-    expect(state.sources[SOURCE_ID].lastRun).toBe(at(4).toISOString());
-    expect(state.sources[SOURCE_ID].lastSuccessfulRun).toBe(
-      at(4).toISOString(),
-    );
-  });
-
-  it("appends the posting count of each run", () => {
-    const first = recordRun(emptyState(), SOURCE_ID, [posting("abc")], at(0));
-    const second = recordRun(
-      first.state,
-      SOURCE_ID,
-      [posting("abc"), posting("def")],
-      at(1),
-    );
-
-    expect(second.state.sources[SOURCE_ID].recentCounts).toEqual([1, 2]);
-  });
-
-  it("keeps the count history to a fixed length", () => {
-    let state = emptyState();
-    for (let run = 0; run <= RUN_COUNT_HISTORY + 2; run += 1) {
-      state = recordRun(state, SOURCE_ID, [], at(run)).state;
-    }
-
-    expect(state.sources[SOURCE_ID].recentCounts).toHaveLength(
-      RUN_COUNT_HISTORY,
-    );
-  });
-});
-
-describe("recordFailedRun", () => {
-  it("dates the run without moving the successful run", () => {
-    const succeeded = recordRun(emptyState(), SOURCE_ID, [], at(0)).state;
-
-    const failed = recordFailedRun(succeeded, SOURCE_ID, at(1));
-
-    expect(failed.sources[SOURCE_ID].lastRun).toBe(at(1).toISOString());
-    expect(failed.sources[SOURCE_ID].lastSuccessfulRun).toBe(
-      at(0).toISOString(),
-    );
-  });
-
-  it("adds no count for a run that returned no posting list", () => {
-    const succeeded = recordRun(
-      emptyState(),
-      SOURCE_ID,
-      [posting("abc")],
-      at(0),
-    ).state;
-
-    const failed = recordFailedRun(succeeded, SOURCE_ID, at(1));
-
-    expect(failed.sources[SOURCE_ID].recentCounts).toEqual([1]);
-  });
-
-  it("dates the first run of a source that has never succeeded", () => {
-    const state = recordFailedRun(emptyState(), SOURCE_ID, at(1));
-
-    expect(state.sources[SOURCE_ID].lastRun).toBe(at(1).toISOString());
-    expect(state.sources[SOURCE_ID].lastSuccessfulRun).toBeUndefined();
+    expect(back.undecided).toEqual([]);
   });
 });
 
 describe("pruneSourcesState", () => {
   it("drops a posting not seen for the whole prune interval", () => {
-    const { state } = recordRun(
-      emptyState(),
-      SOURCE_ID,
-      [posting("abc")],
-      at(0),
-    );
+    const { state } = recordRun(emptyState(), [posting("abc")], at(0));
 
     const pruned = pruneSourcesState(state, at(PRUNE_AFTER_DAYS + 1));
 
@@ -243,12 +169,7 @@ describe("pruneSourcesState", () => {
   });
 
   it("keeps a posting seen inside the prune interval", () => {
-    const { state } = recordRun(
-      emptyState(),
-      SOURCE_ID,
-      [posting("abc")],
-      at(0),
-    );
+    const { state } = recordRun(emptyState(), [posting("abc")], at(0));
 
     const pruned = pruneSourcesState(state, at(PRUNE_AFTER_DAYS - 1));
 
@@ -256,48 +177,57 @@ describe("pruneSourcesState", () => {
       postingKey(SOURCE_ID, "abc"),
     ]);
   });
-
-  it("keeps the run history of the source it prunes postings from", () => {
-    const { state } = recordRun(
-      emptyState(),
-      SOURCE_ID,
-      [posting("abc")],
-      at(0),
-    );
-
-    const pruned = pruneSourcesState(state, at(PRUNE_AFTER_DAYS + 1));
-
-    expect(pruned.sources[SOURCE_ID].recentCounts).toEqual([1]);
-  });
 });
 
 describe("loadSourcesState", () => {
+  let warnings: string[];
+
+  beforeEach(() => {
+    warnings = [];
+    vi.spyOn(console, "warn").mockImplementation((message: string) => {
+      warnings.push(message);
+    });
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("reads back what saveSourcesState wrote", () => {
-    const { state } = recordRun(
-      emptyState(),
-      SOURCE_ID,
-      [posting("abc")],
-      at(0),
-    );
+    const { state } = recordRun(emptyState(), [posting("abc")], at(0));
     saveSourcesState(state, root);
 
     expect(loadSourcesState(root)).toEqual(state);
   });
 
-  it("treats an absent file as a first run", () => {
+  it("treats an absent file as a first run without a warning", () => {
     expect(loadSourcesState(root)).toEqual(emptyState());
+    expect(warnings).toEqual([]);
   });
 
-  it("treats a file that is not JSON as a first run", () => {
+  it("warns about a file that is not JSON", () => {
     writeRawState("{ not json");
 
     expect(loadSourcesState(root)).toEqual(emptyState());
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toContain(SOURCES_STATE_PATH);
   });
 
-  it("treats a JSON file of the wrong shape as a first run", () => {
+  it("warns about a JSON file of the wrong shape", () => {
     writeRawState('["abc"]');
 
     expect(loadSourcesState(root)).toEqual(emptyState());
+    expect(warnings).toHaveLength(1);
+  });
+
+  it("warns about a file that cannot be read at all", () => {
+    // A directory where the file belongs fails the read with EISDIR, which is
+    // the shape of every unreadable file the command can meet.
+    mkdirSync(join(root, SOURCES_STATE_PATH), { recursive: true });
+
+    expect(loadSourcesState(root)).toEqual(emptyState());
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toContain(SOURCES_STATE_PATH);
   });
 
   it("keeps the sound records of a file carrying one broken posting", () => {
@@ -305,15 +235,13 @@ describe("loadSourcesState", () => {
       JSON.stringify({
         postings: {
           "lever:insomniacookies:abc": {
-            firstSeen: "2026-01-01T00:00:00.000Z",
             lastSeen: "2026-01-01T00:00:00.000Z",
             title: "Cookie Crew",
             url: "https://jobs.lever.co/insomniacookies/abc",
-            reported: true,
+            decided: true,
           },
-          "lever:insomniacookies:def": { reported: "yes" },
+          "lever:insomniacookies:def": { decided: "yes" },
         },
-        sources: {},
       }),
     );
 
@@ -327,14 +255,12 @@ describe("loadSourcesState", () => {
       JSON.stringify({
         postings: {
           "lever:insomniacookies:abc": {
-            firstSeen: "whenever",
             lastSeen: "whenever",
             title: "Cookie Crew",
             url: "https://jobs.lever.co/insomniacookies/abc",
-            reported: true,
+            decided: true,
           },
         },
-        sources: {},
       }),
     );
 
@@ -375,49 +301,75 @@ describe("the review file across consecutive runs", () => {
     leverConfig,
   );
 
-  // The block lever-cli.ts runs behind --write-review, against a temporary
-  // root so the run touches no file the live board is built from.
-  function runOnce(
-    state: SourcesState,
-    found: typeof postings,
-    now: Date,
-  ): { state: SourcesState; rows: number } {
-    const result = recordRun(
-      state,
-      SOURCE_ID,
-      found.map((posting) => ({
-        key: postingKey(SOURCE_ID, posting.id),
-        title: posting.title,
-        url: posting.applyLink,
-      })),
-      now,
-    );
-    const owed = new Set(result.unreported.map((posting) => posting.key));
-    const fresh = found.filter((posting) =>
-      owed.has(postingKey(SOURCE_ID, posting.id)),
-    );
+  const decisionColumn = REVIEW_COLUMN_HEADERS.indexOf(DECISION_HEADER);
+  const sourceColumn = REVIEW_COLUMN_HEADERS.indexOf(SOURCE_ID_HEADER);
 
-    const target = writeReviewCsv(fresh.map(toReviewJob), root);
+  function reviewRows(): string[][] {
+    const rows = parseCsv(readFileSync(join(root, REVIEW_CSV_PATH), "utf-8"), {
+      record_delimiter: ["\r\n", "\n", "\r"],
+    }) as string[][];
+    return rows.slice(1);
+  }
+
+  function queuedKeys(): string[] {
+    return reviewRows().map((row) => row[sourceColumn]);
+  }
+
+  // The reviewer typing a decision into the spreadsheet, which is the only
+  // event that takes a posting out of the queue.
+  function recordDecision(key: string, decision: string): void {
+    const target = join(root, REVIEW_CSV_PATH);
     const rows = parseCsv(readFileSync(target, "utf-8"), {
       record_delimiter: ["\r\n", "\n", "\r"],
     }) as string[][];
 
-    return {
-      state: pruneSourcesState(markReported(result.state, [...owed]), now),
-      rows: rows.length - 1,
-    };
+    for (const row of rows.slice(1)) {
+      if (row[sourceColumn] === key) {
+        row[decisionColumn] = decision;
+      }
+    }
+
+    writeFileSync(
+      target,
+      stringifyCsv(rows, { record_delimiter: "\r\n", quoted_match: /[\r\n]/ }),
+      "utf-8",
+    );
   }
 
-  it("hands the reviewer every posting once and never again", () => {
+  it("keeps an undecided posting in the file however many runs happen", () => {
     expect(postings.length).toBeGreaterThan(0);
 
-    const first = runOnce(emptyState(), postings, at(0));
-    expect(first.rows).toBe(postings.length);
+    writeReviewFile(postings, at(0), root);
+    expect(reviewRows()).toHaveLength(postings.length);
 
-    const second = runOnce(first.state, postings, at(1));
-    expect(second.rows).toBe(0);
+    writeReviewFile(postings, at(1), root);
+    expect(reviewRows()).toHaveLength(postings.length);
 
-    const third = runOnce(second.state, postings, at(2));
-    expect(third.rows).toBe(0);
+    writeReviewFile(postings, at(2), root);
+    expect(reviewRows()).toHaveLength(postings.length);
+  });
+
+  it("drops a posting the reviewer decided, and only that posting", () => {
+    writeReviewFile(postings, at(0), root);
+    const decided = postingKey(SOURCE_ID, postings[0].id);
+    recordDecision(decided, "Approved");
+
+    writeReviewFile(postings, at(1), root);
+
+    expect(queuedKeys()).toHaveLength(postings.length - 1);
+    expect(queuedKeys()).not.toContain(decided);
+  });
+
+  it("never offers a decided posting again, once the file has dropped it", () => {
+    writeReviewFile(postings, at(0), root);
+    const decided = postingKey(SOURCE_ID, postings[0].id);
+    recordDecision(decided, "Approved");
+    writeReviewFile(postings, at(1), root);
+
+    // The decision now lives only in the state file, because the run above
+    // rewrote the review file without the row carrying it.
+    writeReviewFile(postings, at(2), root);
+
+    expect(queuedKeys()).not.toContain(decided);
   });
 });

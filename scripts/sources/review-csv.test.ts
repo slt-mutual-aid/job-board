@@ -13,8 +13,8 @@ import {
   writeReviewCsv,
   type ReviewJob,
 } from "./review-csv";
-import { parse as parseLever } from "./adapters/lever";
-import { config as leverConfig, toReviewJob } from "./lever-cli";
+import { leverSource } from "./registry";
+import { toReviewJob } from "./lever-cli";
 
 // The nine columns of slt-jobs.csv, which carries no header row and is read by
 // position. A reordering here is a silent field remap in the spreadsheet.
@@ -164,7 +164,9 @@ describe("the review file format", () => {
 
 describe("the write allowlist", () => {
   it("writes exactly the review file on a full pass over the Lever fixture", () => {
-    const { postings } = parseLever(LISTING_FIXTURE, leverConfig);
+    const { adapter, config } = leverSource;
+    const { entries } = adapter.parseListing(LISTING_FIXTURE);
+    const postings = adapter.selectLocal(entries, config);
     expect(postings.length).toBeGreaterThan(0);
 
     writeReviewCsv(postings.map(toReviewJob), root);

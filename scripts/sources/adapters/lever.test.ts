@@ -1,6 +1,12 @@
 import { readFileSync } from "fs";
 import { describe, it, expect } from "vitest";
-import { parse, buildUrl, LeverResponseError, type LeverConfig } from "./lever";
+import {
+  parseListing,
+  selectLocal,
+  listingUrl,
+  LeverResponseError,
+  type LeverConfig,
+} from "./lever";
 
 const config: LeverConfig = {
   company: "insomniacookies",
@@ -17,33 +23,39 @@ function fixture(name: string): string {
 const listing = fixture("listing.json");
 const empty = fixture("empty.json");
 
-describe("buildUrl", () => {
+describe("listingUrl", () => {
   it("percent-encodes the location filter", () => {
-    expect(buildUrl(config)).toBe(
+    expect(listingUrl(config)).toBe(
       "https://api.lever.co/v0/postings/insomniacookies?mode=json&location=South%20Lake%20Tahoe%20CA",
     );
   });
 });
 
-describe("parse", () => {
+describe("parseListing", () => {
   it("maps every posting in the recorded listing", () => {
-    const { postings, confirmedEmpty } = parse(listing, config);
+    const { entries, confirmedEmpty } = parseListing(listing);
 
     expect(confirmedEmpty).toBe(false);
-    expect(postings.map((posting) => posting.title)).toEqual([
+    expect(entries.map((entry) => entry.title)).toEqual([
       "Cookie Crew",
       "Cookie Delivery Driver",
       "Shift Leader",
     ]);
-    expect(postings[0]).toMatchObject({
+    expect(entries[0]).toMatchObject({
       id: "f510e61f-8cbf-462a-85e1-3269741808cb",
       location: "South Lake Tahoe CA",
       applyLink:
         "https://jobs.lever.co/insomniacookies/f510e61f-8cbf-462a-85e1-3269741808cb",
       commitment: "Part Time",
-      postedDate: "2026-08-16",
+      postedAt: "2026-08-16",
     });
-    expect(postings[0].description).toContain("Insomnia Cookies");
+    expect(entries[0].description).toContain("Insomnia Cookies");
+  });
+
+  it("leaves liveness absent because Lever reports no such signal", () => {
+    for (const entry of parseListing(listing).entries) {
+      expect(entry.liveness).toBeUndefined();
+    }
   });
 
   it("reads createdAt as a UTC date regardless of the local time zone", () => {
@@ -57,7 +69,7 @@ describe("parse", () => {
       },
     ]);
 
-    expect(parse(beforeUtcMidnight, config).postings[0].postedDate).toBe(
+    expect(parseListing(beforeUtcMidnight).entries[0].postedAt).toBe(
       "2026-01-02",
     );
   });
@@ -73,12 +85,12 @@ describe("parse", () => {
       },
     ]);
 
-    expect(parse(sparse, config).postings[0]).toEqual({
+    expect(parseListing(sparse).entries[0]).toEqual({
       id: "a",
       title: "Night Baker",
       location: config.location,
       applyLink: "https://jobs.lever.co/insomniacookies/a",
-      postedDate: "2026-01-02",
+      postedAt: "2026-01-02",
       commitment: undefined,
       description: undefined,
     });
@@ -94,8 +106,8 @@ describe("parse", () => {
       },
     ]);
 
-    expect(() => parse(undated, config)).toThrow(LeverResponseError);
-    expect(() => parse(undated, config)).toThrow(/no number "createdAt"/);
+    expect(() => parseListing(undated)).toThrow(LeverResponseError);
+    expect(() => parseListing(undated)).toThrow(/no number "createdAt"/);
   });
 
   it("throws when createdAt is not a number", () => {
@@ -109,34 +121,19 @@ describe("parse", () => {
       },
     ]);
 
-    expect(() => parse(stringDated, config)).toThrow(LeverResponseError);
-    expect(() => parse(stringDated, config)).toThrow(/no number "createdAt"/);
+    expect(() => parseListing(stringDated)).toThrow(LeverResponseError);
+    expect(() => parseListing(stringDated)).toThrow(/no number "createdAt"/);
   });
 
   it("confirms emptiness for a well-formed empty array", () => {
-    expect(parse(empty, config)).toEqual({
-      postings: [],
+    expect(parseListing(empty)).toEqual({
+      entries: [],
       confirmedEmpty: true,
     });
   });
 
-  it("drops a posting whose location no longer matches the filter", () => {
-    const decoded = JSON.parse(listing) as Array<{
-      categories: { location: string };
-    }>;
-    decoded[1].categories.location = "Reno NV";
-
-    const { postings, confirmedEmpty } = parse(JSON.stringify(decoded), config);
-
-    expect(postings.map((posting) => posting.title)).toEqual([
-      "Cookie Crew",
-      "Shift Leader",
-    ]);
-    expect(confirmedEmpty).toBe(false);
-  });
-
   it("throws on a truncated response", () => {
-    expect(() => parse(listing.slice(0, 5000), config)).toThrow(
+    expect(() => parseListing(listing.slice(0, 5000))).toThrow(
       LeverResponseError,
     );
   });
@@ -148,23 +145,39 @@ describe("parse", () => {
       delete posting.text;
     }
 
-    expect(() => parse(JSON.stringify(decoded), config)).toThrow(
+    expect(() => parseListing(JSON.stringify(decoded))).toThrow(
       /no string "text"/,
     );
   });
 
   it("throws when the response is an object rather than an array", () => {
-    expect(() => parse('{"postings": []}', config)).toThrow(LeverResponseError);
+    expect(() => parseListing('{"postings": []}')).toThrow(LeverResponseError);
   });
 
   it("names the error so a broken endpoint never reads as an empty day", () => {
     let caught: unknown;
     try {
-      parse("<html>maintenance</html>", config);
+      parseListing("<html>maintenance</html>");
     } catch (error) {
       caught = error;
     }
 
     expect((caught as Error).name).toBe("LeverResponseError");
+  });
+});
+
+describe("selectLocal", () => {
+  it("drops a posting whose location no longer matches the filter", () => {
+    const decoded = JSON.parse(listing) as Array<{
+      categories: { location: string };
+    }>;
+    decoded[1].categories.location = "Reno NV";
+
+    const { entries } = parseListing(JSON.stringify(decoded));
+
+    expect(selectLocal(entries, config).map((entry) => entry.title)).toEqual([
+      "Cookie Crew",
+      "Shift Leader",
+    ]);
   });
 });

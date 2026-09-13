@@ -15,6 +15,9 @@ yarn typecheck    # Type-check the project (runs in CI)
 # Updating job data
 yarn fetch-csv    # Download latest CSV from Google Sheets → slt-jobs.csv
 yarn import-csv   # Parse slt-jobs.csv → jobboard.json
+
+# Job source adapters
+yarn sources:lever # Print the Lever postings for the configured location
 ```
 
 To run a single test file: `yarn test src/components/JobBoard.test.tsx`

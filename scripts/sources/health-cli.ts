@@ -43,6 +43,7 @@ function readerFor<Config, Entry>(
           kind: "reading",
           sourceId: adapter.id,
           postingCount: adapter.selectLocal(entries, config).length,
+          entryCount: entries.length,
           confirmedEmpty,
         };
       } catch (error) {

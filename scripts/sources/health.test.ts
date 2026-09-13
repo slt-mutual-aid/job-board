@@ -41,12 +41,21 @@ afterEach(() => {
   rmSync(root, { recursive: true, force: true });
 });
 
+// A reading whose response carried exactly the postings the location filter
+// kept, which is the ordinary case. entryCount is stated where the two differ.
 function reading(
   postingCount: number,
   confirmedEmpty = postingCount === 0,
   sourceId = SOURCE,
+  entryCount = postingCount,
 ): SourceObservation {
-  return { kind: "reading", sourceId, postingCount, confirmedEmpty };
+  return {
+    kind: "reading",
+    sourceId,
+    postingCount,
+    entryCount,
+    confirmedEmpty,
+  };
 }
 
 function writeHealthFileText(text: string): void {
@@ -84,6 +93,14 @@ describe("source health rules", () => {
     const assessment = run(reading(0, false));
 
     expect(assessment.status).toBe("error");
+  });
+
+  it("accepts a zero the location filter produced from a full response", () => {
+    // The BambooHR listing covers a whole company, so a week whose only
+    // openings sit in Truckee is an ordinary week rather than a broken source.
+    const assessment = run(reading(0, false, SOURCE, 5));
+
+    expect(assessment.status).toBe("healthy");
   });
 
   it("accepts a confirmed zero on a first run with no history", () => {

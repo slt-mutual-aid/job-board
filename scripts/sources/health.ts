@@ -26,13 +26,18 @@ export type SourceHealthStatus =
   | "suspicious-zero"
   | "suspicious-drop";
 
-// A run that reached a count. confirmedEmpty carries the adapter's own report
-// that the response was well formed and genuinely held nothing, which is the
-// only thing that separates a quiet day from a parser that lost every posting.
+// A run that reached a count.
 export interface SourceReading {
   kind: "reading";
   sourceId: string;
+  // Postings at the configured location, after the adapter's location filter.
   postingCount: number;
+  // Entries the response carried before that filter. A response that carried
+  // entries was read, whatever the location filter then left.
+  entryCount: number;
+  // The adapter's own report that the response was well formed and genuinely
+  // held nothing, which is the only thing that separates an empty feed from a
+  // parser that lost every posting.
   confirmedEmpty: boolean;
 }
 
@@ -202,14 +207,17 @@ export function assess(
     };
   }
 
-  const { postingCount, confirmedEmpty } = observation;
+  const { postingCount, entryCount, confirmedEmpty } = observation;
   const base = { sourceId, postingCount, previousCount };
 
-  if (postingCount === 0 && !confirmedEmpty) {
+  // A response that carried entries accounted for itself, even where every
+  // entry sits in another town. Only a response that produced neither entries
+  // nor a confirmation of emptiness is a parse that lost its postings.
+  if (entryCount === 0 && !confirmedEmpty) {
     return {
       ...base,
       status: "error",
-      detail: "no postings and no confirmation that the response was empty",
+      detail: "no entries and no confirmation that the response was empty",
     };
   }
 

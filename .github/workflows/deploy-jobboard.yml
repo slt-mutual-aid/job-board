@@ -4,6 +4,10 @@ on:
   # Trigger the workflow every time you push to the `main` branch
   push:
     branches: [ main ]
+    # The weekday source health run commits recorded counts that no visitor can
+    # see, so deploying for them buries the pushes that change the site.
+    paths-ignore:
+      - "scripts/data/**"
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 

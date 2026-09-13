@@ -100,18 +100,52 @@ function truncate(text: string): string {
   return body.trimEnd() + ELLIPSIS;
 }
 
-export function htmlToPlainText(html: string): string {
-  const stripped = html
-    .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, "")
-    .replace(/<br\b[^>]*>/gi, "\n")
-    .replace(/<li\b[^>]*>/gi, "- ")
-    .replace(/<\/(?:p|div|li)\s*>/gi, "\n")
-    // Runs after the tags that carry meaning, so an entity held in an attribute
-    // leaves with its tag instead of decoding into the text. Quoted values are
-    // skipped whole, so a ">" written inside one does not end the tag early.
-    .replace(/<[^>"']*(?:(?:"[^"]*"|'[^']*')[^>"']*)*>/g, "");
+const MARKUP_REPLACEMENTS: ReadonlyArray<readonly [RegExp, string]> = [
+  [/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, ""],
+  [/<br\b[^>]*>/gi, "\n"],
+  [/<li\b[^>]*>/gi, "- "],
+  [/<\/(?:p|div|li)\s*>/gi, "\n"],
+  // Runs after the tags that carry meaning, so an entity held in an attribute
+  // leaves with its tag instead of decoding into the text. Quoted values are
+  // skipped whole, so a ">" written inside one does not end the tag early.
+  [/<[^>"']*(?:(?:"[^"]*"|'[^']*')[^>"']*)*>/g, ""],
+];
 
-  const text = decodeEntities(stripped)
+// A single sweep is defeatable: deleting one match splices the text on either
+// side of it into a tag the finished sweep never revisits, which is how
+// "<sc<script></script>ript>alert(1)</script>" keeps its body. Every sweep that
+// changes the text also shortens it, so repeating one reaches a fixpoint. The
+// cap holds the work to ten sweeps for an input nested deeper than that.
+const MAX_SWEEPS = 10;
+
+function replaceToFixpoint(
+  text: string,
+  pattern: RegExp,
+  replacement: string,
+): string {
+  let current = text;
+  for (let sweep = 0; sweep < MAX_SWEEPS; sweep += 1) {
+    const next = current.replace(pattern, replacement);
+    if (next === current) {
+      break;
+    }
+    current = next;
+  }
+  return current;
+}
+
+function stripMarkup(html: string): string {
+  return MARKUP_REPLACEMENTS.reduce(
+    (text, [pattern, replacement]) =>
+      replaceToFixpoint(text, pattern, replacement),
+    html,
+  );
+}
+
+export function htmlToPlainText(html: string): string {
+  // Entities decode only once stripMarkup has removed every tag, so a written
+  // "&lt;script&gt;" reaches the reader as text rather than becoming a tag.
+  const text = decodeEntities(stripMarkup(html))
     .replace(/ /g, " ")
     .replace(/\r\n?/g, "\n")
     .replace(/^﻿/, "")

@@ -18,8 +18,14 @@ export interface PostingLiveness {
   isOpen: boolean;
 }
 
-export interface SourcePosting {
+// The identity a source gives a posting. A board row is tied back to a listing
+// through this identifier, so an adapter entry without one is an entry no
+// consumer can follow between runs.
+export interface IdentifiedEntry {
   id: string;
+}
+
+export interface SourcePosting extends IdentifiedEntry {
   title: string;
   location: string;
   // Absolute, so a consumer never has to know which host it came from.

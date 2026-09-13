@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # job postings awaiting human review, rewritten on every source run
 review/
+
+# which postings a source run has already put in front of a reviewer, per machine
+scripts/data/sources-state.json

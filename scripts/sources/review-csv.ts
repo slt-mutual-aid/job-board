@@ -1,10 +1,11 @@
-import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, isAbsolute, join, relative, resolve } from "path";
 import { fileURLToPath } from "url";
+import { parse } from "csv-parse/sync";
 import { stringify } from "csv-stringify/sync";
 
 // scripts/sources/review-csv.ts sits two directories below the repository root.
-const REPOSITORY_ROOT = resolve(
+export const REPOSITORY_ROOT = resolve(
   dirname(fileURLToPath(import.meta.url)),
   "..",
   "..",
@@ -68,6 +69,11 @@ export interface ReviewJob {
   sourceId: string;
 }
 
+// The column the reviewer types into, and the column that ties a row back to
+// the posting key the state file records.
+export const DECISION_HEADER = "Decision";
+export const SOURCE_ID_HEADER = "Source ID";
+
 // The first nine entries are the columns of slt-jobs.csv in the order the
 // importer reads them by position. Approving a row is then a matter of dropping
 // the review-only columns that follow, with no field moved.
@@ -84,8 +90,8 @@ const COLUMNS: ReadonlyArray<{
   { header: "Location", value: (job) => job.location ?? "" },
   { header: "Description", value: (job) => job.description ?? "" },
   { header: "Job Closes by", value: (job) => job.closesBy ?? "" },
-  { header: "Decision", value: () => "" },
-  { header: "Source ID", value: (job) => job.sourceId },
+  { header: DECISION_HEADER, value: () => "" },
+  { header: SOURCE_ID_HEADER, value: (job) => job.sourceId },
   { header: "Notes", value: () => "" },
 ];
 
@@ -121,4 +127,31 @@ export function writeReviewCsv(
   root?: string,
 ): string {
   return writeAllowedFile(REVIEW_CSV_PATH, formatReviewCsv(jobs), root);
+}
+
+// The review file is rewritten on every run, so the decisions it carries are
+// read out of it first and kept in the state file. A row the reviewer left
+// blank is a posting still awaiting a decision, and it stays in the queue.
+// A file that cannot be parsed throws, which stops the run before the rewrite
+// that would discard the decisions inside it.
+export function readReviewDecisions(root: string = REPOSITORY_ROOT): string[] {
+  let raw: string;
+  try {
+    raw = readFileSync(resolve(root, REVIEW_CSV_PATH), "utf-8");
+  } catch {
+    return [];
+  }
+
+  const rows = parse(raw, {
+    columns: true,
+    // A spreadsheet saving the file back ends its rows with whichever newline
+    // the program on the reviewer's machine prefers.
+    record_delimiter: ["\r\n", "\n", "\r"],
+    skip_empty_lines: true,
+  }) as Array<Record<string, string>>;
+
+  return rows
+    .filter((row) => (row[DECISION_HEADER] ?? "").trim() !== "")
+    .map((row) => (row[SOURCE_ID_HEADER] ?? "").trim())
+    .filter((sourceId) => sourceId !== "");
 }

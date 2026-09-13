@@ -41,6 +41,8 @@ Google Sheets → slt-jobs.csv → jobboard.json → src/lib/db.ts → component
 - `jobboard.json` — generated file, source of truth for job data at runtime
 - `slt-jobs.csv` — fetched from Google Sheets, input to import script
 
+**Job source review state:** `yarn sources:lever:review` writes the postings a reviewer has not decided about to `review/new-jobs.csv`, and records in `scripts/data/sources-state.json` which postings already carry a decision. A decision typed into the `Decision` column is read back on the next run, and the posting then leaves the review file. Both paths are gitignored per-machine state: deleting `scripts/data/sources-state.json` proposes every posting again.
+
 ## Deployment
 
 Deployed to GitHub Pages at `https://slt-mutual-aid.github.io/` (configured in `astro.config.mjs`).

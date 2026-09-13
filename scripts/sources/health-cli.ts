@@ -7,18 +7,12 @@ import {
   type SourceObservation,
 } from "./health";
 import { bambooHrSource, leverSource } from "./registry";
-import type { ListingResult } from "./types";
+import type { AdapterBase } from "./types";
 
-// The members a health check needs from either adapter shape. A detail request
-// answers nothing about whether a source still responds, so the check stops at
-// the listing and costs one request per source.
+// A detail request answers nothing about whether a source still responds, so
+// the check stops at the listing and costs one request per source.
 interface ListingSource<Config, Entry> {
-  adapter: {
-    readonly id: string;
-    fetchListingRaw(config: Config): Promise<string>;
-    parseListing(raw: string): ListingResult<Entry>;
-    selectLocal(entries: Entry[], config: Config): unknown[];
-  };
+  adapter: AdapterBase<Config, Entry>;
   config: Config;
 }
 
@@ -42,7 +36,7 @@ function readerFor<Config, Entry>(
         return {
           kind: "reading",
           sourceId: adapter.id,
-          postingCount: adapter.selectLocal(entries, config).length,
+          postings: adapter.selectLocal(entries, config),
           entryCount: entries.length,
           confirmedEmpty,
         };

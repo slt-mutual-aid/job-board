@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import {
   mkdtempSync,
   readFileSync,
@@ -6,11 +6,11 @@ import {
   writeFileSync,
   mkdirSync,
 } from "fs";
+import { spawnSync } from "child_process";
 import { tmpdir } from "os";
 import { dirname, join } from "path";
 import {
   HEALTH_FILE_PATH,
-  allowsRemovalConclusions,
   assess,
   exitCodeFor,
   formatRunSummary,
@@ -21,6 +21,7 @@ import {
   type SourceAssessment,
   type SourceObservation,
 } from "./health";
+import { REPOSITORY_ROOT } from "./review-csv";
 import { SourceResponseError } from "./types";
 
 const SOURCE = "lever";
@@ -48,11 +49,14 @@ function reading(
   confirmedEmpty = postingCount === 0,
   sourceId = SOURCE,
   entryCount = postingCount,
-): SourceObservation {
+): SourceObservation<string> {
   return {
     kind: "reading",
     sourceId,
-    postingCount,
+    postings: Array.from(
+      { length: postingCount },
+      (_, index) => `posting-${index}`,
+    ),
     entryCount,
     confirmedEmpty,
   };
@@ -72,8 +76,14 @@ function seed(counts: readonly number[], sourceId = SOURCE): void {
   }
 }
 
-function run(observation: SourceObservation): SourceAssessment {
+function run(observation: SourceObservation<string>): SourceAssessment<string> {
   return recordRun([observation], { now: NOW, root })[0];
+}
+
+function historyCounts(sourceId = SOURCE): number[] {
+  return readHealthFile(root).sources[sourceId].history.map(
+    (entry) => entry.count,
+  );
 }
 
 describe("source health rules", () => {
@@ -89,10 +99,14 @@ describe("source health rules", () => {
     expect(assessment.detail).toContain("container renamed");
   });
 
-  it("reports a zero the response never confirmed as an error", () => {
+  it("reports a zero the response never confirmed as an error with no count", () => {
     const assessment = run(reading(0, false));
 
     expect(assessment.status).toBe("error");
+    // A count of zero beside a status of error is the conflation the whole
+    // module exists to prevent: the parser lost every posting, so no count was
+    // ever read.
+    expect(assessment.postingCount).toBeNull();
   });
 
   it("accepts a zero the location filter produced from a full response", () => {
@@ -117,6 +131,9 @@ describe("source health rules", () => {
 
     expect(assessment.status).toBe("suspicious-zero");
     expect(assessment.previousCount).toBe(3);
+    // Zero here is a count the run actually read, which is what separates a
+    // vanished source from a parser that never reached a count at all.
+    expect(assessment.postingCount).toBe(0);
   });
 
   it("accepts a confirmed zero where the previous run also found nothing", () => {
@@ -131,9 +148,21 @@ describe("source health rules", () => {
     const assessment = run(reading(1));
 
     expect(assessment.status).toBe("suspicious-drop");
+    expect(assessment.postingCount).toBe(1);
     expect(assessment.detail).toBe(
-      "1 postings, down from 4 on the previous run",
+      "1 posting, down from 4 on the previous run",
     );
+  });
+
+  it("counts one posting once in a healthy detail line", () => {
+    seed([1]);
+
+    expect(run(reading(1)).detail).toBe("1 posting, 1 on the previous run");
+    expect(run(reading(2)).detail).toBe("2 postings, 1 on the previous run");
+  });
+
+  it("counts one posting once on a first run", () => {
+    expect(run(reading(1)).detail).toBe("1 posting, no previous run on record");
   });
 
   it("accepts a drop that stops at half the previous count", () => {
@@ -159,43 +188,89 @@ describe("source health rules", () => {
     // and be read as quiet from the second run onward.
     expect(run(reading(0, true)).status).toBe("suspicious-zero");
   });
+
+  it("keeps reporting a confirmed zero instead of adopting it as the baseline", () => {
+    seed([5, 5]);
+
+    const statuses = [
+      run(reading(0, true)),
+      run(reading(0, true)),
+      run(reading(0, true)),
+    ].map((assessment) => assessment.status);
+
+    // A suspicious count that reached the history would be the next run's
+    // baseline, and the break would read as healthy one run later.
+    expect(statuses).toEqual([
+      "suspicious-zero",
+      "suspicious-zero",
+      "suspicious-zero",
+    ]);
+    expect(historyCounts()).toEqual([5, 5]);
+    expect(readHealthFile(root).sources[SOURCE].lastSuccessfulRunAt).toBe(
+      EARLIER.toISOString(),
+    );
+  });
+
+  it("keeps reporting a drop instead of adopting it as the baseline", () => {
+    seed([8]);
+
+    expect(run(reading(1)).status).toBe("suspicious-drop");
+    expect(run(reading(1)).status).toBe("suspicious-drop");
+    expect(historyCounts()).toEqual([8]);
+    expect(readHealthFile(root).sources[SOURCE].lastSuccessfulRunAt).toBe(
+      EARLIER.toISOString(),
+    );
+  });
 });
 
 describe("source health consequences", () => {
   it("stops the run on an error or a vanished source", () => {
-    const at = (status: SourceAssessment["status"]): SourceAssessment[] => [
-      {
-        sourceId: SOURCE,
-        status,
-        postingCount: 0,
-        previousCount: 1,
-        detail: "",
-      },
-    ];
+    const failed = assess(observedFailure(SOURCE, new Error("timeout")), 5);
+    const vanished = assess(reading(0, true), 5);
+    const dropped = assess(reading(1), 8);
+    const healthy = assess(reading(5), 5);
 
-    expect(exitCodeFor(at("error"))).toBe(1);
-    expect(exitCodeFor(at("suspicious-zero"))).toBe(1);
-    expect(exitCodeFor(at("suspicious-drop"))).toBe(0);
-    expect(exitCodeFor(at("healthy"))).toBe(0);
+    expect(exitCodeFor([failed])).toBe(1);
+    expect(exitCodeFor([vanished])).toBe(1);
+    expect(exitCodeFor([dropped])).toBe(0);
+    expect(exitCodeFor([healthy])).toBe(0);
+    expect(exitCodeFor([healthy, vanished])).toBe(1);
   });
 
-  it("allows removal conclusions only for a healthy source", () => {
-    seed([5]);
+  it("carries the postings only on the shape the rules found healthy", () => {
+    const healthy = assess(reading(2), 2);
+    if (healthy.status !== "healthy") {
+      throw new Error(`expected a healthy assessment, got ${healthy.status}`);
+    }
+    expect(healthy.postings).toEqual(["posting-0", "posting-1"]);
 
-    expect(allowsRemovalConclusions(run(reading(5)))).toBe(true);
-    expect(
-      allowsRemovalConclusions(
-        assess(observedFailure(SOURCE, new Error("timeout")), 5),
-      ),
-    ).toBe(false);
-    expect(allowsRemovalConclusions(assess(reading(0, true), 5))).toBe(false);
-    expect(allowsRemovalConclusions(assess(reading(1), 8))).toBe(false);
+    for (const unfit of [
+      assess(observedFailure(SOURCE, new Error("timeout")), 5),
+      assess(reading(0, true), 5),
+      assess(reading(1), 8),
+      assess(reading(0, false), 5),
+    ]) {
+      expect(unfit.status).not.toBe("healthy");
+      // A broken adapter hands a caller nothing to mistake for the complete
+      // set of open postings.
+      expect("postings" in unfit).toBe(false);
+    }
+  });
+
+  it("refuses the postings to a caller that skipped the status", () => {
+    const unfit: SourceAssessment<string> = assess(reading(0, true), 5);
+
+    // @ts-expect-error the postings are unreachable without narrowing to healthy
+    expect(unfit.postings).toBeUndefined();
   });
 
   it("lists every source in the summary, including one that found nothing", () => {
     const assessments = recordRun(
       [reading(2), reading(0, true, OTHER_SOURCE)],
-      { now: NOW, root },
+      {
+        now: NOW,
+        root,
+      },
     );
 
     const summary = formatRunSummary(assessments);
@@ -212,6 +287,17 @@ describe("source health consequences", () => {
 
     expect(summary).toContain("-");
     expect(summary).not.toContain(" 0 ");
+  });
+
+  it("prints no count for a response that lost every posting", () => {
+    seed([4]);
+
+    const summary = formatRunSummary([run(reading(0, false))]);
+    const [, row] = summary.split("\n");
+
+    // A found count of zero would tell a reader the employer has no openings,
+    // when the fact on record is that the parser read nothing at all.
+    expect(row.split(/\s{2,}/)[2]).toBe("-");
   });
 });
 
@@ -273,19 +359,31 @@ describe("source health file", () => {
     );
   });
 
-  it("reads an absent file as no history", () => {
+  it("reads an absent file as no history without a warning", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
     expect(readHealthFile(root)).toEqual({ sources: {} });
     expect(previousCountOf(readHealthFile(root), SOURCE)).toBeNull();
+    expect(warn).not.toHaveBeenCalled();
+
+    warn.mockRestore();
   });
 
-  it("reads a malformed file as no history rather than crashing", () => {
+  it("says out loud that it read a damaged file as no history", () => {
     writeHealthFileText("{ not json");
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
 
+    // The quiet version of the fallback looks exactly like a genuine first run
+    // while the drop and suspicious-zero rules sit disabled.
     expect(readHealthFile(root)).toEqual({ sources: {} });
-    expect(run(reading(0, true)).status).toBe("healthy");
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining(HEALTH_FILE_PATH),
+    );
+
+    warn.mockRestore();
   });
 
-  it("drops a record whose shape it cannot read", () => {
+  it("says out loud that it dropped a record whose shape it cannot read", () => {
     writeHealthFileText(
       JSON.stringify({
         sources: {
@@ -298,10 +396,94 @@ describe("source health file", () => {
         },
       }),
     );
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
 
     const file = readHealthFile(root);
 
     expect(file.sources[SOURCE]).toBeUndefined();
     expect(previousCountOf(file, OTHER_SOURCE)).toBe(4);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining(SOURCE));
+
+    warn.mockRestore();
+  });
+
+  it("keeps the history of a record that names no successful run", () => {
+    const at = EARLIER.toISOString();
+    writeHealthFileText(
+      JSON.stringify({
+        sources: {
+          [SOURCE]: { lastRunAt: at, history: [{ at, count: 4 }] },
+        },
+      }),
+    );
+
+    // A key a hand edit dropped costs the source its history, and a source with
+    // no history reports a first run in good health.
+    expect(previousCountOf(readHealthFile(root), SOURCE)).toBe(4);
+    expect(readHealthFile(root).sources[SOURCE].lastSuccessfulRunAt).toBeNull();
+  });
+
+  it("keeps the readable history around an entry it cannot read", () => {
+    const at = EARLIER.toISOString();
+    writeHealthFileText(
+      JSON.stringify({
+        sources: {
+          [SOURCE]: {
+            lastRunAt: at,
+            lastSuccessfulRunAt: at,
+            history: [
+              { at, count: 5 },
+              { at, count: "12" },
+              { at, count: 5 },
+            ],
+          },
+        },
+      }),
+    );
+
+    // Dropping the record over one bad entry disables the rules for the source
+    // and then reports it as a first run reporting healthy, which fails open.
+    expect(previousCountOf(readHealthFile(root), SOURCE)).toBe(5);
+    expect(readHealthFile(root).sources[SOURCE].history).toHaveLength(2);
+    expect(run(reading(0, true)).status).toBe("suspicious-zero");
+  });
+});
+
+describe("source health in automation", () => {
+  function workflowText(): string {
+    return readFileSync(
+      join(REPOSITORY_ROOT, ".github", "workflows", "source-health.yml"),
+      "utf-8",
+    );
+  }
+
+  it("runs the check on a caller other than a person's laptop", () => {
+    const workflow = workflowText();
+
+    expect(workflow).toContain("yarn sources:health");
+    expect(workflow).toMatch(/^on:/m);
+    expect(workflow).toMatch(/^permissions:/m);
+  });
+
+  it("persists the history the rules compare against", () => {
+    // The rules compare one run against the previous run, so a history the job
+    // leaves behind when it ends takes both rules out of automation entirely.
+    const workflow = workflowText();
+
+    expect(workflow).toContain(`git add ${HEALTH_FILE_PATH}`);
+    expect(workflow).toContain("git push");
+  });
+
+  it("keeps the history file out of the ignore rules", () => {
+    const ignored = spawnSync("git", ["check-ignore", "-q", HEALTH_FILE_PATH], {
+      cwd: REPOSITORY_ROOT,
+    });
+    const tracked = spawnSync("git", ["ls-files", HEALTH_FILE_PATH], {
+      cwd: REPOSITORY_ROOT,
+      encoding: "utf-8",
+    });
+
+    expect(ignored.status).toBe(1);
+    expect(tracked.stdout.trim()).toBe(HEALTH_FILE_PATH);
   });
 });

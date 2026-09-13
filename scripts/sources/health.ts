@@ -26,12 +26,14 @@ export type SourceHealthStatus =
   | "suspicious-zero"
   | "suspicious-drop";
 
-// A run that reached a count.
-export interface SourceReading {
+// A run that reached a set of postings. The postings travel with the reading
+// so an assessment can hand them on only where the rules found the source
+// healthy.
+export interface SourceReading<Posting = unknown> {
   kind: "reading";
   sourceId: string;
   // Postings at the configured location, after the adapter's location filter.
-  postingCount: number;
+  postings: readonly Posting[];
   // Entries the response carried before that filter. A response that carried
   // entries was read, whatever the location filter then left.
   entryCount: number;
@@ -49,7 +51,9 @@ export interface SourceFailure {
   message: string;
 }
 
-export type SourceObservation = SourceReading | SourceFailure;
+export type SourceObservation<Posting = unknown> =
+  | SourceReading<Posting>
+  | SourceFailure;
 
 export function observedFailure(
   sourceId: string,
@@ -60,16 +64,35 @@ export function observedFailure(
   return { kind: "failure", sourceId, message };
 }
 
-export interface SourceAssessment {
+interface AssessmentFacts {
   sourceId: string;
-  status: SourceHealthStatus;
-  // Null for a failure, where no count was ever read. A failed request and a
-  // source with no postings are different facts, and a number here for both
-  // would be the conflation this module exists to prevent.
-  postingCount: number | null;
   previousCount: number | null;
   detail: string;
 }
+
+// The one shape that carries the postings. An absent posting may be read as a
+// withdrawal only where the source that would have listed it is healthy, so a
+// caller reaching for the postings has to narrow to this status to get them.
+export interface HealthySource<Posting = unknown> extends AssessmentFacts {
+  status: "healthy";
+  postingCount: number;
+  postings: readonly Posting[];
+}
+
+// Carries no postings, so a broken adapter cannot hand a caller an empty set
+// that reads as an employer with nothing open.
+export interface UnfitSource extends AssessmentFacts {
+  status: Exclude<SourceHealthStatus, "healthy">;
+  // Null wherever no count was ever read, which covers a request that threw
+  // and a response that carried neither postings nor a confirmation of
+  // emptiness. A number for either would be the conflation this module exists
+  // to prevent.
+  postingCount: number | null;
+}
+
+export type SourceAssessment<Posting = unknown> =
+  | HealthySource<Posting>
+  | UnfitSource;
 
 export interface SourceHistoryEntry {
   at: string;
@@ -88,15 +111,6 @@ export interface SourceHealthFile {
   sources: Record<string, SourceHealthRecord>;
 }
 
-// Only a healthy source may have its absent postings read as withdrawals. An
-// adapter whose employer redesigned their site reports nothing found, and
-// nothing found must never be allowed to retire a posting that is still open.
-export function allowsRemovalConclusions(
-  assessment: SourceAssessment,
-): boolean {
-  return assessment.status === "healthy";
-}
-
 // A drop still reports postings a reviewer can act on, so it does not stop the
 // run. An error or a vanished source produces an empty result that otherwise
 // reads exactly like a quiet day, which is the failure worth halting for.
@@ -106,6 +120,10 @@ export function exitCodeFor(assessments: readonly SourceAssessment[]): number {
       assessment.status === "error" || assessment.status === "suspicious-zero",
   );
   return halting ? 1 : 0;
+}
+
+function postingsPhrase(count: number): string {
+  return count === 1 ? "1 posting" : `${count} postings`;
 }
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -127,34 +145,50 @@ function toRecord(value: unknown): SourceHealthRecord | null {
   if (!isObject(value) || !Array.isArray(value.history)) {
     return null;
   }
-  const history: SourceHistoryEntry[] = [];
-  for (const raw of value.history) {
-    const entry = toHistoryEntry(raw);
-    if (entry === null) {
-      return null;
-    }
-    history.push(entry);
-  }
   if (typeof value.lastRunAt !== "string") {
     return null;
   }
-  const lastSuccessfulRunAt = value.lastSuccessfulRunAt;
-  if (lastSuccessfulRunAt !== null && typeof lastSuccessfulRunAt !== "string") {
-    return null;
+  // An entry that fails to parse is dropped on its own rather than taking the
+  // record with it. A dropped record leaves the source with no history, which
+  // disables the drop and suspicious-zero rules and then reports the source as
+  // a first run in good health, the opposite of failing closed.
+  const history: SourceHistoryEntry[] = [];
+  for (const raw of value.history) {
+    const entry = toHistoryEntry(raw);
+    if (entry !== null) {
+      history.push(entry);
+    }
+  }
+  // A missing key reads as no successful run rather than as an unreadable
+  // record, for the same reason a bad entry is dropped on its own: a record
+  // that goes leaves the source with no history to compare against.
+  const { lastSuccessfulRunAt } = value;
+  if (typeof lastSuccessfulRunAt !== "string") {
+    return { lastRunAt: value.lastRunAt, lastSuccessfulRunAt: null, history };
   }
   return { lastRunAt: value.lastRunAt, lastSuccessfulRunAt, history };
 }
 
-// A file that cannot be read is treated as a first run rather than as an error.
-// Refusing to run without history would take the guard offline exactly when the
-// file is being introduced or has been damaged.
+const REPAIR_NOTICE = "counts as a first run until the file is repaired";
+
+// A file that cannot be read is treated as a first run and said out loud,
+// because the quiet version of the same fallback looks exactly like a genuine
+// first run while the drop and suspicious-zero rules sit disabled. Refusing to
+// run instead would take the guard offline exactly when the file is being
+// introduced or has been damaged.
 export function readHealthFile(
   root: string = REPOSITORY_ROOT,
 ): SourceHealthFile {
   let text: string;
   try {
     text = readFileSync(resolve(root, HEALTH_FILE_PATH), "utf-8");
-  } catch {
+  } catch (error) {
+    const { code } = error as NodeJS.ErrnoException;
+    if (code !== "ENOENT") {
+      console.warn(
+        `Warning: ${HEALTH_FILE_PATH} cannot be read (${code ?? "unknown error"}). Every source ${REPAIR_NOTICE}.`,
+      );
+    }
     return { sources: {} };
   }
 
@@ -162,19 +196,26 @@ export function readHealthFile(
   try {
     decoded = JSON.parse(text);
   } catch {
-    return { sources: {} };
+    decoded = undefined;
   }
 
   if (!isObject(decoded) || !isObject(decoded.sources)) {
+    console.warn(
+      `Warning: ${HEALTH_FILE_PATH} is not a readable health file. Every source ${REPAIR_NOTICE}.`,
+    );
     return { sources: {} };
   }
 
   const sources: Record<string, SourceHealthRecord> = {};
   for (const [sourceId, raw] of Object.entries(decoded.sources)) {
     const record = toRecord(raw);
-    if (record !== null) {
-      sources[sourceId] = record;
+    if (record === null) {
+      console.warn(
+        `Warning: the ${sourceId} record in ${HEALTH_FILE_PATH} is not a readable record. ${sourceId} ${REPAIR_NOTICE}.`,
+      );
+      continue;
     }
+    sources[sourceId] = record;
   }
   return { sources };
 }
@@ -191,10 +232,10 @@ export function previousCountOf(
 // The rules are ordered by precedence. A failure never reaches the zero rules,
 // and an unconfirmed zero never reaches the comparison against history, because
 // neither carries a count anybody should compare.
-export function assess(
-  observation: SourceObservation,
+export function assess<Posting>(
+  observation: SourceObservation<Posting>,
   previousCount: number | null,
-): SourceAssessment {
+): SourceAssessment<Posting> {
   const { sourceId } = observation;
 
   if (observation.kind === "failure") {
@@ -207,23 +248,26 @@ export function assess(
     };
   }
 
-  const { postingCount, entryCount, confirmedEmpty } = observation;
-  const base = { sourceId, postingCount, previousCount };
+  const { postings, entryCount, confirmedEmpty } = observation;
+  const postingCount = postings.length;
+  const counted = { sourceId, postingCount, previousCount };
 
   // A response that carried entries accounted for itself, even where every
   // entry sits in another town. Only a response that produced neither entries
   // nor a confirmation of emptiness is a parse that lost its postings.
   if (entryCount === 0 && !confirmedEmpty) {
     return {
-      ...base,
+      sourceId,
       status: "error",
+      postingCount: null,
+      previousCount,
       detail: "no entries and no confirmation that the response was empty",
     };
   }
 
   if (postingCount === 0 && previousCount !== null && previousCount > 0) {
     return {
-      ...base,
+      ...counted,
       status: "suspicious-zero",
       detail: `no postings, down from ${previousCount} on the previous run`,
     };
@@ -235,19 +279,20 @@ export function assess(
     postingCount * DROP_DIVISOR < previousCount
   ) {
     return {
-      ...base,
+      ...counted,
       status: "suspicious-drop",
-      detail: `${postingCount} postings, down from ${previousCount} on the previous run`,
+      detail: `${postingsPhrase(postingCount)}, down from ${previousCount} on the previous run`,
     };
   }
 
   return {
-    ...base,
+    ...counted,
     status: "healthy",
+    postings,
     detail:
       previousCount === null
-        ? `${postingCount} postings, no previous run on record`
-        : `${postingCount} postings, ${previousCount} on the previous run`,
+        ? `${postingsPhrase(postingCount)}, no previous run on record`
+        : `${postingsPhrase(postingCount)}, ${previousCount} on the previous run`,
   };
 }
 
@@ -259,10 +304,12 @@ function updatedRecord(
   const at = now.toISOString();
   const history = existing?.history ?? [];
 
-  // An error appends no count. A count the run itself calls unreliable would
-  // become the baseline the next run compares against, and a source that stayed
-  // broken would read as a quiet one from then on.
-  if (assessment.status === "error" || assessment.postingCount === null) {
+  // Only a healthy count reaches the history. A count the run itself calls
+  // unreliable would become the baseline the next run compares against, so a
+  // source that stayed broken would alarm once and read as a quiet one from
+  // then on. A source whose postings genuinely fell keeps reporting the drop
+  // until a person confirms the new level by recording a healthy run.
+  if (assessment.status !== "healthy") {
     return {
       lastRunAt: at,
       lastSuccessfulRunAt: existing?.lastSuccessfulRunAt ?? null,
@@ -287,10 +334,10 @@ export interface RunRecordOptions {
 // Assesses every observation against the history on disk, then writes the run
 // back. The assessments are returned in the order the observations arrived, so
 // a summary can list every configured source rather than only the eventful ones.
-export function recordRun(
-  observations: readonly SourceObservation[],
+export function recordRun<Posting>(
+  observations: readonly SourceObservation<Posting>[],
   options: RunRecordOptions,
-): SourceAssessment[] {
+): SourceAssessment<Posting>[] {
   const root = options.root ?? REPOSITORY_ROOT;
   const file = readHealthFile(root);
 

@@ -22,7 +22,7 @@ const { adapter, config } = leverSource;
 
 // The Lever account this command follows, and the namespace of every posting
 // key it records.
-export const SOURCE_ID = `lever:${config.company}`;
+export const SOURCE_ID = leverSource.accountId;
 
 // The Lever slug identifies an account. The board's Company column carries the
 // name a job seeker recognizes, which no Lever field supplies.

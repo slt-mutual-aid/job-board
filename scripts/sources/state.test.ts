@@ -250,6 +250,60 @@ describe("loadSourcesState", () => {
     expect(Object.keys(state.postings)).toEqual(["lever:insomniacookies:abc"]);
   });
 
+  it("keeps the sound records of a file carrying one broken missing record", () => {
+    writeRawState(
+      JSON.stringify({
+        postings: {},
+        missing: {
+          "lever:insomniacookies:abc": {
+            misses: 2,
+            firstMissedAt: "2026-01-01T00:00:00.000Z",
+            lastMissedAt: "2026-01-02T00:00:00.000Z",
+          },
+          "lever:insomniacookies:def": { misses: 0 },
+        },
+      }),
+    );
+
+    expect(Object.keys(loadSourcesState(root).missing)).toEqual([
+      "lever:insomniacookies:abc",
+    ]);
+  });
+
+  it("drops a missing record whose count is not a whole number of runs", () => {
+    writeRawState(
+      JSON.stringify({
+        postings: {},
+        missing: {
+          "lever:insomniacookies:abc": {
+            misses: 1.5,
+            firstMissedAt: "2026-01-01T00:00:00.000Z",
+            lastMissedAt: "2026-01-02T00:00:00.000Z",
+          },
+        },
+      }),
+    );
+
+    expect(loadSourcesState(root).missing).toEqual({});
+  });
+
+  it("drops a missing record whose timestamp cannot be read as a date", () => {
+    writeRawState(
+      JSON.stringify({
+        postings: {},
+        missing: {
+          "lever:insomniacookies:abc": {
+            misses: 2,
+            firstMissedAt: "whenever",
+            lastMissedAt: "2026-01-02T00:00:00.000Z",
+          },
+        },
+      }),
+    );
+
+    expect(loadSourcesState(root).missing).toEqual({});
+  });
+
   it("drops a posting whose timestamp cannot be read as a date", () => {
     writeRawState(
       JSON.stringify({

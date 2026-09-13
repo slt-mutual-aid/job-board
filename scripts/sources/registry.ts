@@ -11,11 +11,19 @@ const bambooHrConfig: BambooHrConfig = {
   city: "South Lake Tahoe",
 };
 
-export const leverSource = { adapter: leverAdapter, config: leverConfig };
+// accountId namespaces every posting key recorded for the source. It names the
+// account rather than the platform, so two accounts on one platform cannot hand
+// out a key that overwrites the other.
+export const leverSource = {
+  adapter: leverAdapter,
+  config: leverConfig,
+  accountId: `lever:${leverConfig.company}`,
+};
 
 export const bambooHrSource = {
   adapter: bambooHrAdapter,
   config: bambooHrConfig,
+  accountId: `bamboohr:${bambooHrConfig.subdomain}`,
 };
 
 // Every source this project reads. A source missing from this list is a source

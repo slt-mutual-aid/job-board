@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 
 # data files (jobboard.json is committed as it's the source of truth)
+
+# job postings awaiting human review, rewritten on every source run
+review/

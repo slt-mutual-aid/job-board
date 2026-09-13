@@ -10,6 +10,7 @@ import {
   leverSource,
   oracleCaesarsSource,
   oracleRaleysSource,
+  ukgSource,
 } from "./registry";
 import { REPOSITORY_ROOT, writeAllowedFile } from "./review-csv";
 import {
@@ -153,6 +154,30 @@ function oraclePostingId(link: URL, config: OracleConfig): string | null {
   return id !== null && /^\d+$/.test(id) ? id : null;
 }
 
+// UKG writes a posting page as /<tenant>/JobBoard/<board id>/OpportunityDetail
+// with the opportunity identifier in the query. Matching the tenant and the
+// board as well as the host keeps a posting on another UKG customer's board out.
+function ukgPostingId(link: URL): string | null {
+  if (link.hostname !== "recruiting.ultipro.com") {
+    return null;
+  }
+
+  const { tenant, jobBoardId } = ukgSource.config;
+  const segments = pathSegments(link);
+  if (
+    segments.length !== 4 ||
+    segments[0] !== tenant ||
+    segments[1] !== "JobBoard" ||
+    segments[2] !== jobBoardId ||
+    segments[3] !== "OpportunityDetail"
+  ) {
+    return null;
+  }
+
+  const opportunityId = link.searchParams.get("opportunityId");
+  return opportunityId === null || opportunityId === "" ? null : opportunityId;
+}
+
 interface CoveredSource {
   // The identifier a health assessment carries for the source, which names one
   // employer's listing rather than the adapter that reads it.
@@ -196,6 +221,11 @@ const COVERED_SOURCES: readonly CoveredSource[] = [
     sourceId: oracleRaleysSource.sourceId,
     accountId: oracleRaleysSource.accountId,
     postingIdFor: (link) => oraclePostingId(link, oracleRaleysSource.config),
+  },
+  {
+    sourceId: ukgSource.sourceId,
+    accountId: ukgSource.accountId,
+    postingIdFor: ukgPostingId,
   },
 ];
 

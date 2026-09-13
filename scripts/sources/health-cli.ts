@@ -13,6 +13,7 @@ import {
   leverSource,
   oracleCaesarsSource,
   oracleRaleysSource,
+  ukgSource,
 } from "./registry";
 import type { AdapterBase, IdentifiedEntry } from "./types";
 
@@ -68,6 +69,7 @@ export const readers: SourceReader[] = [
   readerFor(icimsDavidsonSource),
   readerFor(oracleCaesarsSource),
   readerFor(oracleRaleysSource),
+  readerFor(ukgSource),
 ];
 
 async function main(): Promise<void> {

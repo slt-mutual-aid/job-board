@@ -25,6 +25,9 @@ export default defineConfig({
           globals: true,
           include: ["scripts/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
           environment: "node",
+          // A date bug that shifts dates back one day is invisible in UTC, so the
+          // scripts tests run in a zone west of UTC.
+          env: { TZ: "America/Los_Angeles" },
         },
       },
     ],

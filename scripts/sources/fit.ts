@@ -1,9 +1,8 @@
 import type { SourcePosting } from "./types";
 
-// A reviewer reads the board's queue from the top and stops. Sorting by a
-// verdict puts the rows the board exists for in front of the rows it does not
-// carry, and the reason string is what lets the reviewer overrule a verdict
-// without reading the posting.
+// A posting reaches "unlikely" only on evidence that it is something the board
+// does not carry. A field the source leaves out is not evidence, so a posting
+// nothing could be read from stays "unknown".
 export type FitVerdict = "likely" | "unknown" | "unlikely";
 
 export interface PostingFit {
@@ -128,10 +127,13 @@ function experienceIsRequired(description: string): boolean {
   if (match === null) {
     return false;
   }
-  const before = description
-    .toLowerCase()
-    .slice(Math.max(0, match.index - PREFERENCE_WINDOW), match.index);
-  return !PREFERENCE_HEADINGS.some((heading) => before.includes(heading));
+  const before = words(
+    description.slice(
+      Math.max(0, match.index - PREFERENCE_WINDOW),
+      match.index,
+    ),
+  );
+  return holdsAny(before, PREFERENCE_HEADINGS) === null;
 }
 
 function quote(text: string): string {

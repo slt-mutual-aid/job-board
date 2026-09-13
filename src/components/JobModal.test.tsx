@@ -117,4 +117,16 @@ describe("JobModal", () => {
     const postedDateElement = screen.getByText(/Posted:/).closest("p");
     expect(postedDateElement?.textContent).toContain("Unknown");
   });
+
+  it("displays the stored calendar date for a viewer west of UTC", () => {
+    const jobPostedAtUtcMidnight: Job = {
+      ...mockJob,
+      posted_date: "2026-07-11T00:00:00.000Z",
+    };
+    render(<JobModal job={jobPostedAtUtcMidnight} onClose={vi.fn()} />);
+
+    const postedDateElement = screen.getByText(/Posted:/).closest("p");
+    expect(postedDateElement?.textContent).toContain("7/11/2026");
+    expect(postedDateElement?.textContent).not.toContain("7/10/2026");
+  });
 });

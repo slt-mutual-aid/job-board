@@ -40,11 +40,14 @@ export default function JobModal({ job, onClose }: JobModalProps) {
             <strong>Type:</strong> {job.job_type}
           </p>
         )}
+        {/* posted_date holds a calendar date stored at UTC midnight, so format it in UTC rather than the viewer timezone. */}
         <p className="posted-date">
           <strong>Posted:</strong>{" "}
           {isUnknownDate(job.posted_date)
             ? "Unknown"
-            : new Date(job.posted_date).toLocaleDateString()}
+            : new Date(job.posted_date).toLocaleDateString(undefined, {
+                timeZone: "UTC",
+              })}
         </p>
         <div className="job-description">
           <h3>Description</h3>

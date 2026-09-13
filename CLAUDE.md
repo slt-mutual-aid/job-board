@@ -19,6 +19,7 @@ yarn import-csv   # Parse slt-jobs.csv → jobboard.json
 # Job source adapters
 yarn sources:lever # Print the Lever postings for the configured location
 yarn sources:bamboohr # Print the BambooHR postings for the configured location
+yarn sources:health   # Check every source for a silent failure; exits non-zero on one
 ```
 
 To run a single test file: `yarn test src/components/JobBoard.test.tsx`
@@ -36,12 +37,15 @@ Google Sheets → slt-jobs.csv → jobboard.json → src/lib/db.ts → component
 **Rendering:** `src/pages/index.astro` calls `getAllJobs()` server-side and passes the full job list as a prop to `<JobBoard client:load>`. All search/filter logic runs client-side in React — no server queries after initial load.
 
 **Key files:**
+
 - `src/lib/db.ts` — `Job` interface, `getAllJobs()`, `getJobById()`, `searchJobs()`
 - `src/components/JobBoard.tsx` — stateful root React component; owns `searchQuery`, `jobTypeFilter`, `selectedJob`
 - `jobboard.json` — generated file, source of truth for job data at runtime
 - `slt-jobs.csv` — fetched from Google Sheets, input to import script
 
 **Job source review state:** `yarn sources:lever:review` writes the postings a reviewer has not decided about to `review/new-jobs.csv`, and records in `scripts/data/sources-state.json` which postings already carry a decision. A decision typed into the `Decision` column is read back on the next run, and the posting then leaves the review file. Both paths are gitignored per-machine state: deleting `scripts/data/sources-state.json` proposes every posting again.
+
+**Source health history:** `yarn sources:health` reads the listing of every source in `scripts/sources/registry.ts` and exits non-zero when one returns nothing, or nothing it can confirm as genuinely empty. `.github/workflows/source-health.yml` runs the check on a schedule and pushes the result. `scripts/data/source-health.json` holds the per-source count history and **is committed**: the suspicious-zero and drop rules compare a run against the previous run, so a history that never leaves one machine leaves both rules dormant in CI. Commit it with any change it carries rather than reverting it.
 
 ## Deployment
 
@@ -54,6 +58,7 @@ Deployed to GitHub Pages at `https://slt-mutual-aid.github.io/` (configured in `
 When a contributor asks to "update the jobs" or similar, follow these steps exactly:
 
 **Step 1 — Import the latest data:**
+
 ```bash
 yarn fetch-csv && yarn import-csv
 ```
@@ -67,6 +72,7 @@ Ask: "Does everything look correct? Ready to open a PR?"
 **Step 4 — Branch, commit, push, and open a PR:**
 
 If they have the `gh` CLI set up:
+
 ```bash
 git checkout -b update-jobs-$(date +%Y-%m-%d)
 git add slt-jobs.csv jobboard.json
@@ -76,12 +82,14 @@ gh pr create --title "Update jobs $(date +'%b %-d')" --body "Routine job data up
 ```
 
 If they do **not** have `gh` CLI, note that they should look into setting it up (https://cli.github.com), but they can also do it manually:
+
 ```bash
 git checkout -b update-jobs-$(date +%Y-%m-%d)
 git add slt-jobs.csv jobboard.json
 git commit -m "update jobs $(date +'%b %-d')"
 git push -u origin HEAD
 ```
+
 Then open a PR manually at: https://github.com/slt-mutual-aid/job-board/compare
 
 **Step 5 — Tell them to reach out to Trey:**

@@ -7,13 +7,34 @@ const ISO_TIMESTAMP =
 // cannot be trusted produces the same value a blank cell would.
 const UNPARSEABLE = "";
 
-export function toSpreadsheetDate(isoTimestamp: string): string {
+function utcDate(isoTimestamp: string): Date | null {
   if (!ISO_TIMESTAMP.test(isoTimestamp)) {
-    return UNPARSEABLE;
+    return null;
   }
 
   const date = new Date(isoTimestamp);
-  if (Number.isNaN(date.getTime())) {
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function isoDateOf(date: Date): string {
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${date.getUTCFullYear()}-${month}-${day}`;
+}
+
+export function toIsoDate(isoTimestamp: string): string {
+  const date = utcDate(isoTimestamp);
+  return date === null ? UNPARSEABLE : isoDateOf(date);
+}
+
+export function toIsoDateFromEpochMs(epochMs: number): string {
+  const date = new Date(epochMs);
+  return Number.isNaN(date.getTime()) ? UNPARSEABLE : isoDateOf(date);
+}
+
+export function toSpreadsheetDate(isoTimestamp: string): string {
+  const date = utcDate(isoTimestamp);
+  if (date === null) {
     return UNPARSEABLE;
   }
 

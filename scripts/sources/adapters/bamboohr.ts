@@ -12,7 +12,13 @@
 
 import { fetchText } from "../http";
 import { htmlToPlainText } from "../text";
-import { toSpreadsheetDate } from "../date";
+import { toIsoDate } from "../date";
+import {
+  SourceResponseError,
+  type ListingResult,
+  type ListingThenDetailAdapter,
+  type SourcePosting,
+} from "../types";
 
 export interface BambooHrConfig {
   // The BambooHR account subdomain, as it appears in the careers host.
@@ -33,33 +39,9 @@ export interface BambooHrListingEntry {
   state: string;
 }
 
-export interface BambooHrListingResult {
-  entries: BambooHrListingEntry[];
-  // True only when the response reported a total of zero and carried zero
-  // entries. A caller can then tell a quiet day from a parse that lost
-  // every posting.
-  confirmedEmpty: boolean;
-}
-
-export interface BambooHrPosting {
-  id: string;
-  title: string;
-  department: string;
-  location: string;
-  applyLink: string;
-  // M/D/YYYY, the format the job spreadsheet and scripts/import-csv.ts read.
-  postedDate: string;
-  commitment: string;
-  description: string;
-  // jobOpeningStatus verbatim. It is the only liveness field any source in
-  // this project publishes, so it is carried rather than reduced to isOpen.
-  status: string;
-  isOpen: boolean;
-}
-
 const OPEN_STATUS = "Open";
 
-export class BambooHrResponseError extends Error {
+export class BambooHrResponseError extends SourceResponseError {
   constructor(message: string) {
     super(message);
     this.name = "BambooHrResponseError";
@@ -70,8 +52,11 @@ export function listingUrl(config: BambooHrConfig): string {
   return `https://${config.subdomain}.bamboohr.com/careers/list`;
 }
 
-export function detailUrl(config: BambooHrConfig, id: string): string {
-  return `https://${config.subdomain}.bamboohr.com/careers/${id}/detail`;
+export function detailUrl(
+  config: BambooHrConfig,
+  entry: BambooHrListingEntry,
+): string {
+  return `https://${config.subdomain}.bamboohr.com/careers/${entry.id}/detail`;
 }
 
 export async function fetchListingRaw(config: BambooHrConfig): Promise<string> {
@@ -80,9 +65,9 @@ export async function fetchListingRaw(config: BambooHrConfig): Promise<string> {
 
 export async function fetchDetailRaw(
   config: BambooHrConfig,
-  id: string,
+  entry: BambooHrListingEntry,
 ): Promise<string> {
-  return fetchText(detailUrl(config, id));
+  return fetchText(detailUrl(config, entry));
 }
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -141,7 +126,7 @@ function toListingEntry(entry: unknown, index: number): BambooHrListingEntry {
   };
 }
 
-export function parseListing(raw: string): BambooHrListingResult {
+export function parseListing(raw: string): ListingResult<BambooHrListingEntry> {
   const decoded = decode(raw);
   if (!isObject(decoded)) {
     throw new BambooHrResponseError(
@@ -162,6 +147,8 @@ export function parseListing(raw: string): BambooHrListingResult {
 
   return {
     entries: result.map(toListingEntry),
+    // The total is the source's own count, so agreement with the entries is
+    // what separates a genuinely empty day from a listing that lost its rows.
     confirmedEmpty: totalCount === 0 && result.length === 0,
   };
 }
@@ -176,7 +163,7 @@ export function selectLocal(
 export function parseDetail(
   raw: string,
   entry: BambooHrListingEntry,
-): BambooHrPosting {
+): SourcePosting {
   const decoded = decode(raw);
   const result = requireObject(
     isObject(decoded) ? decoded.result : undefined,
@@ -195,10 +182,25 @@ export function parseDetail(
     department: entry.department,
     location: `${entry.city}, ${entry.state}`,
     applyLink: requireString(opening, "jobOpeningShareUrl", where),
-    postedDate: toSpreadsheetDate(requireString(opening, "datePosted", where)),
+    // datePosted carries a calendar date and no time of day.
+    postedAt: toIsoDate(requireString(opening, "datePosted", where)),
     commitment: entry.commitment,
     description: htmlToPlainText(requireString(opening, "description", where)),
-    status,
-    isOpen: status === OPEN_STATUS,
+    liveness: { status, isOpen: status === OPEN_STATUS },
   };
 }
+
+export const bambooHrAdapter: ListingThenDetailAdapter<
+  BambooHrConfig,
+  BambooHrListingEntry
+> = {
+  id: "bamboohr",
+  shape: "listing-then-detail",
+  listingUrl,
+  fetchListingRaw,
+  parseListing,
+  selectLocal,
+  detailUrl,
+  fetchDetailRaw,
+  parseDetail,
+};

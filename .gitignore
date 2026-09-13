@@ -30,3 +30,8 @@ review/
 
 # which postings a source run has already put in front of a reviewer, per machine
 scripts/data/sources-state.json
+
+# scripts/data/source-health.json is deliberately absent from this file: the
+# suspicious-zero and drop rules compare a run against the previous run, so a
+# count history that stays on one machine leaves both rules dormant everywhere
+# else. Never ignore scripts/data as a whole.

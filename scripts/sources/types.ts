@@ -46,7 +46,9 @@ export interface ListingResult<Entry> {
   confirmedEmpty: boolean;
 }
 
-interface AdapterBase<Config, Entry> {
+// The members every adapter shape shares, whatever a selected entry then
+// costs to complete.
+export interface AdapterBase<Config, Entry> {
   readonly id: string;
   listingUrl(config: Config): string;
   fetchListingRaw(config: Config): Promise<string>;

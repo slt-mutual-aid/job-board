@@ -136,6 +136,24 @@ describe("htmlToPlainText", () => {
     expect(htmlToPlainText("  \n\t Apply today \n  ")).toBe("Apply today");
   });
 
+  it("trims whitespace from the start and end of every line", () => {
+    expect(htmlToPlainText("<p>   Mornings   </p><p>   Weekends   </p>")).toBe(
+      "Mornings\nWeekends",
+    );
+  });
+
+  it("drops a whitespace-only line between two content lines", () => {
+    expect(htmlToPlainText("one\n   \ntwo")).toBe("one\n\ntwo");
+  });
+
+  it("removes source indentation and whitespace-only lines together", () => {
+    expect(
+      htmlToPlainText(
+        '<div style="x">\n    <p>First line.</p>\n    <p>   </p>\n    <p>Second line.</p>\n  </div>',
+      ),
+    ).toBe("First line.\n\nSecond line.");
+  });
+
   it("keeps a result of exactly the maximum length", () => {
     const text = "ab ".repeat(1333) + "a";
     expect(text).toHaveLength(MAX_DESCRIPTION_LENGTH);

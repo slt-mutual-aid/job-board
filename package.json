@@ -11,7 +11,8 @@
     "test:ui": "vitest --ui",
     "typecheck": "astro sync && tsc --noEmit",
     "import-csv": "tsx scripts/import-csv.ts",
-    "fetch-csv": "curl -sL 'https://docs.google.com/spreadsheets/d/16sDYemc_Sn6gRM-cRiT1sEL1U-GJdhqcqmy_k5Z1M3Y/export?format=csv&gid=0' | tail -n +4 > slt-jobs.csv"
+    "fetch-csv": "curl -sL 'https://docs.google.com/spreadsheets/d/16sDYemc_Sn6gRM-cRiT1sEL1U-GJdhqcqmy_k5Z1M3Y/export?format=csv&gid=0' | tail -n +4 > slt-jobs.csv",
+    "sources:lever": "tsx scripts/sources/lever-cli.ts"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.1",
